@@ -9,7 +9,9 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-
+import { IDrawing } from '../../interfaces/IDrawing';
+import { IBlock } from '../../interfaces/IBlock';
+import { INode } from "src/app/interfaces/INode";
 
 @Component({
     selector: "diagram-component",
@@ -20,39 +22,40 @@ import {
 export class Diagram implements OnInit, OnDestroy {
     @ViewChild("diagramNode", { static: true }) private diagramNode: ElementRef;
 
-    public hierarchicalGraph = {
-        nodes: [
-            { id: 'first', label: 'A' },
-            { id: 'second', label: 'B' },
-            { id: 'third', label: 'C' }
-        ],
-        links: [
-            {
-                id: 'a',
-                source: 'first',
-                target: 'second',
-                label: 'is parent of'
-            },
-            {
-                id: 'b',
-                source: 'first',
-                target: 'third',
-                label: 'custom label'
-            },
-            {
-                id: 'c',
-                source: 'second',
-                target: 'third',
-                label: 'custom label'
-            }
-        ]
-    };
+    @Input()
+    set drawing(val: IDrawing) { this._drawing = val; }
+    get drawing() { return this._drawing; }
+
+    private _drawing: IDrawing;
 
     ngOnInit() {
-        
+
     }
 
     ngOnDestroy() {
 
+    }
+
+    drawingClickHandler(evt): void {
+        let elem = evt.target;
+        while (!elem.classList.contains('node-group')) {
+            elem = elem.parentElement;
+            if(!elem) {
+                // Couldn't locate the element; bail out
+                return;
+            }
+        }
+
+        const clickedNode = this._drawing.nodes
+            .reduce((t: INode, n: INode) => {
+                if(n.id == elem.getAttribute('id')) { return n; }
+                return t;
+            });
+
+        console.log(elem, clickedNode);
+    }
+
+    exportDrawing(): void {
+        console.log(this._drawing);
     }
 }

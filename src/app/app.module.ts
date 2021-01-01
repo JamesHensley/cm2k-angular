@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -11,7 +12,7 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     AppComponent, Main, Diagram
   ],
   imports: [
-    BrowserModule, NgxGraphModule
+    BrowserModule, NgxGraphModule, BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
