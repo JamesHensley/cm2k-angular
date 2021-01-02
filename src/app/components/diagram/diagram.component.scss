@@ -37,10 +37,14 @@
     }
   }
   
-  g.node-group {
-    cursor: pointer;
-  }
-  
-  .edge {
-    cursor: pointer;
-  }
+.diagramRoot {
+  border: 1px solid rgba(200, 200, 200, 1);
+}
+
+g.node-group {
+  cursor: pointer;
+}
+
+.edge, .node {
+  cursor: pointer;
+}

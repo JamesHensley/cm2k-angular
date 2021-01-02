@@ -37,7 +37,8 @@ export class Main implements OnInit, OnDestroy {
     drawingNodes: Array<INode> = [];
     drawingLinks: Array<ILink> = [];
     drawingEditable: boolean = false;
-
+    drawingLayout: string = 'dagre';
+    
     ngOnInit() {
         this.buildTestData();
 
@@ -54,7 +55,7 @@ export class Main implements OnInit, OnDestroy {
     }
 
     handleBtnClick(btnData: string) {
-        console.log('Button Clicked: ' + btnData);
+        //console.log('Button Clicked: ' + btnData);
         switch(btnData) {
             case 'Export':
                 this.diagram.exportDrawing();
@@ -73,6 +74,11 @@ export class Main implements OnInit, OnDestroy {
                 }, []);
                 break;
         }
+    }
+
+    handleDropDown(data: any) {
+        //console.log('Main->handleDropDown', data);
+        this.drawingLayout = data;
     }
 
     private buildTestData(): void {

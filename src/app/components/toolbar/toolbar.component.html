@@ -1,5 +1,17 @@
 <div #toolbarNode>
-    <button (click)="toolbarBtnClick('Export')">Export</button>
-    <button (click)="toolbarBtnClick('SetMode')">{{appMode}}</button>
-    <button (click)="toolbarBtnClick('AddNode')">Add Node</button>
+    <button mat-stroked-button (click)="toolbarBtnClick('Export')">Export</button>
+    <button mat-stroked-button (click)="toolbarBtnClick('SetMode')">{{appMode}}</button>
+    <button mat-stroked-button (click)="toolbarBtnClick('AddNode')">Add Node</button>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Layout</mat-label>
+        <mat-select
+            [(value)]="selectedLayout"
+            (selectionChange)='toolbarDropdownChanged($event)'
+            >
+            <mat-option [value]="option.value" *ngFor="let option of layouts">
+                {{ option.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>

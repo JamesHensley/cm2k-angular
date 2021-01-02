@@ -1,11 +1,14 @@
-<div #diagramNode>
+<div #diagramNode class="diagramRoot">
     <ngx-graph
         class="chart-container"
-        [view]="[1024, 600]"
+        [view]="[1200, 500]"
         [showMiniMap]="true"
+        [autoCenter]="true"
+        [autoZoom]="true"
         [links]="drawingLinks"
         [nodes]="drawingNodes"
         [draggingEnabled]="drawingEditable"
+        [layout]="drawingLayout"
         (clickHandler)="drawingClickHandler($event)"
     >
         <ng-template #defsTemplate>
@@ -14,42 +17,28 @@
             </svg:marker>
         </ng-template>
 
-<!--
-
-                    (click)="openMenu('node', node.id)"
--->
         <ng-template #nodeTemplate let-node>
             <svg:g
-                #nodeMenuBtn
                 class="node"
-                [linkedItemId]="node.id"
                 mat-button
                 [matMenuTriggerFor]="nodeMenu"
-                [matMenuTriggerData]="{ itemType: 'node', itemId: node.id }"
-            >
+                (click)="diagramItemClicked(node.id)">
                 <svg:rect
                     [attr.width]="node.dimension.width"
                     [attr.height]="node.dimension.height"
-                    [attr.fill]="node.data.color"
-                />
+                    [attr.fill]="node.data.color" />
                 <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">
                     {{node.label}}
                 </svg:text>
             </svg:g>
         </ng-template>
-<!--
 
-                (click)="openMenu('link', link.id)"
--->
         <ng-template #linkTemplate let-link>
             <svg:g
-                #linkMenuBtn
                 class="edge"
-                [linkedItemId]="link.id"
                 mat-button
                 [matMenuTriggerFor]="linkMenu"
-                [matMenuTriggerData]="{ itemType: 'link', itemId: link.id }"
-            >
+                (click)="diagramItemClicked(link.id)">
                 <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
             </svg:g>
         </ng-template>
@@ -57,18 +46,18 @@
 
     <mat-menu #nodeMenu="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="nodeMenuProperties">Properties</button>
-        <button mat-menu-item (click)="menuItemClicked('item', 'node', 'remove')">Remove Node</button>
+        <button mat-menu-item (click)="menuItemClicked('node', 'remove')">Remove Node</button>
     </mat-menu>
     <mat-menu #nodeMenuProperties="matMenu">
-        <button mat-menu-item (click)="menuItemClicked('item', 'node', 'props')">Manage Node Properties</button>
-        <button mat-menu-item (click)="menuItemClicked('item', 'node', 'iEdge')">Manage Input Edge</button>
-        <button mat-menu-item (click)="menuItemClicked('item', 'node', 'oEdge')">Manage Output Edge</button>
+        <button mat-menu-item (click)="menuItemClicked('node', 'props')">Manage Node Properties</button>
+        <button mat-menu-item (click)="menuItemClicked('node', 'iEdge')">Manage Input Edge</button>
+        <button mat-menu-item (click)="menuItemClicked('node', 'oEdge')">Manage Output Edge</button>
     </mat-menu>
 
     <mat-menu #linkMenu="matMenu">
-        <button mat-menu-item (click)="menuItemClicked('', 'link', 'xform')">Transforms</button>
-        <button mat-menu-item (click)="menuItemClicked('', 'link', 'filters')">Filters</button>
-        <button mat-menu-item (click)="menuItemClicked('', 'link', 'remove')">Remove Link</button>
+        <button mat-menu-item (click)="menuItemClicked('link', 'xform')">Transforms</button>
+        <button mat-menu-item (click)="menuItemClicked('link', 'filters')">Filters</button>
+        <button mat-menu-item (click)="menuItemClicked('link', 'remove')">Remove Link</button>    
     </mat-menu>
 </div>
 
