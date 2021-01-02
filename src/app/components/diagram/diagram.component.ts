@@ -9,9 +9,9 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-import { IDrawing } from '../../interfaces/IDrawing';
-import { IBlock } from '../../interfaces/IBlock';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { INode } from "src/app/interfaces/INode";
+import { ILink } from "src/app/interfaces/ILink";
 
 @Component({
     selector: "diagram-component",
@@ -21,15 +21,29 @@ import { INode } from "src/app/interfaces/INode";
 
 export class Diagram implements OnInit, OnDestroy {
     @ViewChild("diagramNode", { static: true }) private diagramNode: ElementRef;
+    @ViewChild("nodeMenuBtn") nodeMenu: MatMenuTrigger;
+    @ViewChild("linkMenuBtn") linkMenu: MatMenuTrigger;
+    //@ViewChild(MatMenuTrigger) nodeMenu: MatMenuTrigger;
+    //@ViewChild(MatMenuTrigger) linkMenu: MatMenuTrigger;
 
     @Input()
-    set drawing(val: IDrawing) { this._drawing = val; }
-    get drawing() { return this._drawing; }
+    set appMode(val: string) {
+        this._appMode = val;
+        this.drawingEditable = val == "Edit";
+    }
 
-    private _drawing: IDrawing;
+    @Input() drawingNodes: Array<INode> = [];
+    @Input() drawingLinks: Array<ILink> = [];
+    @Input() drawingEditable: boolean = false;
+
+    @Output() nodeClicked = new EventEmitter();
+
+    get appMode() { return this._appMode; }
+
+    private _appMode: string = '';
 
     ngOnInit() {
-
+        
     }
 
     ngOnDestroy() {
@@ -37,25 +51,27 @@ export class Diagram implements OnInit, OnDestroy {
     }
 
     drawingClickHandler(evt): void {
-        let elem = evt.target;
-        while (!elem.classList.contains('node-group')) {
-            elem = elem.parentElement;
-            if(!elem) {
-                // Couldn't locate the element; bail out
-                return;
-            }
-        }
-
-        const clickedNode = this._drawing.nodes
-            .reduce((t: INode, n: INode) => {
-                if(n.id == elem.getAttribute('id')) { return n; }
-                return t;
-            });
-
-        console.log(elem, clickedNode);
     }
 
     exportDrawing(): void {
-        console.log(this._drawing);
+        console.log("Diagram->exportDrawing");
+    }
+
+    openMenu(a, b): void {
+        console.log('openMenu', a, b);
+        this.nodeMenu.openMenu();
+
+    }
+
+    menuItemClicked(e: any, menuType: string, menuData: string): void {
+        console.log('menuItemClicked', e);
+
+        if(menuType == 'link') {
+            console.log('Menu Item Choosen: ', e, menuType, menuData, this.linkMenu.menuData);
+        }
+
+        if(menuType == 'node') {
+            console.log('Menu Item Choosen: ', e, menuType, menuData, this.nodeMenu.menuData);
+        }
     }
 }

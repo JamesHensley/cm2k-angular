@@ -1,9 +1,20 @@
 <div class='container-fluid'>
     <div #mainViewNode>
-        Fuck Off you fucking fucker!
-        
-        <diagram-component
-            [drawing] = 'drawing'
-        ></diagram-component>
+        <div>
+            <toolbar-component
+                (btnClicked) = "handleBtnClick($event)"
+                [appMode]='appMode'
+            >
+            </toolbar-component>
+        </div>
+
+        <div>
+            <diagram-component
+                [drawingLinks] = 'drawingLinks'
+                [drawingNodes] = 'drawingNodes'
+                [appMode]='appMode'
+            >
+            </diagram-component>
+        </div>
     </div>
 </div>

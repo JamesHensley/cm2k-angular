@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BlockModelEndpoint } from './models/BlockModelEndpoint';
 
 @Component({
   selector: 'app-root',

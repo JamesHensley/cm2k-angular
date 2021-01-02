@@ -1,14 +1,14 @@
 // Interface for all blocks
 
-import { IBlock } from './IBlock';
 import { IBlockEdge } from './IBlockEdge';
 import { ILink } from './ILink';
+import { INode } from './INode';
 
 export interface IBlockModel {
     id: string;
     label: string;
-    edges?: Array<IBlockEdge>;
-    GetNodeObj(): IBlock;
+    edges: Map<string, IBlockEdge>;
+    GetNodeObj(): INode;
     GetConnectionsObj(): Array<ILink>;
-    AddConnection(otherBlock: IBlock): void;
+    AddConnection(otherBlock: IBlockModel): void;
 }

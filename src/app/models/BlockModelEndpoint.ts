@@ -1,40 +1,40 @@
 import { Guid } from 'typescript-guid';
 
 import { IBlockEdge } from "../interfaces/IBlockEdge";
-import { IBlock } from '../interfaces/IBlock';
 import { IProcessor } from '../interfaces/IProcessor';
-import { ILink } from "../interfaces/ILink";
 import { IBlockModel } from '../interfaces/IBlockModel';
 import { IConnection } from '../interfaces/IConnection';
-
+import { INode } from '../interfaces/INode';
+import { ILink } from "../interfaces/ILink";
 export class BlockModelEndpoint implements IBlockModel {
-    public guid: string;
-    public label: string;
-    public edges: Array<IBlockEdge>;
-    public processor: IProcessor;
-    public blockName: string;
-    public url: string;
-    public timeOut: number;
-    public edgeInput = { name: 'InputEdge', direction: 'in', connections: [] } as IBlockEdge;
-    public edgeOutput = { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockEdge;
+    guid: string;
+    label: string;
+    edges: Map<string, IBlockEdge>;
+    processor: IProcessor;
+    blockName: string;
+    url: string;
+    timeOut: number;
 
     constructor() {
-        this.edges = [ this.edgeInput, this.edgeOutput ]
+        this.edges = new Map<string, IBlockEdge>();
+
+        this.edges.set('out', { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockEdge);
+        this.edges.set('in', { name: 'InputEdge', direction: 'in', connections: [] } as IBlockEdge);
     }
 
     get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
 
-    GetNodeObj(): IBlock {
+    GetNodeObj(): INode {
         return {
             id: this.id,
             label: this.label || '',
             edges: []
-        } as IBlock
+        } as INode
     }
 
     GetConnectionsObj(): Array<ILink> {
-        if(this.edgeOutput && this.edgeOutput.connections) {
-            return this.edgeOutput.connections.map(m => {
+        if(this.edges.has('out') && this.edges.get('out').connections) {
+            return this.edges.get('out').connections.map(m => {
                 return {
                     id: 'L-' + Guid.create().toString().replace(/\-/ig, ''),
                     source: this.id,
@@ -46,8 +46,8 @@ export class BlockModelEndpoint implements IBlockModel {
         return [];
     }
 
-    AddConnection(otherBlock: IBlock): void {
-        this.edgeOutput.connections.push({
+    AddConnection(otherBlock: IBlockModel): void {
+        this.edges.get('out').connections.push({
             connectedBlockId: otherBlock.id
         } as IConnection)
     }
