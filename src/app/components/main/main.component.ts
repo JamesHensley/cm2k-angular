@@ -9,6 +9,7 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
+import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 
 import { IBlockModel } from "src/app/interfaces/IBlockModel";
 import { INode } from "src/app/interfaces/INode";
@@ -18,6 +19,8 @@ import { Guid } from 'typescript-guid';
 import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 import { Diagram } from '../diagram/diagram.component';
 import { Toolbar } from '../toolbar/toolbar.component';
+import { BlockPropsDialog } from "../modals/blockprops";
+import { LinkPropsDialog } from "../modals/linkprops";
 
 @Component({
     selector: "app-main",
@@ -30,6 +33,8 @@ export class Main implements OnInit, OnDestroy {
     @ViewChild(Diagram) private diagram: Diagram;
     @ViewChild(Toolbar) private toolbar: Toolbar;
 
+    constructor(public nodeDialog: MatDialog, public linkDialog: MatDialog) {}
+
     private _blocks: Array<IBlockModel> = [];
 
     appMode: string = 'Edit';
@@ -37,7 +42,7 @@ export class Main implements OnInit, OnDestroy {
     drawingNodes: Array<INode> = [];
     drawingLinks: Array<ILink> = [];
     drawingEditable: boolean = false;
-    drawingLayout: string = 'dagre';
+    drawingLayout: string = '';
     
     ngOnInit() {
         this.buildTestData();
@@ -48,6 +53,8 @@ export class Main implements OnInit, OnDestroy {
         this.drawingLinks = this._blocks.reduce((t: Array<ILink>, n: IBlockModel) => {
             return [].concat.apply(t, n.GetConnectionsObj());
         }, []);
+        this.drawingLayout = 'dagre';
+        this.drawingEditable = false;
     }
 
     ngOnDestroy() {
@@ -55,7 +62,6 @@ export class Main implements OnInit, OnDestroy {
     }
 
     handleBtnClick(btnData: string) {
-        //console.log('Button Clicked: ' + btnData);
         switch(btnData) {
             case 'Export':
                 this.diagram.exportDrawing();
@@ -77,8 +83,29 @@ export class Main implements OnInit, OnDestroy {
     }
 
     handleDropDown(data: any) {
-        //console.log('Main->handleDropDown', data);
         this.drawingLayout = data;
+    }
+
+
+
+    openBlockProps(elem: INode): void {
+        const dialogRef = this.nodeDialog.open(BlockPropsDialog, {
+            data: elem
+         });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    openLinkProps(elem: ILink): void {
+        const dialogRef = this.linkDialog.open(LinkPropsDialog, {
+            data: elem
+         });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 
     private buildTestData(): void {

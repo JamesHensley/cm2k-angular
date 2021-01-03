@@ -9,7 +9,8 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-import { MatMenuTrigger } from '@angular/material/menu';
+// import { MatMenuTrigger } from '@angular/material/menu';
+//import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
 
@@ -21,7 +22,6 @@ import { ILink } from "src/app/interfaces/ILink";
 
 export class Diagram implements OnInit, OnDestroy {
     @ViewChild("diagramNode", { static: true }) private diagramNode: ElementRef;
-    @ViewChild(MatMenuTrigger) nodeMenu: MatMenuTrigger;
 
     @Input()
     set appMode(val: string) {
@@ -35,45 +35,32 @@ export class Diagram implements OnInit, OnDestroy {
     @Input() drawingLayout: string = "";
 
     @Output() nodeClicked = new EventEmitter();
+    @Output() linkClicked = new EventEmitter();
 
     get appMode() { return this._appMode; }
-
-    activeElem: any = {};
+    isOpen: boolean = false;
 
     private _appMode: string = '';
 
+   
     ngOnInit() { }
 
     ngOnDestroy() { }
 
-    drawingClickHandler(evt): void {
-        // console.log(evt);
-    }
+    drawingClickHandler(evt): void { }
 
-    diagramItemClicked(itemId: string): void {
-        this.activeElem = [].concat.apply(this.drawingLinks, this.drawingNodes)
+
+    diagramItemClicked(itemType: string, itemId: string): void {
+        const activeElem = [].concat.apply(this.drawingLinks, this.drawingNodes)
             .reduce((t: any, n: any) => { return (n.id == itemId) ? n : t});
-    }
-
-    menuItemClicked(menuType: string, menuData: string): void {
-        if(menuType == 'link') {
-            console.log('Menu Item Choosen: ', menuType, menuData, this.activeElem);
-        }
-
-        if(menuType == 'node') {
-            console.log('Menu Item Choosen: ', menuType, menuData, this.activeElem);
-            switch (menuData) {
-                case 'props':
-                    break;
-                case 'iEdge':
-                    this.manageEdge(this.activeElem as INode, 'input');
-                    break;
-                case 'oEdge':
-                    this.manageEdge(this.activeElem as INode, 'output');
-                    break;
-                case 'remove':
-                    break;                    
-            }
+        console.log(activeElem);
+        switch(itemType) {
+            case 'node':
+                this.nodeClicked.emit(activeElem as INode);
+                break;
+            case 'link':
+                this.linkClicked.emit(activeElem as ILink);
+                break;
         }
     }
 

@@ -16,6 +16,8 @@
                 [drawingNodes] = 'drawingNodes'
                 [appMode]='appMode'
                 [drawingLayout]='drawingLayout'
+                (nodeClicked)="openBlockProps($event)"
+                (linkClicked)="openLinkProps($event)"
             >
             </diagram-component>
         </div>
