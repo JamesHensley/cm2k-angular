@@ -5,6 +5,7 @@ import { ILink } from './ILink';
 import { INode } from './INode';
 
 export interface IBlockModel {
+    blockType: string;
     id: string;
     label: string;
     edges: Map<string, IBlockEdge>;

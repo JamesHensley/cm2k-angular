@@ -6,6 +6,7 @@ import { INode } from "../interfaces/INode";
 
 export class BlockModelOutput implements IBlockModel {
     id: string;
+    get blockType(): string { return 'BlockModelOutput'; };
     label: string;
     edges: Map<string, IBlockEdge>;
     processor: IProcessor;

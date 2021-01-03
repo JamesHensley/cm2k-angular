@@ -8,6 +8,7 @@ import { INode } from '../interfaces/INode';
 import { ILink } from "../interfaces/ILink";
 export class BlockModelEndpoint implements IBlockModel {
     guid: string;
+    get blockType(): string { return 'BlockModelEndpoint'; };
     label: string;
     edges: Map<string, IBlockEdge>;
     processor: IProcessor;

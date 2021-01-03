@@ -11,13 +11,13 @@ import {
     Query
 } from "@angular/core";
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { IBlockModel } from "src/app/interfaces/IBlockModel";
 
-import { INode } from '../../interfaces/INode';
 @Component({
     selector: 'blockprops',
     templateUrl: 'blockprops.html',
 })
 
 export class BlockPropsDialog {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: INode) { console.log('BlockPropsDialog: ', data); }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: IBlockModel) { console.log('BlockPropsDialog: ', data); }
 }

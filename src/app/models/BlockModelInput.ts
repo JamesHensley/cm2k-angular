@@ -9,6 +9,7 @@ export class BlockModelInput implements IBlockModel {
     label: string;
     edges: Map<string, IBlockEdge>;
     processor: IProcessor;
+    get blockType(): string { return 'BlockModelInput'; };
 
     constructor() {
         this.edges = new Map<string, IBlockEdge>();

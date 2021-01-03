@@ -90,7 +90,7 @@ export class Main implements OnInit, OnDestroy {
 
     openBlockProps(elem: INode): void {
         const dialogRef = this.nodeDialog.open(BlockPropsDialog, {
-            data: elem
+            data: this._blocks.reduce((t,n) => { return (n.id == elem.id) ? n : t })
          });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -99,6 +99,7 @@ export class Main implements OnInit, OnDestroy {
     }
 
     openLinkProps(elem: ILink): void {
+        /*
         const dialogRef = this.linkDialog.open(LinkPropsDialog, {
             data: elem
          });
@@ -106,6 +107,7 @@ export class Main implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
+        */
     }
 
     private buildTestData(): void {
