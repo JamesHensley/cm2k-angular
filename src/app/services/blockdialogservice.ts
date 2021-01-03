@@ -4,7 +4,7 @@ import { BlockPropsEndpointDialog } from '../components/modals/blockprops-endpoi
 import { BlockPropsInputDialog } from '../components/modals/blockprops-input';
 import { BlockPropsOutputDialog } from '../components/modals/blockprops-output';
 
-import { IBlockModel } from '../interfaces/IBlockModel';
+import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
 import { BlockModelEndpoint } from '../models/BlockModelEndpoint';
 import { BlockModelInput } from '../models/BlockModelInput';
 import { BlockModelOutput } from '../models/BlockModelOutput';

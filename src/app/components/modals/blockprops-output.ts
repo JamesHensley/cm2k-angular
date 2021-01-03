@@ -20,5 +20,7 @@ import { BlockModelOutput } from "src/app/models/BlockModelOutput";
 })
 
 export class BlockPropsOutputDialog {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: BlockModelOutput) { console.log('BlockPropsDialog: ', data); }
+    constructor(@Inject(MAT_DIALOG_DATA) public blockData: BlockModelOutput) {
+        console.log('BlockPropsDialog: ', blockData);
+    }
 }

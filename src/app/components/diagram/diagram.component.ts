@@ -9,10 +9,11 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-// import { MatMenuTrigger } from '@angular/material/menu';
-//import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
+
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
+import { DrawingDataService } from "src/app/services/drawingdataservice";
+import { IDrawing } from "src/app/interfaces/IDrawing";
 
 @Component({
     selector: "diagram-component",
@@ -37,13 +38,20 @@ export class Diagram implements OnInit, OnDestroy {
     @Output() nodeClicked = new EventEmitter();
     @Output() linkClicked = new EventEmitter();
 
+    constructor( private drawingService: DrawingDataService ) {}
+
     get appMode() { return this._appMode; }
     isOpen: boolean = false;
 
     private _appMode: string = '';
 
-   
-    ngOnInit() { }
+    ngOnInit() {
+        this.drawingService.drawingUpdated.subscribe((data: IDrawing) => {
+            console.log('Drawing Data Updated Event: ', data);
+            this.drawingNodes = data.nodes;
+            this.drawingLinks = data.links;
+        })
+    }
 
     ngOnDestroy() { }
 

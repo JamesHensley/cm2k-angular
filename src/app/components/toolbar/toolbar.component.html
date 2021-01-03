@@ -1,7 +1,7 @@
 <div #toolbarNode>
-    <button mat-stroked-button (click)="toolbarBtnClick('Export')">Export</button>
-    <button mat-stroked-button (click)="toolbarBtnClick('SetMode')">{{appMode}}</button>
-    <button mat-stroked-button (click)="toolbarBtnClick('AddNode')">Add Node</button>
+    <button mat-stroked-button (click)="toolbarBtnClick({ btnType:'Export', btnData: ''})">Export</button>
+    <button mat-stroked-button (click)="toolbarBtnClick({ btnType:'SetMode', btnData: ''})">{{appMode}}</button>
+    <button mat-stroked-button [matMenuTriggerFor]="addNode">Add Node</button>
 
     <mat-form-field appearance="fill">
         <mat-label>Layout</mat-label>
@@ -14,4 +14,16 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+
+    <mat-menu #addNode="matMenu">
+        <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'inputBlock' })">
+            Add Input Node
+        </button>
+        <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'endpointBlock' })">
+            Add HTML Endpoint Node
+        </button>
+        <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'outputBlock' })">
+            Add Output Node
+        </button>
+    </mat-menu>
 </div>

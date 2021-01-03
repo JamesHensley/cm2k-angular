@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 
-import { IBlockModel } from "src/app/interfaces/IBlockModel";
+import { IBlockModel } from "src/app/interfaces/IBlock/IBlockModel";
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
 
@@ -19,13 +19,10 @@ import { Guid } from 'typescript-guid';
 import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 import { Diagram } from '../diagram/diagram.component';
 import { Toolbar } from '../toolbar/toolbar.component';
-//import { BlockPropsEndpointDialog } from "../modals/blockprops-endpoint";
-//import { LinkPropsDialog } from "../modals/linkprops";
 
 import { DialogService } from '../../services/dialogservice';
-import { BlockModelInput } from "src/app/models/BlockModelInput";
-import { BlockModelOutput } from "src/app/models/BlockModelOutput";
-
+import { DrawingDataService } from "src/app/services/drawingdataservice";
+import { blockTypes } from '../../enums';
 @Component({
     selector: "app-main",
     templateUrl: "./main.component.html",
@@ -37,7 +34,10 @@ export class Main implements OnInit, OnDestroy {
     @ViewChild(Diagram) private diagram: Diagram;
     @ViewChild(Toolbar) private toolbar: Toolbar;
 
-    constructor(public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService) {}
+    constructor(
+        public drawingService: DrawingDataService,
+        public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService
+    ) {}
 
     private _blocks: Array<IBlockModel> = [];
 
@@ -49,14 +49,8 @@ export class Main implements OnInit, OnDestroy {
     drawingLayout: string = '';
     
     ngOnInit() {
-        this.buildTestData();
-
-        this.drawingNodes = this._blocks.reduce((t: Array<INode>, n: IBlockModel) => {
-            return [].concat.apply(t, [n.GetNodeObj()]);
-        }, []);
-        this.drawingLinks = this._blocks.reduce((t: Array<ILink>, n: IBlockModel) => {
-            return [].concat.apply(t, n.GetConnectionsObj());
-        }, []);
+        this.drawingNodes = this.drawingService.drawingData.nodes;
+        this.drawingLinks = this.drawingService.drawingData.links;
         this.drawingLayout = 'dagre';
         this.drawingEditable = false;
     }
@@ -65,8 +59,8 @@ export class Main implements OnInit, OnDestroy {
 
     }
 
-    handleBtnClick(btnData: string) {
-        switch(btnData) {
+    handleBtnClick(data: any) {
+        switch(data.btnType) {
             case 'Export':
                 this.diagram.exportDrawing();
                 break;
@@ -75,13 +69,7 @@ export class Main implements OnInit, OnDestroy {
                 this.drawingEditable = (this.appMode == "Edit");
                 break;
             case 'AddNode':
-                const block = new BlockModelEndpoint();
-                block.guid = Guid.create().toString();
-                this._blocks.push(block);
-
-                this.drawingNodes = this._blocks.reduce((t: Array<INode>, n: IBlockModel) => {
-                    return [].concat.apply(t, [n.GetNodeObj()]);
-                }, []);
+                this.drawingService.addNode(data.btnData);
                 break;
         }
     }
@@ -93,9 +81,8 @@ export class Main implements OnInit, OnDestroy {
 
 
     openBlockProps(elem: INode): void {
-        const dialogRef = this.dialogService.openNodeDialog(
-            this._blocks.reduce((t,n) => { return (n.id == elem.id) ? n : t })
-        );
+        const block = this.drawingService.block(elem.id)
+        const dialogRef = this.dialogService.openNodeDialog(block);
 
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
@@ -112,32 +99,5 @@ export class Main implements OnInit, OnDestroy {
             console.log(`Dialog result: ${result}`);
         });
         */
-    }
-
-    private buildTestData(): void {
-        let iBlock = new BlockModelInput();
-        iBlock.guid = Guid.create().toString();
-        this._blocks.push(iBlock)
-        for(var i = 1; i < 4; i++) {
-            const block = new BlockModelEndpoint();
-            block.guid = Guid.create().toString();
-            this._blocks.push(block);
-        }
-        let oBlock = new BlockModelOutput();
-        oBlock.guid = Guid.create().toString();
-        this._blocks.push(oBlock)
-
-        this._blocks[0].AddConnection(this._blocks[1]);
-        this._blocks[1].AddConnection(this._blocks[2]);
-        this._blocks[1].AddConnection(this._blocks[4]);
-        this._blocks[2].AddConnection(this._blocks[3]);
-        this._blocks[2].AddConnection(this._blocks[4]);
-        this._blocks[3].AddConnection(this._blocks[4]);
-        this._blocks[3].AddConnection(this._blocks[1]);
-        this._blocks[0].label = 'inputCSV';
-        this._blocks[1].label = 'Q';
-        this._blocks[2].label = 'RS';
-        this._blocks[3].label = 'D';
-        this._blocks[4].label = 'outputCSV';
     }
 }

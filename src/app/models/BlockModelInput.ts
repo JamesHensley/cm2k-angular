@@ -1,11 +1,12 @@
 import { Guid } from 'typescript-guid';
 
-import { IBlockEdge } from "../interfaces/IBlockEdge";
-import { IProcessor } from '../interfaces/IProcessor';
-import { IBlockModel } from "../interfaces/IBlockModel";
+import { IBlockModelEdge } from "../interfaces/IBlock/IBlockModelEdge";
+import { IBlockProcessor } from '../interfaces/IBlock/IBlockProcessor';
+import { IBlockModel } from "../interfaces/IBlock/IBlockModel";
 import { ILink } from "../interfaces/ILink";
 import { INode } from "../interfaces/INode";
 import { IConnection } from '../interfaces/IConnection';
+import { IBlockModelField } from '../interfaces/IBlock/IBlockModelFields';
 
 export class BlockModelInput implements IBlockModel {
     guid: string;
@@ -13,12 +14,13 @@ export class BlockModelInput implements IBlockModel {
     get blockType(): string { return 'BlockModelInput'; };
     get blockTypeFriendlyName(): string { return 'BlockModelInput'; };
     label: string;
-    edges: Map<string, IBlockEdge>;
-    processor: IProcessor;
-
+    edges: Map<string, IBlockModelEdge>;
+    processor: IBlockProcessor;
+    modelFields: IBlockModelField[];
+    
     constructor() {
-        this.edges = new Map<string, IBlockEdge>();
-        this.edges.set('out', { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockEdge);
+        this.edges = new Map<string, IBlockModelEdge>();
+        this.edges.set('out', { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockModelEdge);
     }
 
     GetNodeObj(): INode {

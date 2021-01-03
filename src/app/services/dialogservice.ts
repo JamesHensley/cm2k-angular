@@ -1,5 +1,5 @@
 import { MatDialogRef } from '@angular/material/dialog';
-import { IBlockModel } from '../interfaces/IBlockModel';
+import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
 import { BlockDialogService } from './blockdialogservice';
 import { Injectable } from '@angular/core';
 

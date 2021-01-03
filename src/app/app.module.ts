@@ -22,9 +22,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
 
 import { DialogService } from './services/dialogservice';
 import { BlockDialogService } from './services/blockdialogservice';
+import { DrawingDataService } from './services/drawingdataservice';
 
 @NgModule({
   declarations: [
@@ -35,11 +37,12 @@ import { BlockDialogService } from './services/blockdialogservice';
   imports: [
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,
     MatMenuModule, MatButtonModule, MatSelectModule, MatFormFieldModule,
-    MatInputModule, MatDialogModule, MatTabsModule
+    MatInputModule, MatDialogModule, MatTabsModule, MatListModule
   ],
   providers: [
     DialogService,
-    BlockDialogService
+    BlockDialogService,
+    DrawingDataService
   ],
   entryComponents: [
   ],

@@ -1,5 +1,5 @@
 // Holds processing data for the block
 
-export interface IProcessor {
+export interface IBlockProcessor {
     
 }

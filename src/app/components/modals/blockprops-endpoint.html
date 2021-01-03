@@ -1,18 +1,26 @@
-<h2 mat-dialog-title>{{data.label}}</h2>
+<h2 mat-dialog-title>{{blockData.label}}</h2>
 <mat-dialog-content class="mat-typography">
-  {{ data.blockTypeFriendlyName }}
+  {{ blockData.blockTypeFriendlyName }}
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Inputs">
-      Input edge stuff
+      <mat-list role="list">
+        <mat-list-item *ngFor="let conn of inputConnections">
+        {{ conn.connectedBlockId }}
+        </mat-list-item>
+      </mat-list>
     </mat-tab>
     <mat-tab label="Processes">
-      <h3>{{data.id}}</h3>
+      <h3>{{blockData.id}}</h3>
     </mat-tab>
     <mat-tab label="Outputs">
-      Output edge stuff
+      <mat-list role="list">
+        <mat-list-item *ngFor="let conn of outputConnections">
+        {{ conn.connectedBlockId }}
+        </mat-list-item>
+      </mat-list>
     </mat-tab>
-    <mat-tab label="Outputs">
-      Output edge stuff
+    <mat-tab label="Advanced">
+      Advanced stuff
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
