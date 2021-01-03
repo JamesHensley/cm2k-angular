@@ -1,7 +1,21 @@
 <h2 mat-dialog-title>{{blockData.label}}</h2>
 <mat-dialog-content class="mat-typography">
-    {{ blockData.blockTypeFriendlyName }}
-    <h3>{{blockData.id}}</h3>
+  {{ blockData.blockTypeFriendlyName }}
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Processes">
+      <h3>{{blockData.id}}</h3>
+    </mat-tab>
+    <mat-tab label="Outputs">
+      <mat-list role="list">
+        <mat-list-item *ngFor="let conn of outputConnections">
+        {{ conn.connectedBlockId }}
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+    <mat-tab label="Advanced">
+      Advanced stuff
+    </mat-tab>
+  </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>

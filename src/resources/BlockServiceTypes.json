@@ -1,0 +1,29 @@
+[
+    {
+        "serviceType": "csvInput",
+        "fields": [
+            { "blockName": "string" },
+            { "fileLocation": "string" },
+            { "seperator": "string" },
+            { "firstRowHasHeaders": "boolean" }
+        ]
+    },
+    {
+        "serviceType": "csvOutput",
+        "fields": [
+            { "blockName": "string" },
+            { "fileLocation": "string" },
+            { "seperator": "string" },
+            { "firstRowHasHeaders": "boolean" }
+        ]
+    },
+    {
+        "serviceType": "htmlEndpointBlock",
+        "fields": [
+            { "blockName": "string" },
+            { "url": "string" },
+            { "waitFor": "AppFields.waitFor" },
+            { "edgeInput": "AppFields.blockEdge" }
+        ]
+    }
+]

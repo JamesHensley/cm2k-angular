@@ -9,7 +9,7 @@ import { BlockModelEndpoint } from '../models/BlockModelEndpoint';
 import { BlockModelInput } from '../models/BlockModelInput';
 import { BlockModelOutput } from '../models/BlockModelOutput';
 
-import { blockTypes } from '../enums';
+import { BlockTypes } from '../enums';
 
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
@@ -32,9 +32,12 @@ export class DrawingDataService {
     constructor() {
         let iBlock = new BlockModelInput();
         iBlock.guid = Guid.create().toString();
+
         this._blocks.push(iBlock)
+
         for(var i = 1; i < 4; i++) {
             const block = new BlockModelEndpoint();
+            block
             block.guid = Guid.create().toString();
             this._blocks.push(block);
         }
@@ -64,9 +67,9 @@ export class DrawingDataService {
 
     addNode(nodeType: string): void {
         let block: IBlockModel;
-        if(nodeType == blockTypes.INPUTBLOCK) { block = new BlockModelInput(); }
-        if(nodeType == blockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(); }
-        if(nodeType == blockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(); }
+        if(nodeType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(); }
+        if(nodeType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(); }
+        if(nodeType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(); }
         if(block) {
             block.guid = Guid.create().toString();
             this._blocks.push(block);

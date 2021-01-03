@@ -15,14 +15,12 @@ import { IBlockModel } from "src/app/interfaces/IBlock/IBlockModel";
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
 
-import { Guid } from 'typescript-guid';
-import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 import { Diagram } from '../diagram/diagram.component';
 import { Toolbar } from '../toolbar/toolbar.component';
 
 import { DialogService } from '../../services/dialogservice';
 import { DrawingDataService } from "src/app/services/drawingdataservice";
-import { blockTypes } from '../../enums';
+import { AppConfigService } from "src/app/services/appConfigService";
 @Component({
     selector: "app-main",
     templateUrl: "./main.component.html",
@@ -35,7 +33,7 @@ export class Main implements OnInit, OnDestroy {
     @ViewChild(Toolbar) private toolbar: Toolbar;
 
     constructor(
-        public drawingService: DrawingDataService,
+        public drawingService: DrawingDataService, public appConfigService: AppConfigService,
         public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService
     ) {}
 
@@ -49,6 +47,11 @@ export class Main implements OnInit, OnDestroy {
     drawingLayout: string = '';
     
     ngOnInit() {
+        this.appConfigService.configUpdated.subscribe(newConfig => {
+            console.log('Main->Configuration Updated: ', newConfig);
+            console.log('Main BlockServiceTypes: ', this.appConfigService.BlockServiceTypes);
+        });
+        
         this.drawingNodes = this.drawingService.drawingData.nodes;
         this.drawingLinks = this.drawingService.drawingData.links;
         this.drawingLayout = 'dagre';

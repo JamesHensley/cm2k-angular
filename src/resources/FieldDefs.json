@@ -1,0 +1,17 @@
+{
+    "AppFields": {
+        "waitFor": { "action": "string" },
+        "blockEdge" : {
+            "name": { "type":  "string" },
+            "direction": { "type":  "string" },
+            "connections": { "type": "connection", "instance": "array" }
+        },
+        "connection": {
+            "connectedBlockId": "string",
+            "connectors": { "type": "connector", "instance": "array" }
+        },
+        "connector": {
+            "modelName": {"type":  "string"}
+        }
+    }
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "serviceType": "csvInput",
+        "properties": {
+            "blockName": "CSV Input Block",
+            "fileLocation": "",
+            "seperator": ",",
+            "firstRowHasHeaders": true
+        }
+    },
+    {
+        "serviceType": "csvOutput",
+        "properties": {
+            "blockName": "CSV Output Block",
+            "fileLocation": "",
+            "seperator": ",",
+            "firstRowHasHeaders": true
+        }
+    },
+    {
+        "serviceType": "htmlEndpointBlock",
+        "properties": {
+            "blockName": "Q Service 1",
+            "url": "",
+            "waitFor": {
+                "action": "pageLoad"
+            }
+        }
+    }
+]

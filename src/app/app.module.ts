@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { DialogService } from './services/dialogservice';
 import { BlockDialogService } from './services/blockdialogservice';
 import { DrawingDataService } from './services/drawingdataservice';
+import { AppConfigService } from './services/appConfigService';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DrawingDataService } from './services/drawingdataservice';
   providers: [
     DialogService,
     BlockDialogService,
-    DrawingDataService
+    DrawingDataService,
+    AppConfigService
   ],
   entryComponents: [
   ],

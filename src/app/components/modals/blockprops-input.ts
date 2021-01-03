@@ -11,6 +11,7 @@ import {
     Query
 } from "@angular/core";
 import { MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { IConnection } from "src/app/interfaces/IConnection";
 import { BlockModelInput } from "src/app/models/BlockModelInput";
 
 @Component({
@@ -21,6 +22,10 @@ import { BlockModelInput } from "src/app/models/BlockModelInput";
 
 export class BlockPropsInputDialog {
     constructor(@Inject(MAT_DIALOG_DATA) public blockData: BlockModelInput) {
-        console.log('BlockPropsDialog: ', blockData);
+        console.log('BlockPropsInputDialog: ', blockData);
+    }
+
+    get outputConnections(): Array<IConnection> {
+        return this.blockData.edgeOutput.connections;
     }
 }
