@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.label}}</h2>
+<mat-dialog-content class="mat-typography">
+  {{ data.blockTypeFriendlyName }}
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Inputs">
+      Input edge stuff
+    </mat-tab>
+    <mat-tab label="Processes">
+      <h3>{{data.id}}</h3>
+    </mat-tab>
+    <mat-tab label="Outputs">
+      Output edge stuff
+    </mat-tab>
+    <mat-tab label="Outputs">
+      Output edge stuff
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

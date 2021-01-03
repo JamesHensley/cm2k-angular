@@ -1,3 +1,5 @@
+import { Guid } from 'typescript-guid';
+
 import { IBlockEdge } from "../interfaces/IBlockEdge";
 import { IProcessor } from '../interfaces/IProcessor';
 import { IBlockModel } from "../interfaces/IBlockModel";
@@ -5,8 +7,10 @@ import { ILink } from "../interfaces/ILink";
 import { INode } from "../interfaces/INode";
 
 export class BlockModelOutput implements IBlockModel {
-    id: string;
+    guid: string;
+    get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
     get blockType(): string { return 'BlockModelOutput'; };
+    get blockTypeFriendlyName(): string { return 'BlockModelOutput'; };
     label: string;
     edges: Map<string, IBlockEdge>;
     processor: IProcessor;
@@ -17,10 +21,15 @@ export class BlockModelOutput implements IBlockModel {
     }
 
     GetNodeObj(): INode {
-        throw new Error("Method not implemented.");
+        return {
+            id: this.id,
+            label: this.label || '',
+            edges: []
+        } as INode
     }
+
     GetConnectionsObj(): ILink[] {
-        throw new Error("Method not implemented.");
+        return [];
     }
     AddConnection(otherBlock: IBlockModel): void {
         throw new Error("Method not implemented.");

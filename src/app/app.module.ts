@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { Main } from "../app/components/main/main.component";
 import { Toolbar } from "../app/components/toolbar/toolbar.component";
 import { Diagram } from "../app/components/diagram/diagram.component";
-import { BlockPropsDialog } from '../app/components/modals/blockprops';
+import { BlockPropsEndpointDialog } from './components/modals/blockprops-endpoint';
+import { BlockPropsInputDialog } from './components/modals/blockprops-input';
+import { BlockPropsOutputDialog } from './components/modals/blockprops-output';
 import { LinkPropsDialog } from '../app/components/modals/linkprops';
 
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -19,18 +21,26 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { DialogService } from './services/dialogservice';
+import { BlockDialogService } from './services/blockdialogservice';
 
 @NgModule({
   declarations: [
-    AppComponent, Main, Toolbar, Diagram, BlockPropsDialog, LinkPropsDialog
+    AppComponent, Main, Toolbar, Diagram,
+    BlockPropsEndpointDialog, BlockPropsInputDialog, BlockPropsOutputDialog,
+    LinkPropsDialog
   ],
   imports: [
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,
     MatMenuModule, MatButtonModule, MatSelectModule, MatFormFieldModule,
-    MatInputModule, MatDialogModule
-
+    MatInputModule, MatDialogModule, MatTabsModule
   ],
-  providers: [],
+  providers: [
+    DialogService,
+    BlockDialogService
+  ],
   entryComponents: [
   ],
   bootstrap: [AppComponent],

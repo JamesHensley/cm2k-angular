@@ -19,8 +19,12 @@ import { Guid } from 'typescript-guid';
 import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 import { Diagram } from '../diagram/diagram.component';
 import { Toolbar } from '../toolbar/toolbar.component';
-import { BlockPropsDialog } from "../modals/blockprops";
-import { LinkPropsDialog } from "../modals/linkprops";
+//import { BlockPropsEndpointDialog } from "../modals/blockprops-endpoint";
+//import { LinkPropsDialog } from "../modals/linkprops";
+
+import { DialogService } from '../../services/dialogservice';
+import { BlockModelInput } from "src/app/models/BlockModelInput";
+import { BlockModelOutput } from "src/app/models/BlockModelOutput";
 
 @Component({
     selector: "app-main",
@@ -33,7 +37,7 @@ export class Main implements OnInit, OnDestroy {
     @ViewChild(Diagram) private diagram: Diagram;
     @ViewChild(Toolbar) private toolbar: Toolbar;
 
-    constructor(public nodeDialog: MatDialog, public linkDialog: MatDialog) {}
+    constructor(public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService) {}
 
     private _blocks: Array<IBlockModel> = [];
 
@@ -89,9 +93,9 @@ export class Main implements OnInit, OnDestroy {
 
 
     openBlockProps(elem: INode): void {
-        const dialogRef = this.nodeDialog.open(BlockPropsDialog, {
-            data: this._blocks.reduce((t,n) => { return (n.id == elem.id) ? n : t })
-         });
+        const dialogRef = this.dialogService.openNodeDialog(
+            this._blocks.reduce((t,n) => { return (n.id == elem.id) ? n : t })
+        );
 
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
@@ -111,14 +115,20 @@ export class Main implements OnInit, OnDestroy {
     }
 
     private buildTestData(): void {
-        for(var i = 0; i < 5; i++) {
+        let iBlock = new BlockModelInput();
+        iBlock.guid = Guid.create().toString();
+        this._blocks.push(iBlock)
+        for(var i = 1; i < 4; i++) {
             const block = new BlockModelEndpoint();
             block.guid = Guid.create().toString();
             this._blocks.push(block);
         }
+        let oBlock = new BlockModelOutput();
+        oBlock.guid = Guid.create().toString();
+        this._blocks.push(oBlock)
+
         this._blocks[0].AddConnection(this._blocks[1]);
         this._blocks[1].AddConnection(this._blocks[2]);
-        //this._blocks[1].AddConnection(this._blocks[3]);
         this._blocks[1].AddConnection(this._blocks[4]);
         this._blocks[2].AddConnection(this._blocks[3]);
         this._blocks[2].AddConnection(this._blocks[4]);

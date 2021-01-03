@@ -6,9 +6,12 @@ import { IBlockModel } from '../interfaces/IBlockModel';
 import { IConnection } from '../interfaces/IConnection';
 import { INode } from '../interfaces/INode';
 import { ILink } from "../interfaces/ILink";
+
 export class BlockModelEndpoint implements IBlockModel {
     guid: string;
+    get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
     get blockType(): string { return 'BlockModelEndpoint'; };
+    get blockTypeFriendlyName(): string { return 'BlockModelEndpoint'; };
     label: string;
     edges: Map<string, IBlockEdge>;
     processor: IProcessor;
@@ -23,7 +26,7 @@ export class BlockModelEndpoint implements IBlockModel {
         this.edges.set('in', { name: 'InputEdge', direction: 'in', connections: [] } as IBlockEdge);
     }
 
-    get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
+
 
     GetNodeObj(): INode {
         return {

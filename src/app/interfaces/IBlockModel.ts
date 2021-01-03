@@ -6,7 +6,9 @@ import { INode } from './INode';
 
 export interface IBlockModel {
     blockType: string;
+    blockTypeFriendlyName: string;
     id: string;
+    guid: string;
     label: string;
     edges: Map<string, IBlockEdge>;
     GetNodeObj(): INode;
