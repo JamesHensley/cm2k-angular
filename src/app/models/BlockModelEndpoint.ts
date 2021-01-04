@@ -17,7 +17,6 @@ export class BlockModelEndpoint implements IBlockModel {
     get blockTypeFriendlyName(): string { return 'BlockModelEndpoint'; };
     serviceType: BlockTypes.ENDPOINTBLOCK;
     label: string;
-    //edges: Map<string, IBlockModelEdge>;
     edgeInput: IBlockModelEdge;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
