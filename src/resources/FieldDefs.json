@@ -7,7 +7,7 @@
             "connections": { "type": "connection", "instance": "array" }
         },
         "connection": {
-            "connectedBlockId": "string",
+            "connectedBlockId": { "type":  "string" },
             "connectors": { "type": "connector", "instance": "array" }
         },
         "connector": {
