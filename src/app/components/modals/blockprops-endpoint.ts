@@ -22,7 +22,8 @@ import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 
 export class BlockPropsEndpointDialog {
     constructor(@Inject(MAT_DIALOG_DATA) public blockData: BlockModelEndpoint) {
-        console.log('BlockPropsEndpointDialog: ', blockData);
+        //console.log('BlockPropsEndpointDialog: ', blockData);
+        console.log('BlockPropsEndpointDialog: ', blockData.ToJSON());
     }
 
     get inputConnections(): Array<IConnection> {

@@ -23,22 +23,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 import { DialogService } from './services/dialogservice';
 import { BlockDialogService } from './services/blockdialogservice';
 import { DrawingDataService } from './services/drawingdataservice';
 import { AppConfigService } from './services/appConfigService';
+import { TreeComponent } from './components/shared/tree-component';
 
 @NgModule({
   declarations: [
-    AppComponent, Main, Toolbar, Diagram,
+    AppComponent, Main, Toolbar, Diagram, TreeComponent,
     BlockPropsEndpointDialog, BlockPropsInputDialog, BlockPropsOutputDialog,
     LinkPropsDialog
   ],
   imports: [
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,
     MatMenuModule, MatButtonModule, MatSelectModule, MatFormFieldModule,
-    MatInputModule, MatDialogModule, MatTabsModule, MatListModule
+    MatInputModule, MatDialogModule, MatTabsModule, MatListModule,
+    MatGridListModule, MatTreeModule, MatIconModule
   ],
   providers: [
     DialogService,

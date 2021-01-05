@@ -5,22 +5,43 @@
     <mat-tab label="Inputs">
       <mat-list role="list">
         <mat-list-item *ngFor="let conn of inputConnections">
-        {{ conn.connectedBlockId }}
+          {{ conn.connectedBlockId }}
         </mat-list-item>
       </mat-list>
     </mat-tab>
     <mat-tab label="Processes">
-      <h3>{{blockData.id}}</h3>
+      <h3>
+        {{blockData.id}}
+      </h3>
     </mat-tab>
     <mat-tab label="Outputs">
       <mat-list role="list">
         <mat-list-item *ngFor="let conn of outputConnections">
-        {{ conn.connectedBlockId }}
+          {{ conn.connectedBlockId }}
         </mat-list-item>
       </mat-list>
     </mat-tab>
     <mat-tab label="Advanced">
-      Advanced stuff
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Model Fields">
+          <mat-grid-list cols="2" rowHeight="500px">
+            <mat-grid-tile>
+              {{blockData.label}}
+              <mat-list role="list">
+                <mat-list-item *ngFor="let field of blockData.modelFields">
+                  {{ field.fieldName }} {{ field.fieldType }}
+                </mat-list-item>
+              </mat-list>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <tree-component></tree-component>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+        <mat-tab label="Model Parameters">
+          Model Parameters
+        </mat-tab>
+      </mat-tab-group>        
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
