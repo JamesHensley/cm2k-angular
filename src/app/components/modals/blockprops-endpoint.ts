@@ -16,8 +16,8 @@ import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 
 @Component({
     selector: 'blockprops-endpoint',
-    templateUrl: 'blockprops-endpoint.html',
-    styleUrls: ["blockprops.scss"]
+    templateUrl: './blockprops-endpoint.html',
+    styleUrls: ['./blockprops.scss']
 })
 
 export class BlockPropsEndpointDialog {

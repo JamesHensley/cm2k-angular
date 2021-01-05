@@ -33,8 +33,11 @@
                 </mat-list-item>
               </mat-list>
             </mat-grid-tile>
-            <mat-grid-tile>
-              <tree-component></tree-component>
+            <mat-grid-tile class='alignTopLeft'>
+              <block-props-fields-component
+                [blockData] = 'blockData'
+                [allowEdits] = 'false'>
+              </block-props-fields-component>
             </mat-grid-tile>
           </mat-grid-list>
         </mat-tab>

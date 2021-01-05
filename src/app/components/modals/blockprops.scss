@@ -1,4 +1,4 @@
-mat-grid-tile {
-    align-items: flex-start;
-    justify-content: left;
+.alignTopLeft > ::ng-deep figure {
+    align-items: flex-start!important;
+    justify-content: left!important;
 }

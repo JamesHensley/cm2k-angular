@@ -32,10 +32,11 @@ import { BlockDialogService } from './services/blockdialogservice';
 import { DrawingDataService } from './services/drawingdataservice';
 import { AppConfigService } from './services/appConfigService';
 import { TreeComponent } from './components/shared/tree-component';
+import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldscomponent';
 
 @NgModule({
   declarations: [
-    AppComponent, Main, Toolbar, Diagram, TreeComponent,
+    AppComponent, Main, Toolbar, Diagram, TreeComponent, BlockPropsFieldsComponent,
     BlockPropsEndpointDialog, BlockPropsInputDialog, BlockPropsOutputDialog,
     LinkPropsDialog
   ],
