@@ -1,15 +1,20 @@
 function enumerateObject(obj, retObj) {
-	Object.keys(obj).forEach(o => {
-		let t = {};
-		t[o.valueOf()] = (Array.isArray(obj[o]) ? 'Array' : typeof obj[o]);
+	return Object.keys(obj).map(o => {
+		let objField = obj[o];
 
-		if(obj[o] && typeof obj[o] == 'object' && !Array.isArray(obj[o])) {
-			console.log(t);
-			t[o.valueOf()] = enumerateObject(obj[o], retObj);
+		let tObj = {};
+		tObj[o.valueOf()] = typeof objField;
+
+		if(objField && typeof objField == 'object' && !Array.isArray(objField)) {
+console.log(o, objField);
+			tObj.children = enumerateObject(objField, retObj);
 		}
-		retObj.push(t);
+		else {
+			if(Array.isArray(objField)) { tObj[o.valueOf()] = 'array'; }
+			tObj.children = [];
+		}
+		return tObj;
 	})
-	return retObj;
 }
 
 var k = enumerateObject(j, []);
