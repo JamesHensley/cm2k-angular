@@ -6,19 +6,15 @@ export class BlockModelField implements IBlockModelField {
     path: string[];
     children?: IBlockModelField[];
 
-    private myNode: IBlockModelField;
     constructor(name: string, type: string, path: Array<string>, children: Array<IBlockModelField>) {
         this.name = name;
         this.type = type;
         this.path = path;
         this.children = children;
-
-        this.myNode = this;
-        console.log('BlockModelField->constructor: ', this);
     }
 
     GetFieldNode(path: Array<string>): IBlockModelField {
-        let root = this.myNode;
+        let root: IBlockModelField = this;
 
         path.forEach((d, i) => {
             if(i==0) { return root; }

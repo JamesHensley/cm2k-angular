@@ -38,7 +38,7 @@ export class DrawingDataService {
 
         for(var i = 1; i < 4; i++) {
             const block = new BlockModelEndpoint();
-            block
+            
             block.guid = Guid.create().toString();
             this._blocks.push(block);
         }
