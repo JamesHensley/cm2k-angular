@@ -54,8 +54,9 @@ export class TreeComponent implements OnInit {
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
   ngOnInit(): void {
-    this.dataSource.data = this.treeData;
-    console.log('TreeComponent->ngOnInit: ', this.treeData);
+    this.dataSource.data = [this.blockRef.modelFields];
+    //this.dataSource.data = this.treeData;
+    console.log('TreeComponent->ngOnInit: ', this.dataSource.data);
   }
 
   private _activeField: string;

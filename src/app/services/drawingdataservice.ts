@@ -56,6 +56,7 @@ export class DrawingDataService {
         this._blocks[0].label = 'inputCSV';
         this._blocks[1].label = 'Q';
         this._blocks[2].label = 'RS';
+this._blocks[2].modelFields.children.push({ name: 'web', type: 'string', path: ['RS', 'web'], children: [] } as IBlockModelField);
         this._blocks[3].label = 'D';
         this._blocks[4].label = 'outputCSV';
     }
