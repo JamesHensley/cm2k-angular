@@ -6,6 +6,7 @@
     <div class='clickable'
       (click)="fieldClick($event)"
       [attr.aria-id]="node.name"
+      [attr.aria-path]="node.path"
       [matMenuTriggerFor]="fieldMenu">
       {{node.name}}
     </div>
@@ -24,6 +25,7 @@
     <div class='clickable'
       (click)="fieldClick($event)"
       [attr.aria-id]="node.name"
+      [attr.aria-path]="node.path"
       [matMenuTriggerFor]="fieldMenu">
       {{node.name}}
     </div>
@@ -31,11 +33,12 @@
 </mat-tree>
   
 <mat-menu #fieldMenu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="childAddMenu">Add Child</button>
+  <button mat-menu-item [matMenuTriggerFor]="childAddMenu" [disabled]='!canAddChildren'>Add Child</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RemoveBranch', btnData: '' })">Remove Field</button>
 </mat-menu>
 
-<mat-menu #childAddMenu="matMenu">      
+<mat-menu #childAddMenu="matMenu">
+  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'object' })">Add Object</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'string' })">Add String</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'boolean'  })">Add Boolean</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'array'  })">Add Array</button>

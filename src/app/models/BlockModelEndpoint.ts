@@ -6,10 +6,11 @@ import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
 import { IConnection } from '../interfaces/IConnection';
 import { INode } from '../interfaces/INode';
 import { ILink } from "../interfaces/ILink";
-import { IBlockModelField } from '../interfaces/IBlock/IBlockModelFields';
+import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { BlockTypes } from '../enums';
 import { IConnector } from '../interfaces/IConnector';
 import { BlockModelEdge } from './BlockModelEdge';
+import { BlockModelField } from './BlockModelField';
 
 export class BlockModelEndpoint implements IBlockModel {
     guid: string;
@@ -24,11 +25,14 @@ export class BlockModelEndpoint implements IBlockModel {
     blockName: string;
     url: string;
     timeOut: number;
-    modelFields: IBlockModelField[];
+    modelFields: BlockModelField;
 
     constructor() {
         this.edgeInput = new BlockModelEdge('InputEdge', 'in', null);
         this.edgeOutput = new BlockModelEdge('OutputEdge', 'out', null);
+
+        this.modelFields = new BlockModelField(this.label, 'object', [this.label], []);
+        console.log('BlockModelEndpoint->constructor: ', this);
     }
 
     GetNodeObj(): INode {

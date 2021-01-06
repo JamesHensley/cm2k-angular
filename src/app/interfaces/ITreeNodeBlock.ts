@@ -1,4 +1,5 @@
 export interface ITreeNodeBlock {
-  name: string;
+  nodeName: string;
+  nodeType: string;
   children?: Array<ITreeNodeBlock>;
 }

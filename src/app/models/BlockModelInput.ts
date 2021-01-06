@@ -6,8 +6,9 @@ import { IBlockModel } from "../interfaces/IBlock/IBlockModel";
 import { ILink } from "../interfaces/ILink";
 import { INode } from "../interfaces/INode";
 import { IConnection } from '../interfaces/IConnection';
-import { IBlockModelField } from '../interfaces/IBlock/IBlockModelFields';
+import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { BlockTypes } from '../enums';
+import { BlockModelField } from './BlockModelField';
 
 export class BlockModelInput implements IBlockModel {
     guid: string;
@@ -18,7 +19,7 @@ export class BlockModelInput implements IBlockModel {
     label: string;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
-    modelFields: IBlockModelField[];
+    modelFields: BlockModelField;
     
     constructor() {
         this.edgeOutput = { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockModelEdge;

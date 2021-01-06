@@ -33,6 +33,7 @@ import { DrawingDataService } from './services/drawingdataservice';
 import { AppConfigService } from './services/appConfigService';
 import { TreeComponent } from './components/shared/tree-component';
 import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldscomponent';
+import { MappingService } from './services/mappingService';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldsc
     DialogService,
     BlockDialogService,
     DrawingDataService,
-    AppConfigService
+    AppConfigService,
+    MappingService
   ],
   entryComponents: [
   ],

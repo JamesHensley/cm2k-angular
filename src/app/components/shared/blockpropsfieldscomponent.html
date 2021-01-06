@@ -1,5 +1,8 @@
 <div>
     <tree-component
+        (treeItemAdded) = 'treeItemAdded($event)'
+        (treeItemRemoved) = 'treeItemRemoved($event)'
+        [blockRef] = 'blockData'
         [treeData] = 'treeData'
         [allowEdits] = 'allowEdits'>
     </tree-component>

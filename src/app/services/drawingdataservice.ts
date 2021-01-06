@@ -10,6 +10,7 @@ import { BlockModelInput } from '../models/BlockModelInput';
 import { BlockModelOutput } from '../models/BlockModelOutput';
 
 import { BlockTypes } from '../enums';
+import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
@@ -77,4 +78,15 @@ export class DrawingDataService {
             this.drawingUpdated.emit(this.drawingData);
         }
     }
+
+    addFieldToNode(nodeId: string, path: Array<string>, field: IBlockModelField): void {
+        let thisBlock = this._blocks.reduce((t,n) => { return (n.id == nodeId) ? n : t;});
+        console.log('DrawingDataService->addFieldToNode: ', thisBlock, path, field);
+    }
+
+    removeFieldFromNode(nodeId: string, path: Array<string>, field: IBlockModelField): void {
+        
+    }
+
+
 }
