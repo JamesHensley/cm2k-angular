@@ -36,10 +36,20 @@
               </mat-list>
             </mat-grid-tile>
             <mat-grid-tile class='alignTopLeft'>
+              <!--
               <block-props-fields-component
                 [blockData] = 'blockData'
                 [allowEdits] = 'false'>
               </block-props-fields-component>
+              (treeItemAdded) = 'treeItemAdded($event)'
+              (treeItemRemoved) = 'treeItemRemoved($event)'
+              [treeData] = 'treeData'
+              -->
+                <tree-component
+
+                  [blockData] = 'blockData'
+                  [allowEdits] = 'allowEdits'>
+              </tree-component>
             </mat-grid-tile>
           </mat-grid-list>
         </mat-tab>
@@ -52,5 +62,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial  (click)='saveBlock($event)'>Save</button>
 </mat-dialog-actions>

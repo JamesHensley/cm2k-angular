@@ -88,7 +88,7 @@ export class Main implements OnInit, OnDestroy {
         const dialogRef = this.dialogService.openNodeDialog(block);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            //console.log(`Dialog result: ${result}`);
         });
     }
 

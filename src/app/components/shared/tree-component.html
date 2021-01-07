@@ -5,7 +5,7 @@
     <button mat-icon-button disabled></button>
     <div class='clickable'
       (click)="fieldClick($event)"
-      [attr.aria-id]="node.name"
+      [attr.aria-id]="node.id"
       [attr.aria-path]="node.path"
       [matMenuTriggerFor]="fieldMenu">
       {{node.name}}
@@ -24,7 +24,7 @@
     </button>
     <div class='clickable'
       (click)="fieldClick($event)"
-      [attr.aria-id]="node.name"
+      [attr.aria-id]="node.id"
       [attr.aria-path]="node.path"
       [matMenuTriggerFor]="fieldMenu">
       {{node.name}}
@@ -34,7 +34,8 @@
   
 <mat-menu #fieldMenu="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="childAddMenu" [disabled]='!canAddChildren'>Add Child</button>
-  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RemoveBranch', btnData: '' })">Remove Field</button>
+  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RenameField', btnData: '' })" [disabled]='!canModify'>Rename Field</button>
+  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RemoveBranch', btnData: '' })" [disabled]='!canModify'>Remove Field</button>
 </mat-menu>
 
 <mat-menu #childAddMenu="matMenu">

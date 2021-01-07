@@ -46,10 +46,10 @@ export class Diagram implements OnInit, OnDestroy {
     private _appMode: string = '';
 
     ngOnInit() {
-        this.drawingService.drawingUpdated.subscribe((data: IDrawing) => {
-            console.log('Drawing Data Updated Event: ', data);
-            this.drawingNodes = data.nodes;
-            this.drawingLinks = data.links;
+        this.drawingService.drawingUpdated.subscribe(data => {
+            console.log('Drawing Data Updated Event: ', data.newDiagramData);
+            this.drawingNodes = data.newDiagramData.nodes;
+            this.drawingLinks = data.newDiagramData.links;
         })
     }
 

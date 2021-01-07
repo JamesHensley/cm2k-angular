@@ -56,7 +56,7 @@ export class DrawingDataService {
         this._blocks[0].label = 'inputCSV';
         this._blocks[1].label = 'Q';
         this._blocks[2].label = 'RS';
-this._blocks[2].modelFields.children.push({ name: 'web', type: 'string', path: ['RS', 'web'], children: [] } as IBlockModelField);
+//this._blocks[2].modelFields.children.push({ name: 'web', type: 'string', path: ['RS', 'web'], children: [] } as IBlockModelField);
         this._blocks[3].label = 'D';
         this._blocks[4].label = 'outputCSV';
     }
@@ -80,14 +80,30 @@ this._blocks[2].modelFields.children.push({ name: 'web', type: 'string', path: [
         }
     }
 
-    addFieldToNode(nodeId: string, path: Array<string>, field: IBlockModelField): void {
+    addFieldToNode(nodeId: string, path: Array<string>, newField: IBlockModelField): void {
         let thisBlock = this._blocks.reduce((t,n) => { return (n.id == nodeId) ? n : t;});
-        console.log('DrawingDataService->addFieldToNode: ', thisBlock, path, field);
+
+        let parent = this.getTreeItem(thisBlock, path);
+        parent.children.push(newField);
+
+        newField.path = [].concat.apply(parent.path, [newField.id]);
+
+        console.log('DrawingDataService->addFieldToNode: ', thisBlock);
+        this.drawingUpdated.emit({ newDiagramData: this.drawingData, newBlockData: this._blocks });
     }
 
     removeFieldFromNode(nodeId: string, path: Array<string>, field: IBlockModelField): void {
         
     }
 
+    private getTreeItem(block: IBlockModel, path: Array<string>): IBlockModelField {
+        let root: IBlockModelField = block.modelFields;
+    
+        path.forEach((d, i) => {
+            if(i==0) { return root; }
+            root = root.children.reduce((t,n) => { return n.id == d ? n : t; }, {} as IBlockModelField)
+        })
+        return root;
+    }
 
 }

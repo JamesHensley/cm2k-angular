@@ -22,7 +22,6 @@ export class BlockModelEndpoint implements IBlockModel {
     set label(val: string) {
         this.blockName = val;
         this.modelFields.name = val;
-        this.modelFields.path = [val];
     }
     edgeInput: IBlockModelEdge;
     edgeOutput: IBlockModelEdge;
@@ -36,7 +35,7 @@ export class BlockModelEndpoint implements IBlockModel {
         this.edgeInput = new BlockModelEdge('InputEdge', 'in', null);
         this.edgeOutput = new BlockModelEdge('OutputEdge', 'out', null);
 
-        this.modelFields = new BlockModelField(this.label, 'object', [this.label], []);
+        this.modelFields = new BlockModelField(this.label, 'object', [Guid.create().toString()], []);
         //console.log('BlockModelEndpoint->constructor: ', this);
     }
 

@@ -5,6 +5,9 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 //import { ITreeNodeBlock } from 'src/app/interfaces/ITreeNodeBlock';
 import { IBlockModelField } from 'src/app/interfaces/IBlock/IBlockModelField';
 import { IBlockModel } from 'src/app/interfaces/IBlock/IBlockModel';
+import { DrawingDataService } from 'src/app/services/drawingdataservice';
+import { MappingService } from 'src/app/services/mappingService';
+import { BlockModelField } from 'src/app/models/BlockModelField';
 
 interface FlatNode {
   expandable: boolean;
@@ -28,12 +31,10 @@ export interface treeItemAction {
 
 
 export class TreeComponent implements OnInit {
-  @Input() blockRef: IBlockModel;
+  @Input() blockData: IBlockModel;
   @Input() allowEdits: boolean;
-  @Input() treeData: Array<IBlockModelField>;
 
-  @Output() treeItemAdded = new EventEmitter<treeItemAction>();
-  @Output() treeItemRemoved = new EventEmitter<treeItemAction>();
+  constructor(private drawingService: DrawingDataService, private mapper: MappingService) { }
 
   private _transformer = (node: IBlockModelField, level: number) => {
     return {
@@ -54,22 +55,31 @@ export class TreeComponent implements OnInit {
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
   ngOnInit(): void {
-    this.dataSource.data = [this.blockRef.modelFields];
-    //this.dataSource.data = this.treeData;
-    console.log('TreeComponent->ngOnInit: ', this.dataSource.data);
+    this.dataSource.data = [this.blockData.modelFields];
+
+    this.drawingService.drawingUpdated.subscribe(newData => {
+      this.blockData = newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t));;
+      console.log('TreeComponent->Received a drawing UPDATED message (treeControl): ', this.treeControl);
+      //console.log('TreeComponent->Received a drawing UPDATED message (blockData): ', this.blockData);
+      this.dataSource.data = [this.blockData.modelFields];
+      this.treeControl.expandAll();
+      //this.treeFlattener.getChildren(this._activeNode)
+    });
   }
 
   private _activeField: string;
   private _activePath: Array<string>;
+  private _activeNode: IBlockModelField;
   canAddChildren: boolean;
+  canModify: boolean;
 
   fieldClick(data: MouseEvent): void {
     this._activeField = (data.target as Element).getAttribute('aria-id');
     this._activePath = JSON.parse((data.target as Element).getAttribute('aria-path'));
+    this._activeNode = this.blockData.modelFields.GetFieldNode(this._activePath);
 
-    let actNode = this.blockRef.modelFields.GetFieldNode(this._activePath);
-    this.canAddChildren = actNode.type === 'object';
-    console.log('Can Add Children: ', this.canAddChildren);
+    this.canAddChildren = this._activeNode.type === 'object';
+    this.canModify = this._activeNode !== this.blockData.modelFields;
   }
 
   fieldMenuClick(data): void {
@@ -77,7 +87,19 @@ export class TreeComponent implements OnInit {
   }
 
   private addChild(nodeType: string): void {
-    console.log('TreeComponent->addChild: emitting - ', this._activePath);
-    this.treeItemAdded.emit({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType });
+    this.treeItemAdded({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType } as treeItemAction);
   }
+
+  treeItemAdded(data: treeItemAction): void {
+    console.log('BlockPropsFieldsComponent->treeItemAdded: ', data);
+    let newNode = new BlockModelField('NewField', data.actionData, data.nodePath, []);
+    //this.drawingService.addFieldToNode(this.blockData.id, data.nodePath, { name: 'NewField', type: data.actionData, children: [] } as IBlockModelField);
+    this.drawingService.addFieldToNode(this.blockData.id, data.nodePath, newNode);
+  }
+
+  treeItemRemoved(data: treeItemAction): void {
+    console.log('BlockPropsFieldsComponent->treeItemRemoved: ', data);
+    this.drawingService.removeFieldFromNode(this.blockData.id, data.nodePath, null);
+  }
+
 }
