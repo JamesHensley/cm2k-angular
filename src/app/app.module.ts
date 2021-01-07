@@ -10,6 +10,7 @@ import { Diagram } from "../app/components/diagram/diagram.component";
 import { BlockPropsEndpointDialog } from './components/modals/blockprops-endpoint';
 import { BlockPropsInputDialog } from './components/modals/blockprops-input';
 import { BlockPropsOutputDialog } from './components/modals/blockprops-output';
+import { InputDialog } from './components/modals/input-dialog';
 import { LinkPropsDialog } from '../app/components/modals/linkprops';
 
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -35,11 +36,12 @@ import { TreeComponent } from './components/shared/tree-component';
 import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldscomponent';
 import { MappingService } from './services/mappingService';
 
+
 @NgModule({
   declarations: [
     AppComponent, Main, Toolbar, Diagram, TreeComponent, BlockPropsFieldsComponent,
     BlockPropsEndpointDialog, BlockPropsInputDialog, BlockPropsOutputDialog,
-    LinkPropsDialog
+    LinkPropsDialog, InputDialog
   ],
   imports: [
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,

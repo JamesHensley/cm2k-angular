@@ -8,6 +8,8 @@ import { IBlockModel } from 'src/app/interfaces/IBlock/IBlockModel';
 import { DrawingDataService } from 'src/app/services/drawingdataservice';
 import { MappingService } from 'src/app/services/mappingService';
 import { BlockModelField } from 'src/app/models/BlockModelField';
+import { DialogService } from 'src/app/services/dialogservice';
+import { InputData } from '../modals/input-dialog';
 
 interface FlatNode {
   expandable: boolean;
@@ -34,7 +36,9 @@ export class TreeComponent implements OnInit {
   @Input() blockData: IBlockModel;
   @Input() allowEdits: boolean;
 
-  constructor(private drawingService: DrawingDataService, private mapper: MappingService) { }
+  constructor(private drawingService: DrawingDataService,
+    private mapper: MappingService,
+    private dialogservice: DialogService) { }
 
   private _transformer = (node: IBlockModelField, level: number) => {
     return {
@@ -84,10 +88,24 @@ export class TreeComponent implements OnInit {
 
   fieldMenuClick(data): void {
     if(data.btnType == 'addChild') { this.addChild(data.btnData); }
+    if(data.btnType == 'RenameField') { this.renameField(); }
   }
 
   private addChild(nodeType: string): void {
     this.treeItemAdded({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType } as treeItemAction);
+  }
+
+  private renameField(): void {
+    const dialogRef = this.dialogservice.openInputDialog({ message: 'New Field Name', currentVal: this._activeNode.name } as InputData);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        console.log('TreeComponent->renameField: ');
+      }
+    })
+    
+    dialogRef.componentInstance.closing.subscribe(saveData => {
+      console.log('Received SaveData Event: ', saveData)
+    })
   }
 
   treeItemAdded(data: treeItemAction): void {
