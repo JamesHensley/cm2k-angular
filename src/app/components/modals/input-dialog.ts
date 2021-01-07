@@ -13,12 +13,11 @@ export interface InputData {
 })
 export class InputDialog {
     @ViewChild("inpVal", { static: true }) private inputValNode: ElementRef;
-    
+    @Output() saveVal = new EventEmitter();
+
     constructor(@Inject(MAT_DIALOG_DATA) public data: InputData) {}
-    @Output() closing = new EventEmitter();
 
     save(): void {
-        //console.log('InputDialog Save: ', this.inputValNode.nativeElement.value);
-        this.closing.emit(this.inputValNode.nativeElement.value);
+        this.saveVal.emit(this.inputValNode.nativeElement.value);
     }
 }

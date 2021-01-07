@@ -97,15 +97,9 @@ export class TreeComponent implements OnInit {
 
   private renameField(): void {
     const dialogRef = this.dialogservice.openInputDialog({ message: 'New Field Name', currentVal: this._activeNode.name } as InputData);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        console.log('TreeComponent->renameField: ');
-      }
-    })
-    
-    dialogRef.componentInstance.closing.subscribe(saveData => {
+    dialogRef.componentInstance.saveVal.subscribe(saveData => {
       console.log('Received SaveData Event: ', saveData)
-    })
+    });
   }
 
   treeItemAdded(data: treeItemAction): void {
