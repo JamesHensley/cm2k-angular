@@ -40,4 +40,12 @@ export class AppConfigService {
             .filter((f,i,e) => e.indexOf(f) == i)
             .sort();
     }
+
+    get DiagramLayouts(): Array<any> {
+        return [
+            {value: 'dagre', viewValue: 'dagre'},
+            {value: 'colaForceDirected', viewValue: 'colaForceDirected'},
+            {value: 'dagreNodesOnly', viewValue: 'dagreNodesOnly'}
+        ]
+    }
 }

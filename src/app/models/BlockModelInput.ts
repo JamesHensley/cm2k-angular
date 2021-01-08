@@ -17,11 +17,15 @@ export class BlockModelInput implements IBlockModel {
     get blockTypeFriendlyName(): string { return 'BlockModelInput'; };
     serviceType: BlockTypes.INPUTBLOCK;
     label: string;
+    blockName: string;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
     modelFields: BlockModelField;
     
-    constructor() {
+    constructor(blockName: string) {
+        this.blockName = blockName;
+        this.label = blockName;
+
         this.edgeOutput = { name: 'OutputEdge', direction: 'out', connections: [] } as IBlockModelEdge;
     }
 

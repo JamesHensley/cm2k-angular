@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{blockData.label}}</h2>
 <mat-dialog-content class="mat-typography">
-  {{ blockData.blockTypeFriendlyName }}
+  {{ blockData.blockTypeFriendlyName }} <button (click)="renameBlock()">rename</button>
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Inputs">
       <mat-list role="list">
@@ -26,7 +26,6 @@
         <mat-tab label="Model Fields">
           <mat-grid-list cols="2" rowHeight="500px">
             <mat-grid-tile>
-              {{blockData.label}}
               <mat-list role="list">
                 <!--
                 <mat-list-item *ngFor="let field of blockData.modelFields">
@@ -36,9 +35,7 @@
               </mat-list>
             </mat-grid-tile>
             <mat-grid-tile class='alignTopLeft'>
-                <tree-component
-                  [blockData] = 'blockData'
-                  [allowEdits] = 'allowEdits'>
+                <tree-component [blockData] = 'blockData'>
               </tree-component>
             </mat-grid-tile>
           </mat-grid-list>

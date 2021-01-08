@@ -12,7 +12,7 @@ import {
 
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
-import { DrawingDataService } from "src/app/services/drawingdataservice";
+import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
 import { IDrawing } from "src/app/interfaces/IDrawing";
 
 @Component({
@@ -24,32 +24,31 @@ import { IDrawing } from "src/app/interfaces/IDrawing";
 export class Diagram implements OnInit, OnDestroy {
     @ViewChild("diagramNode", { static: true }) private diagramNode: ElementRef;
 
-    @Input()
-    set appMode(val: string) {
-        this._appMode = val;
-        this.drawingEditable = val == "Edit";
-    }
-
     @Input() drawingNodes: Array<INode> = [];
     @Input() drawingLinks: Array<ILink> = [];
     @Input() drawingEditable: boolean = false;
-    @Input() drawingLayout: string = "";
 
     @Output() nodeClicked = new EventEmitter();
     @Output() linkClicked = new EventEmitter();
 
-    constructor( private drawingService: DrawingDataService ) {}
+    constructor( private drawingService: DrawingDataService ) {
+        this.drawingLayout = this.drawingService.drawingLayout;
+        this.appMode = this.drawingService.appMode;
+        this.editable = this.drawingService.editable;
+    }
 
-    get appMode() { return this._appMode; }
+    appMode: string;
+    editable: boolean;
+    drawingLayout: string;
     isOpen: boolean = false;
 
-    private _appMode: string = '';
-
     ngOnInit() {
-        this.drawingService.drawingUpdated.subscribe(data => {
-            console.log('Drawing Data Updated Event: ', data.newDiagramData);
-            this.drawingNodes = data.newDiagramData.nodes;
-            this.drawingLinks = data.newDiagramData.links;
+        this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+            this.drawingNodes = newData.newDiagramData.nodes;
+            this.drawingLinks = newData.newDiagramData.links;
+            this.appMode = newData.appMode;
+            this.editable = newData.editable;
+            this.drawingLayout = newData.drawingLayout;
         })
     }
 

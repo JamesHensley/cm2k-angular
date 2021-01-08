@@ -13,6 +13,7 @@ export interface IBlockModel {
     serviceType: BlockTypes;
     id: string;
     guid: string;
+    blockName: string;
     label: string;
     edgeInput?: IBlockModelEdge;
     edgeOutput?: IBlockModelEdge;

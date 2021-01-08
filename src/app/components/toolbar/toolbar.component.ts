@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import { AppConfigService } from "src/app/services/appConfigService";
 import { DialogService } from "src/app/services/dialogservice";
-import { DrawingDataService } from "src/app/services/drawingdataservice";
+import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
 import { InputData } from "../modals/input-dialog";
 
 export interface ToolBarBtnData {
@@ -30,21 +30,24 @@ export class Toolbar implements OnInit, OnDestroy {
     @Output() btnClicked = new EventEmitter();
     @Output() dropdownChanged = new EventEmitter();
 
-    @Input() appMode: string ='View';
     @Input() selectedLayout: any = {value: 'dagre', viewValue: 'dagre'};
 
     constructor(
         public drawingService: DrawingDataService, public appConfigService: AppConfigService,
         private dialogservice: DialogService
-    ) {}
+    ) {
+        this.appMode = this.drawingService.appMode;
+        this.layouts = this.appConfigService.DiagramLayouts;
+    }
 
-    layouts: any[] = [
-        {value: 'dagre', viewValue: 'dagre'},
-        {value: 'colaForceDirected', viewValue: 'colaForceDirected'},
-        {value: 'dagreNodesOnly', viewValue: 'dagreNodesOnly'}
-    ];
+    layouts: Array<any>;
+    appMode: string;
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+            this.appMode = newData.appMode;
+        });
+    }
 
     ngOnDestroy() { }
 
@@ -54,9 +57,9 @@ export class Toolbar implements OnInit, OnDestroy {
                 //this.diagram.exportDrawing();
                 break;
             case 'SetMode':
-                this.appMode = (this.appMode == "Edit") ? "View" : "Edit";
+                //this.appMode = (this.appMode == "Edit") ? "View" : "Edit";
                 //this.drawingEditable = (this.appMode == "Edit");
-                this.drawingService.drawingData.editable = false;
+                this.drawingService.editable = !this.drawingService.editable;
                 break;
             case 'AddNode':
                 const dialogRef = this.dialogservice.openInputDialog({
@@ -74,7 +77,6 @@ export class Toolbar implements OnInit, OnDestroy {
     }
 
     toolbarDropdownChanged(e: string): void {
-        console.log('Toolbar->toolbarDropdownChanged:', e, this.selectedLayout);
-        this.dropdownChanged.emit(this.selectedLayout);
+        this.drawingService.drawingLayout = this.selectedLayout;
     }
 }

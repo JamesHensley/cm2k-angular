@@ -3,9 +3,7 @@
         <div>
             <toolbar-component
                 (dropdownChanged) = "handleDropDown($event)"
-                [appMode]='appMode'
-                [selectedLayout]='drawingLayout'
-            >
+                [selectedLayout]='drawingLayout'>
             </toolbar-component>
         </div>
 
@@ -13,11 +11,8 @@
             <diagram-component
                 [drawingLinks] = 'drawingLinks'
                 [drawingNodes] = 'drawingNodes'
-                [appMode]='appMode'
-                [drawingLayout]='drawingLayout'
                 (nodeClicked)="openBlockProps($event)"
-                (linkClicked)="openLinkProps($event)"
-            >
+                (linkClicked)="openLinkProps($event)">
             </diagram-component>
         </div>
     </div>

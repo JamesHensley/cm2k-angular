@@ -29,7 +29,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 
 import { DialogService } from './services/dialogservice';
-import { BlockDialogService } from './services/blockdialogservice';
+//import { BlockDialogService } from './services/blockdialogservice';
 import { DrawingDataService } from './services/drawingdataservice';
 import { AppConfigService } from './services/appConfigService';
 import { TreeComponent } from './components/shared/tree-component';
@@ -51,7 +51,7 @@ import { MappingService } from './services/mappingService';
   ],
   providers: [
     DialogService,
-    BlockDialogService,
+    /*BlockDialogService,*/
     DrawingDataService,
     AppConfigService,
     MappingService

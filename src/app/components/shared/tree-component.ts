@@ -2,15 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-//import { ITreeNodeBlock } from 'src/app/interfaces/ITreeNodeBlock';
 import { IBlockModelField } from 'src/app/interfaces/IBlock/IBlockModelField';
 import { IBlockModel } from 'src/app/interfaces/IBlock/IBlockModel';
-import { DrawingDataService } from 'src/app/services/drawingdataservice';
+import { DrawingDataService, DrawingUpdatedData } from 'src/app/services/drawingdataservice';
 import { MappingService } from 'src/app/services/mappingService';
 import { BlockModelField } from 'src/app/models/BlockModelField';
 import { DialogService } from 'src/app/services/dialogservice';
 import { InputData } from '../modals/input-dialog';
-import { Guid } from 'typescript-guid';
+
 
 interface FlatNode {
   expandable: boolean;
@@ -35,11 +34,12 @@ export interface treeItemAction {
 
 export class TreeComponent implements OnInit {
   @Input() blockData: IBlockModel;
-  @Input() allowEdits: boolean;
 
   constructor(private drawingService: DrawingDataService,
     private mapper: MappingService,
     private dialogservice: DialogService) { }
+
+    allowEdits: boolean;
 
   private _transformer = (node: IBlockModelField, level: number) => {
     return {
@@ -62,7 +62,8 @@ export class TreeComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource.data = [this.blockData.modelFields];
 
-    this.drawingService.drawingUpdated.subscribe(newData => {
+    this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+      this.allowEdits = newData.editable;
       this.blockData = newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t));;
       this.dataSource.data = [this.blockData.modelFields];
       this.treeControl.expandAll();
@@ -91,7 +92,6 @@ export class TreeComponent implements OnInit {
   }
 
   private addChild(): void {
-    //this.treeItemAdded({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType } as treeItemAction);
     const dialogRef = this.dialogservice.openInputDialog({
       dlgTitle: 'Adding child to [' + this._activeNode.name + ']',
       message: '',
