@@ -27,9 +27,6 @@ export interface ToolBarBtnData {
 export class Toolbar implements OnInit, OnDestroy {
     @ViewChild("toolbarNode", { static: true }) private toolbarNode: ElementRef;
 
-    @Output() btnClicked = new EventEmitter();
-    @Output() dropdownChanged = new EventEmitter();
-
     @Input() selectedLayout: any = {value: 'dagre', viewValue: 'dagre'};
 
     constructor(
@@ -57,8 +54,6 @@ export class Toolbar implements OnInit, OnDestroy {
                 //this.diagram.exportDrawing();
                 break;
             case 'SetMode':
-                //this.appMode = (this.appMode == "Edit") ? "View" : "Edit";
-                //this.drawingEditable = (this.appMode == "Edit");
                 this.drawingService.editable = !this.drawingService.editable;
                 break;
             case 'AddNode':

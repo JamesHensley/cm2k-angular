@@ -26,7 +26,6 @@ export class Diagram implements OnInit, OnDestroy {
 
     @Input() drawingNodes: Array<INode> = [];
     @Input() drawingLinks: Array<ILink> = [];
-    @Input() drawingEditable: boolean = false;
 
     @Output() nodeClicked = new EventEmitter();
     @Output() linkClicked = new EventEmitter();
@@ -34,11 +33,11 @@ export class Diagram implements OnInit, OnDestroy {
     constructor( private drawingService: DrawingDataService ) {
         this.drawingLayout = this.drawingService.drawingLayout;
         this.appMode = this.drawingService.appMode;
-        this.editable = this.drawingService.editable;
+        this.drawingEditable = this.drawingService.editable;
     }
 
     appMode: string;
-    editable: boolean;
+    drawingEditable: boolean;
     drawingLayout: string;
     isOpen: boolean = false;
 
@@ -47,7 +46,7 @@ export class Diagram implements OnInit, OnDestroy {
             this.drawingNodes = newData.newDiagramData.nodes;
             this.drawingLinks = newData.newDiagramData.links;
             this.appMode = newData.appMode;
-            this.editable = newData.editable;
+            this.drawingEditable = newData.editable;
             this.drawingLayout = newData.drawingLayout;
         })
     }

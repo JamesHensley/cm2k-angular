@@ -2,8 +2,8 @@
   <h2 mat-dialog-title>{{data.dlgTitle}}</h2>
   <mat-dialog-content class="mat-typography">
       <h3> {{data.message}} </h3>
-      <div>
-        <mat-form-field appearance="legacy" *ngIf='data.dropDownVal'>
+      <div *ngIf='data.dropDownVal'>
+        <mat-form-field appearance="legacy">
             <mat-label *ngIf='data.dropDownLabel'>{{data.dropDownLabel}}</mat-label>
             <mat-select
                 [(value)]="data.dropDownVal"
@@ -15,8 +15,8 @@
             </mat-select>
         </mat-form-field>
       </div>
-      <div>
-        <mat-form-field appearance="legacy" *ngIf='data.inputVal'>
+      <div *ngIf='data.inputVal'>
+        <mat-form-field appearance="legacy">
           <mat-label *ngIf='data.inputLabel'>{{data.inputLabel}}</mat-label>
           <input #inpVal matInput placeholder="{{data.inputVal}}" value="{{data.inputVal}}" (change)='setVal("inputVal", $event)'>
         </mat-form-field>

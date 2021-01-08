@@ -107,6 +107,7 @@ export class TreeComponent implements OnInit {
       dropDownLabel: 'New Field Type',
       dropDownVal: 'object'
     } as InputData);
+
     dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
       let newNode = new BlockModelField(saveData.inputVal, saveData.dropDownVal);
       this.drawingService.addFieldToNode(this.blockData.id, this._activePath, newNode);
@@ -121,6 +122,7 @@ export class TreeComponent implements OnInit {
       inputVal: this._activeNode.name,
       inputLabel:'Field Name',
     } as InputData);
+
     dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
       this.drawingService.renameField(this.blockData.id, this._activePath, saveData.inputVal);
       dialogRef.componentInstance.saveVal.unsubscribe();
@@ -128,6 +130,16 @@ export class TreeComponent implements OnInit {
   }
 
   private removeBranch(): void {
-    this.drawingService.removeFieldFromNode(this.blockData.id, this._activePath);
+    let subLen = this._activeNode.children.length;
+
+    const dialogRef = this.dialogservice.openInputDialog({
+      dlgTitle: 'WARNING',
+      message: 'This will remove "' + this._activeNode.name + '"' + (subLen > 0 ? ' and all children. ' : ' ') + 'Do you want to continue?'
+    } as InputData);
+
+    dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
+      this.drawingService.removeFieldFromNode(this.blockData.id, this._activePath);
+      dialogRef.componentInstance.saveVal.unsubscribe();
+    });
   }
 }

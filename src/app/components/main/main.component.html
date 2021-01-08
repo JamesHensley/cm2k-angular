@@ -1,8 +1,8 @@
 <div class='container-fluid'>
     <div #mainViewNode>
         <div>
+            <!-- (dropdownChanged) = "handleDropDown($event)" -->
             <toolbar-component
-                (dropdownChanged) = "handleDropDown($event)"
                 [selectedLayout]='drawingLayout'>
             </toolbar-component>
         </div>

@@ -1,6 +1,5 @@
 import { ArrayType } from '@angular/compiler';
 import { EventEmitter, Injectable } from '@angular/core';
-//import { BlockTypes } from '../enums';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {

@@ -62,21 +62,13 @@ export class Main implements OnInit, OnDestroy {
 
     }
 
-    handleDropDown(data: any) {
-        this.drawingLayout = data;
-    }
-
-
-
+    //Called when a user clicks on a node on the drawing
     openBlockProps(elem: INode): void {
         const block = this.drawingService.block(elem.id)
         const dialogRef = this.dialogService.openNodeDialog(block);
-
-        dialogRef.afterClosed().subscribe(result => {
-            //console.log(`Dialog result: ${result}`);
-        });
     }
 
+    //Called when a user clicks on a node on the drawing
     openLinkProps(elem: ILink): void {
         /*
         const dialogRef = this.linkDialog.open(LinkPropsDialog, {

@@ -27,7 +27,7 @@ export class BlockPropsFieldsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let root = this.blockData.modelFields; //this.mapper.getFieldsFromBlockType(this.blockData);
+    let root = this.blockData.modelFields;
     this.treeData = [root];
     console.log('BlockPropsFieldsComponent->ngOnInit: ', this.treeData);
   }
