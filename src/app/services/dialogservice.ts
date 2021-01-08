@@ -10,6 +10,8 @@ import { InputDialog, InputData } from '../components/modals/input-dialog';
 import { BlockModelEndpoint } from '../models/BlockModelEndpoint';
 import { BlockModelInput } from '../models/BlockModelInput';
 import { BlockModelOutput } from '../models/BlockModelOutput';
+import { AppConfigService } from './appConfigService';
+import { BlockTypes } from '../enums';
 
 @Injectable({
     providedIn: 'root',
@@ -18,17 +20,20 @@ import { BlockModelOutput } from '../models/BlockModelOutput';
 export class DialogService {
     constructor(
         public nodeDialog: MatDialog,
-        public inputDialog: MatDialog
+        public inputDialog: MatDialog,
+        private appConfigService: AppConfigService
     ) {}
 
     openNodeDialog(blockModel: IBlockModel): MatDialogRef<any> {
-        switch(blockModel.blockType) {
-            case 'BlockModelEndpoint':
+        switch(blockModel.blockServiceType) {
+            case BlockTypes.PROCESSORBLOCK:
                 return this.nodeDialog.open(BlockPropsEndpointDialog, {data: blockModel as BlockModelEndpoint });
-            case 'BlockModelInput':
+            case BlockTypes.INPUTBLOCK:
                 return this.nodeDialog.open(BlockPropsInputDialog, {data: blockModel as BlockModelInput });
-            case 'BlockModelOutput':
+            case BlockTypes.OUTPUTBLOCK:
                 return this.nodeDialog.open(BlockPropsOutputDialog, {data: blockModel as BlockModelOutput });
+            default:
+                throw new Error ("DialogService->openNodeDialog: Could not identify block type");
         }
     }
     

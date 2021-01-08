@@ -1,14 +1,17 @@
 [
     {
-        "serviceType": "csvInput",
-        "id": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42"
+        "serviceType": "inputBlock",
+        "serviceId": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42",
+        "serviceDisplayName": "Input Blocks"
     },
     {
-        "serviceType": "csvOutput",
-        "id": "696a219e-58a8-1585-dd24-53e90670cfc7"
+        "serviceType": "outputBlock",
+        "serviceId": "696a219e-58a8-1585-dd24-53e90670cfc7",
+        "serviceDisplayName": "Output Blocks"
     },
     {
-        "serviceType": "htmlEndpointBlock",
-        "id": "dc279a42-2b88-62eb-baa9-51f3d42885e3"
+        "serviceType": "processorBlock",
+        "serviceId": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
+        "serviceDisplayName": "Processor Blocks"
     }
 ]

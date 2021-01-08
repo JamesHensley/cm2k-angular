@@ -8,9 +8,10 @@ import { BlockTypes } from '../../enums';
 import { BlockModelField } from 'src/app/models/BlockModelField';
 
 export interface IBlockModel {
-    blockType: string;
-    blockTypeFriendlyName: string;
-    serviceType: BlockTypes;
+    blockServiceId: string;
+    blockServiceType: BlockTypes;
+    blockServiceSubType: string;
+
     id: string;
     guid: string;
     blockName: string;

@@ -2,12 +2,21 @@ import { ArrayType } from '@angular/compiler';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Guid } from 'typescript-guid';
 import { BlockTypes } from '../enums';
+import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
+
 import { IBlockServiceModel } from '../models/configurationModels/blockServiceModel';
 
 export interface IAppConfig {
-    blockDefs: Array<any>,
+    blockDefs: Array<IBlockDefinitions>,
     serviceTypes: Array<IBlockServiceModel>,
     fieldTypes: Array<any>
+}
+
+export interface IBlockDefinitions {
+    blockServiceId: string;
+    blockServiceType: string;
+    blockServiceDisplayName: string;
+    blocks: Array<any>;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +25,6 @@ export class AppConfigService {
 
     private _blockDefs: Array<any>;
     private _blockServiceTypes: Array<IBlockServiceModel>;
-    private _fieldTypes: Array<any>;
 
     constructor() {
         Promise.all([
@@ -29,23 +37,27 @@ export class AppConfigService {
         ]).then(data => {
             this._blockDefs = data[0];
             this._blockServiceTypes = data[1];
-            this._fieldTypes = data[2];
 
-            this.configUpdated.emit({
-                blockDefs: data[0],
-                serviceTypes: data[1],
-                fieldTypes: data[2]
-            });
+            this.emitConfigUpdate();
         });
     }
 
-    getBlockTypeId(blockType: string): IBlockServiceModel {
+    getBlockServiceIdFromServiceType(serviceType: string): string {
         return this._blockServiceTypes
-            .reduce((t: IBlockServiceModel, n: IBlockServiceModel) => { return n.serviceType == blockType ? n : t });
+            .reduce((t: string, n: IBlockServiceModel) => {
+                return (n.serviceType == serviceType ? n.serviceId : t)
+            }, null);
     }
 
-    get blockDefinitions(): Array<any> {
-        return this._blockDefs;
+    getBlockServiceTypeFromServiceId(serviceId: string): string {
+        return this._blockServiceTypes
+            .reduce((t: string, n: IBlockServiceModel) => {
+                return (n.serviceId == serviceId ? n.serviceType : t)
+            }, null);
+    }
+
+    getBlockTemplateByGuid(guid: string): IBlockModel {
+        return this._blockDefs.reduce((t, n) => { return n.guid == guid ? n : t });
     }
 
     get BlockServiceTypes(): Array<string> {
@@ -61,5 +73,20 @@ export class AppConfigService {
             {value: 'colaForceDirected', viewValue: 'colaForceDirected'},
             {value: 'dagreNodesOnly', viewValue: 'dagreNodesOnly'}
         ]
+    }
+
+    private emitConfigUpdate(): void {
+        let blockDefs = (this._blockServiceTypes || []).map(d => { return {
+            blockServiceId: d.serviceId,
+            blockServiceType: d.serviceType,
+            blockServiceDisplayName: d.serviceDisplayName,
+            blocks: this._blockDefs.filter(f => f.blockServiceId == d.serviceId)
+        }});
+
+        this.configUpdated.emit({
+            blockDefs: blockDefs,
+            serviceTypes: this._blockServiceTypes,
+            fieldTypes: null
+        });
     }
 }

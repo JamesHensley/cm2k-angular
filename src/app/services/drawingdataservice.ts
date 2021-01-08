@@ -12,6 +12,7 @@ import { BlockModelOutput } from '../models/BlockModelOutput';
 import { BlockTypes } from '../enums';
 import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { AppConfigService } from './appConfigService';
+import { BlockModelField } from '../models/BlockModelField';
 
 export interface DrawingUpdatedData {
     newDiagramData: IDrawing;
@@ -24,7 +25,7 @@ export interface DrawingUpdatedData {
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
     constructor(
-        private configService: AppConfigService
+        private appConfigService: AppConfigService
     ) {
         this.drawingLayout = 'dagre';
         this.editable = false;
@@ -86,24 +87,46 @@ export class DrawingDataService {
         return this._blocks.reduce((t,n) => { return (n.id == blockId) ? n : t });
     }
 
+    private cloneBlockByTemplate(serviceId: string, blockGuid: string, blockName: string): IBlockModel {
+        let newBlock: IBlockModel;
+        const block: IBlockModel = this.appConfigService.getBlockTemplateByGuid(blockGuid);
 
+        let blockServiceType = this.appConfigService.getBlockServiceTypeFromServiceId(serviceId);
+        if(blockServiceType == BlockTypes.INPUTBLOCK) { newBlock = new BlockModelInput(blockName, serviceId); }
+        if(blockServiceType == BlockTypes.PROCESSORBLOCK) { newBlock = new BlockModelEndpoint(blockName, serviceId); }
+        if(blockServiceType == BlockTypes.OUTPUTBLOCK) { newBlock = new BlockModelOutput(blockName, serviceId); }
+
+        if(newBlock) {
+            newBlock.guid = Guid.create().toString();
+            newBlock.modelFields.children = JSON.parse(JSON.stringify(block.modelFields.children));
+            return newBlock;
+        }
+        return null;
+    }
+
+    addBlockByTemplate(serviceId: string, blockGuid: string, blockName: string) {
+        let block: IBlockModel = this.cloneBlockByTemplate(serviceId, blockGuid, blockName);
+        console.log(block);
+        this._blocks.push(block);
+        this.emitUpdate(this.drawingData, this._blocks);
+    }
 
     addNewBlock(blockType: string, blockName: string): void {
         let block: IBlockModel;
-        let blockTypeId = this.configService.getBlockTypeId(blockType).id || null;
+        let blockServiceId = this.appConfigService.getBlockServiceIdFromServiceType(blockType);
 
-        if(blockType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(blockName, blockTypeId); }
-        if(blockType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(blockName, blockTypeId); }
-        if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(blockName, blockTypeId); }
+        if(blockType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(blockName, blockServiceId); }
+        if(blockType == BlockTypes.PROCESSORBLOCK) { block = new BlockModelEndpoint(blockName, blockServiceId); }
+        if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(blockName, blockServiceId); }
 
-        if(block && blockTypeId) {
+        if(block && blockServiceId) {
             block.guid = Guid.create().toString();
             this._blocks.push(block);
     
             this.emitUpdate(this.drawingData, this._blocks);
         }
         else {
-            console.log(blockName, blockType, block, blockTypeId);
+            console.log(blockName, blockType, block, blockServiceId);
             throw new Error("DrawingDataService->addNewBlock: Could not locate a suitable block type or create a new block");
         }
     }

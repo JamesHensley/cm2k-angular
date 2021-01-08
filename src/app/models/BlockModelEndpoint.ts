@@ -15,20 +15,21 @@ import { BlockModelField } from './BlockModelField';
 export class BlockModelEndpoint implements IBlockModel {
     guid: string;
     get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
-    blockType: string;
+
+    blockServiceId: string;
+    get blockServiceType(): BlockTypes { return BlockTypes.PROCESSORBLOCK; }
+    blockServiceSubType: string;
     get blockTypeFriendlyName(): string { return 'BlockModelEndpoint'; };
-    serviceType: BlockTypes.ENDPOINTBLOCK;
+
     label: string;
+    blockName: string;
     edgeInput: IBlockModelEdge;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
-    blockName: string;
-    url: string;
-    timeOut: number;
     modelFields: BlockModelField;
 
-    constructor(blockName: string, blockType: string) {
-        this.blockType = blockType;
+    constructor(blockName: string, blockServiceId: string) {
+        this.blockServiceId = blockServiceId;
         this.blockName = blockName;
         this.label = blockName;
 
@@ -36,8 +37,6 @@ export class BlockModelEndpoint implements IBlockModel {
         this.edgeOutput = new BlockModelEdge('OutputEdge', 'out', null);
 
         this.modelFields = new BlockModelField(blockName, 'object', [Guid.create().toString()], []);
-
-
     }
 
     GetNodeObj(): INode {

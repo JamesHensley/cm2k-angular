@@ -16,14 +16,42 @@
     </mat-form-field>
 
     <mat-menu #addNode="matMenu">
+        <ng-container *ngFor="let blockCat of jimmy">
+            <button mat-menu-item [matMenuTriggerFor]="sub_menu">
+                {{ blockCat.blockServiceDisplayName }}
+            </button>
+            <mat-menu #sub_menu="matMenu">
+                <button *ngFor="let subItem of blockCat.blocks" mat-menu-item
+                    [attr.aria-guid] = subItem.guid
+                    (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: $event })"
+                >
+                    {{subItem.blockName}}
+                </button>
+            </mat-menu>
+        </ng-container>
+    </mat-menu>
+    <!--
+        <button mat-menu-item [matMenuTriggerFor]="input">Add Input Block</button>
+        <button mat-menu-item [matMenuTriggerFor]="processor">Add Processor Block</button>
+        <button mat-menu-item [matMenuTriggerFor]="output">Add Output Block</button>
+    </mat-menu>
+
+    <mat-menu #input="matMenu">
         <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'inputBlock' })">
             Add Input Node
         </button>
+    </mat-menu>
+
+    <mat-menu #processor="matMenu">
         <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'endpointBlock' })">
             Add HTML Endpoint Node
         </button>
+    </mat-menu>
+
+    <mat-menu #output="matMenu">
         <button mat-menu-item (click)="toolbarBtnClick({ btnType: 'AddNode', btnData: 'outputBlock' })">
             Add Output Node
         </button>
     </mat-menu>
+    -->
 </div>

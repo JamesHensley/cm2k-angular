@@ -49,7 +49,6 @@ export class Main implements OnInit, OnDestroy {
     ngOnInit() {
         this.appConfigService.configUpdated.subscribe(newConfig => {
             console.log('Main->Configuration Updated: ', newConfig);
-            console.log('Main BlockServiceTypes: ', this.appConfigService.BlockServiceTypes);
         });
         
         this.drawingNodes = this.drawingService.drawingData.nodes;
@@ -64,7 +63,7 @@ export class Main implements OnInit, OnDestroy {
 
     //Called when a user clicks on a node on the drawing
     openBlockProps(elem: INode): void {
-        const block = this.drawingService.block(elem.id)
+        const block = this.drawingService.block(elem.id);
         const dialogRef = this.dialogService.openNodeDialog(block);
     }
 

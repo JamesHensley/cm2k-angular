@@ -9,14 +9,15 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-import { AppConfigService } from "src/app/services/appConfigService";
+import { AppConfigService, IAppConfig, IBlockDefinitions } from "src/app/services/appConfigService";
 import { DialogService } from "src/app/services/dialogservice";
 import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
+import { Guid } from "typescript-guid";
 import { InputData } from "../modals/input-dialog";
 
 export interface ToolBarBtnData {
     btnType: string;
-    btnData: string;
+    btnData: any;
 }
 
 @Component({
@@ -28,6 +29,8 @@ export class Toolbar implements OnInit, OnDestroy {
     @ViewChild("toolbarNode", { static: true }) private toolbarNode: ElementRef;
 
     @Input() selectedLayout: any = {value: 'dagre', viewValue: 'dagre'};
+
+    jimmy: Array<IBlockDefinitions>;
 
     constructor(
         public drawingService: DrawingDataService, public appConfigService: AppConfigService,
@@ -41,6 +44,11 @@ export class Toolbar implements OnInit, OnDestroy {
     appMode: string;
 
     ngOnInit() {
+        this.appConfigService.configUpdated.subscribe((newConfig: IAppConfig) => {
+            this.jimmy = newConfig.blockDefs;
+            console.log('Toolbar->NewConfig: ', this.jimmy);
+        });
+        
         this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
             this.appMode = newData.appMode;
         });
@@ -57,14 +65,23 @@ export class Toolbar implements OnInit, OnDestroy {
                 this.drawingService.editable = !this.drawingService.editable;
                 break;
             case 'AddNode':
+                let btnGuid = data.btnData.srcElement.getAttribute('aria-guid');
+//"serviceType": this.appConfigService.getBlockServiceTypeFromServiceId(template.blockServiceId),
+                let tempData = {
+                    "serviceId": this.appConfigService.getBlockTemplateByGuid(btnGuid).blockServiceId,
+                    "guid": btnGuid
+                }
+
                 const dialogRef = this.dialogservice.openInputDialog({
                     dlgTitle: 'Adding New Block',
                     message: '',
                     inputVal: 'New Block',
                     inputLabel:'New Block Name',
                   } as InputData);
+
                   dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
-                    this.drawingService.addNewBlock(data.btnData, saveData.inputVal);
+                    this.drawingService.addBlockByTemplate(tempData.serviceId, tempData.guid, saveData.inputVal);
+                    //this.drawingService.addNewBlock(x1, saveData.inputVal);
                     dialogRef.componentInstance.saveVal.unsubscribe();
                   });
                 break;

@@ -1,7 +1,7 @@
 [
     {
         "blockName": "csvInput",
-		"blockType": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42",
+		"blockServiceId": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42",
         "label": "csvInput",
         "edgeOutput": {
             "name": "OutputEdge",
@@ -52,7 +52,7 @@
     },
     {
         "blockName": "csvOutput",
-		"blockType": "696a219e-58a8-1585-dd24-53e90670cfc7",
+		"blockServiceId": "696a219e-58a8-1585-dd24-53e90670cfc7",
         "label": "csvOutput",
         "edgeInput": {
             "name": "InputEdge",
@@ -103,7 +103,7 @@
     },
     {
         "blockName": "Q",
-		"blockType": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
+		"blockServiceId": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
         "label": "Q",
         "edgeInput": {
             "name": "InputEdge",

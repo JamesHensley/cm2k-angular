@@ -1,4 +1,5 @@
 export interface IBlockServiceModel {
     serviceType: string;
-    id: string;
+    serviceId: string;
+    serviceDisplayName: string;
 }

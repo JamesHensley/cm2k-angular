@@ -13,17 +13,20 @@ import { BlockModelEdge } from './BlockModelEdge';
 export class BlockModelOutput implements IBlockModel {
     guid: string;
     get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
-    blockType: string;
+
+    blockServiceId: string;
+    get blockServiceType(): BlockTypes { return BlockTypes.OUTPUTBLOCK; }
+    blockServiceSubType: string;
     get blockTypeFriendlyName(): string { return 'BlockModelOutput'; };
-    serviceType: BlockTypes.OUTPUTBLOCK;
+
     label: string;
     blockName: string;
     edgeInput: IBlockModelEdge;
     processor: IBlockProcessor;
     modelFields: BlockModelField;
     
-    constructor(blockName: string, blockType: string) {
-        this.blockType = blockType;
+    constructor(blockName: string, blockServiceId: string) {
+        this.blockServiceId = blockServiceId;
         this.blockName = blockName;
         this.label = blockName;
 
