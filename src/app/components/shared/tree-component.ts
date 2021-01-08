@@ -110,6 +110,7 @@ export class TreeComponent implements OnInit {
     dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
       let newNode = new BlockModelField(saveData.inputVal, saveData.dropDownVal);
       this.drawingService.addFieldToNode(this.blockData.id, this._activePath, newNode);
+      dialogRef.componentInstance.saveVal.unsubscribe();
     });
   }
 
@@ -122,6 +123,7 @@ export class TreeComponent implements OnInit {
     } as InputData);
     dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
       this.drawingService.renameField(this.blockData.id, this._activePath, saveData.inputVal);
+      dialogRef.componentInstance.saveVal.unsubscribe();
     });
   }
 

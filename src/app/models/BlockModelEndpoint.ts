@@ -18,11 +18,7 @@ export class BlockModelEndpoint implements IBlockModel {
     get blockType(): string { return 'BlockModelEndpoint'; };
     get blockTypeFriendlyName(): string { return 'BlockModelEndpoint'; };
     serviceType: BlockTypes.ENDPOINTBLOCK;
-    get label(): string { return this.blockName; }
-    set label(val: string) {
-        this.blockName = val;
-        this.modelFields.name = val;
-    }
+    label: string;
     edgeInput: IBlockModelEdge;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
@@ -31,12 +27,14 @@ export class BlockModelEndpoint implements IBlockModel {
     timeOut: number;
     modelFields: BlockModelField;
 
-    constructor() {
+    constructor(blockName: string) {
+        this.blockName = blockName;
+        this.label = blockName;
+
         this.edgeInput = new BlockModelEdge('InputEdge', 'in', null);
         this.edgeOutput = new BlockModelEdge('OutputEdge', 'out', null);
 
-        this.modelFields = new BlockModelField(this.label, 'object', [Guid.create().toString()], []);
-        //console.log('BlockModelEndpoint->constructor: ', this);
+        this.modelFields = new BlockModelField(blockName, 'object', [Guid.create().toString()], []);
     }
 
     GetNodeObj(): INode {

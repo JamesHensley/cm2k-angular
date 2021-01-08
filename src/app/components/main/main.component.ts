@@ -62,21 +62,6 @@ export class Main implements OnInit, OnDestroy {
 
     }
 
-    handleBtnClick(data: any) {
-        switch(data.btnType) {
-            case 'Export':
-                this.diagram.exportDrawing();
-                break;
-            case 'SetMode':
-                this.appMode = (this.appMode == "Edit") ? "View" : "Edit";
-                this.drawingEditable = (this.appMode == "Edit");
-                break;
-            case 'AddNode':
-                this.drawingService.addNode(data.btnData);
-                break;
-        }
-    }
-
     handleDropDown(data: any) {
         this.drawingLayout = data;
     }

@@ -37,7 +37,7 @@ export class DrawingDataService {
         this._blocks.push(iBlock)
 
         for(var i = 1; i < 4; i++) {
-            const block = new BlockModelEndpoint();
+            const block = new BlockModelEndpoint('');
             
             block.guid = Guid.create().toString();
             this._blocks.push(block);
@@ -67,16 +67,16 @@ export class DrawingDataService {
 
 
 
-    addNode(nodeType: string): void {
+    addNewBlock(blockType: string, blockName: string): void {
         let block: IBlockModel;
-        if(nodeType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(); }
-        if(nodeType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(); }
-        if(nodeType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(); }
+        if(blockType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(); }
+        if(blockType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(blockName); }
+        if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(); }
         if(block) {
             block.guid = Guid.create().toString();
             this._blocks.push(block);
     
-            this.drawingUpdated.emit(this.drawingData);
+            this.drawingUpdated.emit({ newDiagramData: this.drawingData, newBlockData: this._blocks });
         }
     }
 
