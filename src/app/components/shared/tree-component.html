@@ -33,14 +33,7 @@
 </mat-tree>
   
 <mat-menu #fieldMenu="matMenu">
-  <button mat-menu-item [matMenuTriggerFor]="childAddMenu" [disabled]='!canAddChildren'>Add Child</button>
+  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'AddChild', btnData: '' })" [disabled]='!canAddChildren'>Add Child</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RenameField', btnData: '' })" [disabled]='!canModify'>Rename Field</button>
   <button mat-menu-item (click)="fieldMenuClick({ btnType: 'RemoveBranch', btnData: '' })" [disabled]='!canModify'>Remove Field</button>
-</mat-menu>
-
-<mat-menu #childAddMenu="matMenu">
-  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'object' })">Add Object</button>
-  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'string' })">Add String</button>
-  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'boolean'  })">Add Boolean</button>
-  <button mat-menu-item (click)="fieldMenuClick({ btnType: 'addChild', btnData: 'array'  })">Add Array</button>
 </mat-menu>

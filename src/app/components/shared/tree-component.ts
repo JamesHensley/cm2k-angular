@@ -10,6 +10,7 @@ import { MappingService } from 'src/app/services/mappingService';
 import { BlockModelField } from 'src/app/models/BlockModelField';
 import { DialogService } from 'src/app/services/dialogservice';
 import { InputData } from '../modals/input-dialog';
+import { Guid } from 'typescript-guid';
 
 interface FlatNode {
   expandable: boolean;
@@ -63,11 +64,8 @@ export class TreeComponent implements OnInit {
 
     this.drawingService.drawingUpdated.subscribe(newData => {
       this.blockData = newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t));;
-      console.log('TreeComponent->Received a drawing UPDATED message (treeControl): ', this.treeControl);
-      //console.log('TreeComponent->Received a drawing UPDATED message (blockData): ', this.blockData);
       this.dataSource.data = [this.blockData.modelFields];
       this.treeControl.expandAll();
-      //this.treeFlattener.getChildren(this._activeNode)
     });
   }
 
@@ -87,31 +85,47 @@ export class TreeComponent implements OnInit {
   }
 
   fieldMenuClick(data): void {
-    if(data.btnType == 'addChild') { this.addChild(data.btnData); }
+    if(data.btnType == 'AddChild') { this.addChild(); }
     if(data.btnType == 'RenameField') { this.renameField(); }
+    if(data.btnType == 'RemoveBranch') { this.removeBranch(); }
   }
 
-  private addChild(nodeType: string): void {
-    this.treeItemAdded({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType } as treeItemAction);
-  }
-
-  private renameField(): void {
-    const dialogRef = this.dialogservice.openInputDialog({ message: 'New Field Name', currentVal: this._activeNode.name } as InputData);
-    dialogRef.componentInstance.saveVal.subscribe(saveData => {
-      console.log('Received SaveData Event: ', saveData)
+  private addChild(): void {
+    //this.treeItemAdded({ nodePath: this._activePath, nodeAction: 'add', actionData: nodeType } as treeItemAction);
+    const dialogRef = this.dialogservice.openInputDialog({
+      dlgTitle: 'Adding child to [' + this._activeNode.name + ']',
+      message: '',
+      inputVal: 'newfield',
+      inputLabel:'New Field Name',
+      dropDownChoices: [
+        { value: 'object', viewValue: 'object' },
+        { value: 'string', viewValue: 'string' },
+        { value: 'number', viewValue: 'number' },
+        { value: 'boolean', viewValue: 'boolean' },
+        { value: 'array', viewValue: 'array' }
+      ],
+      dropDownLabel: 'New Field Type',
+      dropDownVal: 'object'
+    } as InputData);
+    dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
+      let newNode = new BlockModelField(saveData.inputVal, saveData.dropDownVal);
+      this.drawingService.addFieldToNode(this.blockData.id, this._activePath, newNode);
     });
   }
 
-  treeItemAdded(data: treeItemAction): void {
-    console.log('BlockPropsFieldsComponent->treeItemAdded: ', data);
-    let newNode = new BlockModelField('NewField', data.actionData, data.nodePath, []);
-    //this.drawingService.addFieldToNode(this.blockData.id, data.nodePath, { name: 'NewField', type: data.actionData, children: [] } as IBlockModelField);
-    this.drawingService.addFieldToNode(this.blockData.id, data.nodePath, newNode);
+  private renameField(): void {
+    const dialogRef = this.dialogservice.openInputDialog({
+      dlgTitle: 'Renaming field [' + this._activeNode.name + ']',
+      message: '',
+      inputVal: this._activeNode.name,
+      inputLabel:'Field Name',
+    } as InputData);
+    dialogRef.componentInstance.saveVal.subscribe((saveData: InputData) => {
+      this.drawingService.renameField(this.blockData.id, this._activePath, saveData.inputVal);
+    });
   }
 
-  treeItemRemoved(data: treeItemAction): void {
-    console.log('BlockPropsFieldsComponent->treeItemRemoved: ', data);
-    this.drawingService.removeFieldFromNode(this.blockData.id, data.nodePath, null);
+  private removeBranch(): void {
+    this.drawingService.removeFieldFromNode(this.blockData.id, this._activePath);
   }
-
 }

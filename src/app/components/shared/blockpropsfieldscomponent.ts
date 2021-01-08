@@ -24,34 +24,11 @@ export class BlockPropsFieldsComponent implements OnInit {
 
   constructor(private drawingService: DrawingDataService, private mapper: MappingService) {
 
-    /*
-    this.treeData = [
-      {
-        name: 'Fruit',
-        nodeType: '',
-        children: [
-          { name: 'Apple', nodeType: 'string' },
-          { name: 'Banana', nodeType: 'string' },
-          { name: 'Fruit loops', nodeType: 'string' }
-        ]
-      }
-    ];
-    */
   }
 
   ngOnInit(): void {
     let root = this.blockData.modelFields; //this.mapper.getFieldsFromBlockType(this.blockData);
     this.treeData = [root];
     console.log('BlockPropsFieldsComponent->ngOnInit: ', this.treeData);
-  }
-
-  treeItemAdded(data: treeItemAction): void {
-    console.log('BlockPropsFieldsComponent->treeItemAdded: ', data);
-    this.drawingService.addFieldToNode(this.blockData.id, data.nodePath, { name: 'NewField', type: data.actionData, children: [] } as IBlockModelField);
-  }
-
-  treeItemRemoved(data: treeItemAction): void {
-    console.log('BlockPropsFieldsComponent->treeItemRemoved: ', data);
-    this.drawingService.removeFieldFromNode(this.blockData.id, data.nodePath, null);
   }
 }

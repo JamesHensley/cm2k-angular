@@ -8,12 +8,12 @@ export class BlockModelField implements IBlockModelField {
     path: string[];
     children?: IBlockModelField[];
 
-    constructor(name: string, type: string, path: Array<string>, children: Array<IBlockModelField>) {
-        this.id = Guid.create().toString();
+    constructor(name: string, type: string, path?: Array<string>, children?: Array<IBlockModelField>, id?: string) {
+        this.id = id || Guid.create().toString();
         this.name = name;
         this.type = type;
-        this.path = path;
-        this.children = children;
+        this.path = path || new Array<string>();
+        this.children = children || new Array<IBlockModelField>();
     }
 
     GetFieldNode(path: Array<string>): IBlockModelField {

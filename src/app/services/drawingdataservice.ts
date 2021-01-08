@@ -82,18 +82,28 @@ export class DrawingDataService {
 
     addFieldToNode(nodeId: string, path: Array<string>, newField: IBlockModelField): void {
         let thisBlock = this._blocks.reduce((t,n) => { return (n.id == nodeId) ? n : t;});
-
         let parent = this.getTreeItem(thisBlock, path);
         parent.children.push(newField);
-
         newField.path = [].concat.apply(parent.path, [newField.id]);
 
-        console.log('DrawingDataService->addFieldToNode: ', thisBlock);
         this.drawingUpdated.emit({ newDiagramData: this.drawingData, newBlockData: this._blocks });
     }
 
-    removeFieldFromNode(nodeId: string, path: Array<string>, field: IBlockModelField): void {
-        
+    renameField(nodeId: string, path: Array<string>, newName: string): void {
+        let thisBlock = this._blocks.reduce((t,n) => { return (n.id == nodeId) ? n : t;});
+        let field = this.getTreeItem(thisBlock, path);
+        field.name = newName;
+
+        this.drawingUpdated.emit({ newDiagramData: this.drawingData, newBlockData: this._blocks });
+    }
+
+    removeFieldFromNode(nodeId: string, path: Array<string>): void {
+        let thisBlock = this._blocks.reduce((t,n) => { return (n.id == nodeId) ? n : t;});
+        let parentPath = [].concat.apply(path);
+        let removalField = parentPath.pop();
+        let parentNode = this.getTreeItem(thisBlock, parentPath);
+        parentNode.children = parentNode.children.filter(f => f.id != removalField);
+        this.drawingUpdated.emit({ newDiagramData: this.drawingData, newBlockData: this._blocks });
     }
 
     private getTreeItem(block: IBlockModel, path: Array<string>): IBlockModelField {

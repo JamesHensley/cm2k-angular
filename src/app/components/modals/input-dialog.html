@@ -1,13 +1,30 @@
-<h2 mat-dialog-title></h2>
-<mat-dialog-content class="mat-typography">
-    <div>
-        {{data.message}}
-    </div>
-    <div>
-      <input #inpVal matInput placeholder="{{data.message}}" value="{{data.currentVal}}">
-    </div>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)='save()'>Ok</button>
-</mat-dialog-actions>
+<div class='input-container'>
+  <h2 mat-dialog-title>{{data.dlgTitle}}</h2>
+  <mat-dialog-content class="mat-typography">
+      <h3> {{data.message}} </h3>
+      <div>
+        <mat-form-field appearance="legacy" *ngIf='data.dropDownVal'>
+            <mat-label *ngIf='data.dropDownLabel'>{{data.dropDownLabel}}</mat-label>
+            <mat-select
+                [(value)]="data.dropDownVal"
+                (change)='setVal("dropDownVal", $event)'
+                >
+                <mat-option [value]="option.value" *ngFor="let option of data.dropDownChoices">
+                    {{ option.viewValue }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="legacy" *ngIf='data.inputVal'>
+          <mat-label *ngIf='data.inputLabel'>{{data.inputLabel}}</mat-label>
+          <input #inpVal matInput placeholder="{{data.inputVal}}" value="{{data.inputVal}}" (change)='setVal("inputVal", $event)'>
+        </mat-form-field>
+      </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)='save()'>Ok</button>
+  </mat-dialog-actions>
+</div>
