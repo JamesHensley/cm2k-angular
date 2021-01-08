@@ -8,11 +8,12 @@ import { INode } from "../interfaces/INode";
 import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { BlockTypes } from '../enums';
 import { BlockModelField } from './BlockModelField';
+import { BlockModelEdge } from './BlockModelEdge';
 
 export class BlockModelOutput implements IBlockModel {
     guid: string;
     get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
-    get blockType(): string { return 'BlockModelOutput'; };
+    blockType: string;
     get blockTypeFriendlyName(): string { return 'BlockModelOutput'; };
     serviceType: BlockTypes.OUTPUTBLOCK;
     label: string;
@@ -21,11 +22,14 @@ export class BlockModelOutput implements IBlockModel {
     processor: IBlockProcessor;
     modelFields: BlockModelField;
     
-    constructor(blockName: string) {
+    constructor(blockName: string, blockType: string) {
+        this.blockType = blockType;
         this.blockName = blockName;
         this.label = blockName;
 
-        this.edgeInput = { name: 'InputEdge', direction: 'in', connections: [] } as IBlockModelEdge;
+        this.edgeInput = new BlockModelEdge('InputEdge', 'in', null);
+
+        this.modelFields = new BlockModelField(blockName, 'object', [Guid.create().toString()], []);
     }
 
     GetNodeObj(): INode {

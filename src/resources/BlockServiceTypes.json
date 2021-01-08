@@ -1,29 +1,14 @@
 [
     {
         "serviceType": "csvInput",
-        "fields": [
-            { "blockName": "string" },
-            { "fileLocation": "string" },
-            { "seperator": "string" },
-            { "firstRowHasHeaders": "boolean" }
-        ]
+        "id": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42"
     },
     {
         "serviceType": "csvOutput",
-        "fields": [
-            { "blockName": "string" },
-            { "fileLocation": "string" },
-            { "seperator": "string" },
-            { "firstRowHasHeaders": "boolean" }
-        ]
+        "id": "696a219e-58a8-1585-dd24-53e90670cfc7"
     },
     {
         "serviceType": "htmlEndpointBlock",
-        "fields": [
-            { "blockName": "string" },
-            { "url": "string" },
-            { "waitFor": "AppFields.waitFor" },
-            { "edgeInput": "AppFields.blockEdge" }
-        ]
+        "id": "dc279a42-2b88-62eb-baa9-51f3d42885e3"
     }
 ]

@@ -14,6 +14,7 @@ import { InputData } from '../modals/input-dialog';
 interface FlatNode {
   expandable: boolean;
   name: string;
+  type: string;
   level: number;
   path: string;
   canAddChildren: boolean;
@@ -45,6 +46,7 @@ export class TreeComponent implements OnInit {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
+      type: (level == 0 ? '' : ' - ' + node.type),
       level: level,
       path: JSON.stringify(node.path),
       canAddChildren: node.type == 'object'

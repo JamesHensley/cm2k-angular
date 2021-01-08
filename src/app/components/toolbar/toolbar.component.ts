@@ -51,7 +51,7 @@ export class Toolbar implements OnInit, OnDestroy {
     toolbarBtnClick(data: ToolBarBtnData): void {
         switch(data.btnType) {
             case 'Export':
-                //this.diagram.exportDrawing();
+                this.drawingService.exportDrawing();
                 break;
             case 'SetMode':
                 this.drawingService.editable = !this.drawingService.editable;

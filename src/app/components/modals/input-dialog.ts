@@ -31,7 +31,6 @@ export class InputDialog {
     }
 
     save(): void {
-        console.log('Saving: ', this.data);
         this.saveVal.emit(this.data);
     }
 }

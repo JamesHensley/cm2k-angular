@@ -1,30 +1,184 @@
 [
     {
-        "serviceType": "csvInput",
-        "properties": {
-            "blockName": "CSV Input Block",
-            "fileLocation": "",
-            "seperator": ",",
-            "firstRowHasHeaders": true
-        }
+        "blockName": "csvInput",
+		"blockType": "ff8c1eec-6735-c63a-14ce-6f4da2ccea42",
+        "label": "csvInput",
+        "edgeOutput": {
+            "name": "OutputEdge",
+            "direction": "out",
+            "connections": []
+        },
+        "modelFields": {
+            "id": "735b4d7d-2283-23e2-5d2c-ae8a4f493428",
+            "name": "csvInput",
+            "type": "object",
+            "path": [
+                "abef29ff-94f8-590f-d37b-3e27b8648cc4"
+            ],
+            "children": [
+                {
+                    "id": "78f8ab57-5c3d-36c6-70dc-aa672fc2035c",
+                    "name": "fileLocation",
+                    "type": "string",
+                    "path": [
+                        "abef29ff-94f8-590f-d37b-3e27b8648cc4",
+                        "78f8ab57-5c3d-36c6-70dc-aa672fc2035c"
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "7f8ae2d0-8a35-b32a-5461-f5bb5fc352c6",
+                    "name": "columns",
+                    "type": "array",
+                    "path": [
+                        "abef29ff-94f8-590f-d37b-3e27b8648cc4",
+                        "7f8ae2d0-8a35-b32a-5461-f5bb5fc352c6"
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "ffda193f-1bfd-324c-ed87-26454f83f272",
+                    "name": "delimeter",
+                    "type": "string",
+                    "path": [
+                        "abef29ff-94f8-590f-d37b-3e27b8648cc4",
+                        "ffda193f-1bfd-324c-ed87-26454f83f272"
+                    ],
+                    "children": []
+                }
+            ]
+        },
+        "guid": "443965a6-3071-62e1-60b7-aa99b4747638"
     },
     {
-        "serviceType": "csvOutput",
-        "properties": {
-            "blockName": "CSV Output Block",
-            "fileLocation": "",
-            "seperator": ",",
-            "firstRowHasHeaders": true
-        }
+        "blockName": "csvOutput",
+		"blockType": "696a219e-58a8-1585-dd24-53e90670cfc7",
+        "label": "csvOutput",
+        "edgeInput": {
+            "name": "InputEdge",
+            "direction": "in",
+            "connections": []
+        },
+        "modelFields": {
+            "id": "51600b0c-49c5-03aa-6569-bffd96d58d11",
+            "name": "csvOutput",
+            "type": "object",
+            "path": [
+                "3bef2e4e-77ab-c908-072f-31e8523da938"
+            ],
+            "children": [
+                {
+                    "id": "d43ec956-ff72-03ef-332a-dd7f5b8dcf87",
+                    "name": "fileLocation",
+                    "type": "string",
+                    "path": [
+                        "3bef2e4e-77ab-c908-072f-31e8523da938",
+                        "d43ec956-ff72-03ef-332a-dd7f5b8dcf87"
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "7dd79395-639d-813d-015d-1e3a3e665e77",
+                    "name": "columns",
+                    "type": "array",
+                    "path": [
+                        "3bef2e4e-77ab-c908-072f-31e8523da938",
+                        "7dd79395-639d-813d-015d-1e3a3e665e77"
+                    ],
+                    "children": []
+                },
+                {
+                    "id": "cf709612-23c1-c015-dd3f-c0a353194a22",
+                    "name": "delimeter",
+                    "type": "string",
+                    "path": [
+                        "3bef2e4e-77ab-c908-072f-31e8523da938",
+                        "cf709612-23c1-c015-dd3f-c0a353194a22"
+                    ],
+                    "children": []
+                }
+            ]
+        },
+        "guid": "d14ab94e-0037-4c66-9980-4b785099c6b1"
     },
     {
-        "serviceType": "htmlEndpointBlock",
-        "properties": {
-            "blockName": "Q Service 1",
-            "url": "",
-            "waitFor": {
-                "action": "pageLoad"
-            }
-        }
+        "blockName": "Q",
+		"blockType": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
+        "label": "Q",
+        "edgeInput": {
+            "name": "InputEdge",
+            "direction": "in",
+            "connections": []
+        },
+        "edgeOutput": {
+            "name": "OutputEdge",
+            "direction": "out",
+            "connections": []
+        },
+        "modelFields": {
+            "id": "edb62a75-d0f5-40b4-bf5e-c61de542b5e6",
+            "name": "Q",
+            "type": "object",
+            "path": [
+                "ba75e930-13eb-0c19-a944-8d867b18bfa7"
+            ],
+            "children": [
+                {
+                    "id": "bc6366d6-49f9-bf5f-dd7a-9ec2e0d413d5",
+                    "name": "web",
+                    "type": "object",
+                    "path": [
+                        "ba75e930-13eb-0c19-a944-8d867b18bfa7",
+                        "bc6366d6-49f9-bf5f-dd7a-9ec2e0d413d5"
+                    ],
+                    "children": [
+                        {
+                            "id": "3526c8e2-110f-0414-efbc-2ea62976b069",
+                            "name": "baseUrl",
+                            "type": "string",
+                            "path": [
+                                "ba75e930-13eb-0c19-a944-8d867b18bfa7",
+                                "bc6366d6-49f9-bf5f-dd7a-9ec2e0d413d5",
+                                "3526c8e2-110f-0414-efbc-2ea62976b069"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "id": "742f7f3f-1907-eccf-2636-9d8364fe9426",
+                            "name": "timeOut",
+                            "type": "number",
+                            "path": [
+                                "ba75e930-13eb-0c19-a944-8d867b18bfa7",
+                                "bc6366d6-49f9-bf5f-dd7a-9ec2e0d413d5",
+                                "742f7f3f-1907-eccf-2636-9d8364fe9426"
+                            ],
+                            "children": []
+                        },
+                        {
+                            "id": "c0e04707-99cb-4c22-859a-ebb6e3095510",
+                            "name": "searchFormSelector",
+                            "type": "string",
+                            "path": [
+                                "ba75e930-13eb-0c19-a944-8d867b18bfa7",
+                                "bc6366d6-49f9-bf5f-dd7a-9ec2e0d413d5",
+                                "c0e04707-99cb-4c22-859a-ebb6e3095510"
+                            ],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "id": "9bd39953-3637-c979-45f0-451a803f5a8e",
+                    "name": "fields",
+                    "type": "array",
+                    "path": [
+                        "ba75e930-13eb-0c19-a944-8d867b18bfa7",
+                        "9bd39953-3637-c979-45f0-451a803f5a8e"
+                    ],
+                    "children": []
+                }
+            ]
+        },
+        "guid": "0ec538f6-e5c8-0d08-2264-025197be81fd"
     }
 ]

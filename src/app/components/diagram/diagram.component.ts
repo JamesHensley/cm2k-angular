@@ -73,8 +73,6 @@ export class Diagram implements OnInit, OnDestroy {
 
 
     //#region MenuFunctions
-        exportDrawing(): void { console.log("Diagram->exportDrawing"); }
-
         manageEdge(node: INode, side: string): void {}
 
         manageProcess(node: INode, side: string): void {}

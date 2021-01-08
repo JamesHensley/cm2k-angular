@@ -11,6 +11,7 @@ import { BlockModelOutput } from '../models/BlockModelOutput';
 
 import { BlockTypes } from '../enums';
 import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
+import { AppConfigService } from './appConfigService';
 
 export interface DrawingUpdatedData {
     newDiagramData: IDrawing;
@@ -22,6 +23,14 @@ export interface DrawingUpdatedData {
 
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
+    constructor(
+        private configService: AppConfigService
+    ) {
+        this.drawingLayout = 'dagre';
+        this.editable = false;
+        this.appMode = 'View'
+    }
+
     drawingUpdated = new EventEmitter<DrawingUpdatedData>();
 
     private _blocks: Array<IBlockModel> = [];
@@ -57,28 +66,12 @@ export class DrawingDataService {
         } as IDrawing;
     }
 
-    constructor() {
+    xxxconstructor() {
         this.drawingLayout = 'dagre';
         this.editable = false;
         this.appMode = 'View'
 
-        const labels = ['inputCSV', 'Q', 'RS', 'D', 'outputCSV'];
-
-        let iBlock = new BlockModelInput(labels[0]);
-        iBlock.guid = Guid.create().toString();
-        this._blocks.push(iBlock)
-
-        for(var i = 1; i < 4; i++) {
-            const block = new BlockModelEndpoint(labels[i]);
-            
-            block.guid = Guid.create().toString();
-            this._blocks.push(block);
-        }
-
-        let oBlock = new BlockModelOutput(labels[4]);
-        oBlock.guid = Guid.create().toString();
-        this._blocks.push(oBlock)
-
+        /*
         this._blocks[0].AddConnection(this._blocks[1]);
         this._blocks[1].AddConnection(this._blocks[2]);
         this._blocks[1].AddConnection(this._blocks[4]);
@@ -86,6 +79,7 @@ export class DrawingDataService {
         this._blocks[2].AddConnection(this._blocks[4]);
         this._blocks[3].AddConnection(this._blocks[4]);
         this._blocks[3].AddConnection(this._blocks[1]);
+        */
     }
 
     block(blockId: string): IBlockModel {
@@ -96,14 +90,21 @@ export class DrawingDataService {
 
     addNewBlock(blockType: string, blockName: string): void {
         let block: IBlockModel;
-        if(blockType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(blockName); }
-        if(blockType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(blockName); }
-        if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(blockName); }
-        if(block) {
+        let blockTypeId = this.configService.getBlockTypeId(blockType).id || null;
+
+        if(blockType == BlockTypes.INPUTBLOCK) { block = new BlockModelInput(blockName, blockTypeId); }
+        if(blockType == BlockTypes.ENDPOINTBLOCK) { block = new BlockModelEndpoint(blockName, blockTypeId); }
+        if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(blockName, blockTypeId); }
+
+        if(block && blockTypeId) {
             block.guid = Guid.create().toString();
             this._blocks.push(block);
     
             this.emitUpdate(this.drawingData, this._blocks);
+        }
+        else {
+            console.log(blockName, blockType, block, blockTypeId);
+            throw new Error("DrawingDataService->addNewBlock: Could not locate a suitable block type or create a new block");
         }
     }
 
@@ -142,6 +143,16 @@ export class DrawingDataService {
         this.emitUpdate(this.drawingData, this._blocks);
     }
 
+    exportDrawing(): void {
+        console.log("*  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *");
+        console.log(JSON.stringify(this._blocks, null, '    '));
+        console.log("*  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *");
+    }
+
+    saveNodeChanges(): void {
+
+    }
+
     private getTreeItem(block: IBlockModel, path: Array<string>): IBlockModelField {
         let root: IBlockModelField = block.modelFields;
     
@@ -153,7 +164,6 @@ export class DrawingDataService {
     }
 
     private emitUpdate(diagramData?: IDrawing, blockData?: Array<IBlockModel>): void {
-        console.log('DrawingDataService->emitUpdate: ', this)
         this.drawingUpdated.emit({
             newDiagramData: diagramData || this.drawingData,
             newBlockData: blockData || this._blocks,

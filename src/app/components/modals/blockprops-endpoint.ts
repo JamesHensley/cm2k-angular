@@ -30,7 +30,6 @@ export class BlockPropsEndpointDialog implements OnInit {
     ngOnInit(): void {
         this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
             this.blockData = (newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t))) as BlockModelEndpoint;
-            console.log('Received a drawing UPDATED message', this.blockData);
         });
     }
 
@@ -56,7 +55,6 @@ export class BlockPropsEndpointDialog implements OnInit {
     }
 
     saveBlock(ev): void {
-        console.log('BlockPropsEndpointDialog->saveBlock: ', ev)
-        throw new Error("BlockPropsEndpointDialog->saveBlock Method not implemented.");
+        this.drawingService.saveNodeChanges();
     }
 }

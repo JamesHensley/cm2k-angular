@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{blockData.label}}</h2>
 <mat-dialog-content class="mat-typography">
-  {{ blockData.blockTypeFriendlyName }}
+  {{ blockData.blockTypeFriendlyName }} <button (click)="renameBlock()">rename</button>
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Processes">
       <h3>{{blockData.id}}</h3>
@@ -13,11 +13,32 @@
       </mat-list>
     </mat-tab>
     <mat-tab label="Advanced">
-      Advanced stuff
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Model Fields">
+          <mat-grid-list cols="2" rowHeight="500px">
+            <mat-grid-tile>
+              <mat-list role="list">
+                <!--
+                <mat-list-item *ngFor="let field of blockData.modelFields">
+                  {{ field.fieldName }} {{ field.fieldType }}
+                </mat-list-item>
+                -->
+              </mat-list>
+            </mat-grid-tile>
+            <mat-grid-tile class='alignTopLeft'>
+              <tree-component [blockData] = 'blockData'>
+              </tree-component>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+        <mat-tab label="Model Parameters">
+          Model Parameters
+        </mat-tab>
+      </mat-tab-group>
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial  (click)='saveBlock($event)'>Save</button>
 </mat-dialog-actions>
