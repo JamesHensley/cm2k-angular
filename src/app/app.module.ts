@@ -35,13 +35,14 @@ import { AppConfigService } from './services/appConfigService';
 import { TreeComponent } from './components/shared/tree-component';
 import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldscomponent';
 import { MappingService } from './services/mappingService';
+import { BlockEdgeMgr } from './components/modals/block-edge-mgr';
 
 
 @NgModule({
   declarations: [
     AppComponent, Main, Toolbar, Diagram, TreeComponent, BlockPropsFieldsComponent,
     BlockPropsEndpointDialog, BlockPropsInputDialog, BlockPropsOutputDialog,
-    LinkPropsDialog, InputDialog
+    LinkPropsDialog, InputDialog, BlockEdgeMgr
   ],
   imports: [
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,

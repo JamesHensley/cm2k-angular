@@ -23,11 +23,10 @@ import { InputData } from "./input-dialog";
     templateUrl: 'blockprops-output.html',
     styleUrls: ["blockprops.scss"]
 })
-
 export class BlockPropsOutputDialog implements OnInit {
     constructor(@Inject(MAT_DIALOG_DATA) public blockData: BlockModelOutput,
-    private dialogservice: DialogService,
-    private drawingService: DrawingDataService) { }
+        private dialogservice: DialogService,
+        private drawingService: DrawingDataService) { }
 
     ngOnInit(): void {
         this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {

@@ -1,16 +1,14 @@
 <h2 mat-dialog-title>{{blockData.label}}</h2>
+<button (click)="renameBlock()" aria-id="blockRenameBtn">rename</button>
 <mat-dialog-content class="mat-typography">
-  {{ blockData.blockTypeFriendlyName }} <button (click)="renameBlock()">rename</button>
+  {{ blockData.blockTypeFriendlyName }} 
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Processes">
       <h3>{{blockData.id}}</h3>
     </mat-tab>
     <mat-tab label="Outputs">
-      <mat-list role="list">
-        <mat-list-item *ngFor="let conn of outputConnections">
-        {{ conn.connectedBlockId }}
-        </mat-list-item>
-      </mat-list>
+      <block-edge-mgr [connections]="outputConnections" side="out">
+      </block-edge-mgr>
     </mat-tab>
     <mat-tab label="Advanced">
       <mat-tab-group mat-align-tabs="start">
