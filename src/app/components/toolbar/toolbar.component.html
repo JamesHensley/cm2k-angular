@@ -16,7 +16,7 @@
     </mat-form-field>
 
     <mat-menu #addNode="matMenu">
-        <ng-container *ngFor="let blockCat of jimmy">
+        <ng-container *ngFor="let blockCat of appBlockDefs">
             <button mat-menu-item [matMenuTriggerFor]="sub_menu">
                 {{ blockCat.blockServiceDisplayName }}
             </button>

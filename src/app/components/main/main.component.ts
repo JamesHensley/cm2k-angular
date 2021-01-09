@@ -29,15 +29,13 @@ import { AppConfigService } from "src/app/services/appConfigService";
 
 export class Main implements OnInit, OnDestroy {
     @ViewChild("mainViewNode", { static: true }) private mainViewNode: ElementRef;
-    @ViewChild(Diagram) private diagram: Diagram;
-    @ViewChild(Toolbar) private toolbar: Toolbar;
+    //@ViewChild(Diagram) private diagram: Diagram;
+    //@ViewChild(Toolbar) private toolbar: Toolbar;
 
     constructor(
         public drawingService: DrawingDataService, public appConfigService: AppConfigService,
         public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService
     ) {}
-
-    private _blocks: Array<IBlockModel> = [];
 
     appMode: string = 'Edit';
 
@@ -63,8 +61,9 @@ export class Main implements OnInit, OnDestroy {
 
     //Called when a user clicks on a node on the drawing
     openBlockProps(elem: INode): void {
-        const block = this.drawingService.block(elem.id);
-        const dialogRef = this.dialogService.openNodeDialog(block);
+        const block = this.drawingService.getBlockById(elem.id);
+        //const dialogRef = this.dialogService.openNodeDialog(block);
+        this.dialogService.openNodeDialog(block);
     }
 
     //Called when a user clicks on a node on the drawing

@@ -16,7 +16,6 @@ import { BlockTypes } from '../enums';
 @Injectable({
     providedIn: 'root',
 })
-
 export class DialogService {
     constructor(
         public nodeDialog: MatDialog,
