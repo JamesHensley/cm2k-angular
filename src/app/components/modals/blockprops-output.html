@@ -4,7 +4,7 @@
   {{ blockData.blockTypeFriendlyName }} 
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Inputs">
-      <block-edge-mgr [connections]="inputConnections" side="in">
+      <block-edge-mgr [connections]="inputConnections" side="in" [blockData] = 'blockData'>
       </block-edge-mgr>
     </mat-tab>
     <mat-tab label="Processes">

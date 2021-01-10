@@ -20,7 +20,7 @@ export interface IBlockModel {
     edgeOutput?: IBlockModelEdge;
     modelFields: BlockModelField;
     GetNodeObj(): INode;
-    GetConnectionsObj(): Array<ILink>;
-    AddConnection(otherBlock: IBlockModel): void;
+    //GetConnectionsObj(): Array<ILink>;
+    //AddConnection(otherBlock: IBlockModel): void;
     ToJSON(): string;
 }

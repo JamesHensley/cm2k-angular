@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { IConnection } from "src/app/interfaces/IConnection";
+import { ILink } from "src/app/interfaces/ILink";
 import { BlockModelInput } from "src/app/models/BlockModelInput";
 import { DialogService } from "src/app/services/dialogservice";
 import { DrawingUpdatedData, DrawingDataService } from "src/app/services/drawingdataservice";
@@ -34,8 +35,8 @@ export class BlockPropsInputDialog implements OnInit {
         });
     }
 
-    get outputConnections(): Array<IConnection> {
-        return this.blockData.edgeOutput.connections;
+    get outputConnections(): Array<ILink> {
+        return this.drawingService.getLinksForBlock(this.blockData.id).out;
     }
 
     renameBlock(): void {

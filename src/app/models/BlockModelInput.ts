@@ -46,6 +46,7 @@ export class BlockModelInput implements IBlockModel {
         } as INode
     }
 
+    /*
     GetConnectionsObj(): Array<ILink> {
         return this.edgeOutput.connections.map(m => {
             return {
@@ -56,12 +57,14 @@ export class BlockModelInput implements IBlockModel {
             } as ILink
         });
     }
-
+    */
+    /*
     AddConnection(otherBlock: IBlockModel): void {
         this.edgeOutput.connections.push({
             connectedBlockId: otherBlock.id
         } as IConnection)
     }
+    */
 
     ToJSON(): string { return JSON.stringify(this); }
 }

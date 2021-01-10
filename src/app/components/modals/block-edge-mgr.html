@@ -1,7 +1,13 @@
-Edge {{side}}
-<hr />
-<mat-list role="list">
-    <mat-list-item *ngFor="let conn of connections">
-        {{ conn.connectedBlockId }}
-    </mat-list-item>
-</mat-list>
+
+<div>
+    <button mat-stroked-button (click)='addConnectionBtn()'>Add New Connection</button>
+    <hr />
+    <mat-list role="list">
+        <mat-list-item *ngFor="let conn of connections">
+            <div class='linkRow'
+                [attr.aria-id]=conn.id
+                (click)="linkClicked($event)"
+                >{{ conn.label }}</div>
+        </mat-list-item>
+    </mat-list>
+</div>

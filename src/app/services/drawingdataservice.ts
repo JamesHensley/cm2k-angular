@@ -12,7 +12,8 @@ import { BlockModelOutput } from '../models/BlockModelOutput';
 import { BlockTypes } from '../enums';
 import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { AppConfigService } from './appConfigService';
-import { BlockModelField } from '../models/BlockModelField';
+import { Link } from '../models/Link';
+import { IBlockLinks } from '../interfaces/IBlock/IBlockLinks';
 
 export interface DrawingUpdatedData {
     newDiagramData: IDrawing;
@@ -34,8 +35,12 @@ export class DrawingDataService {
 
     drawingUpdated = new EventEmitter<DrawingUpdatedData>();
 
-    private _blocks: Array<IBlockModel> = [];
+    private _links: Array<ILink> = [];
+    get links(): Array<ILink> { return this._links; }
 
+    private _blocks: Array<IBlockModel> = [];
+    get blocks(): Array<IBlockModel> { return this._blocks; }
+    
     private _editable: boolean;
     get editable(): boolean { return this._editable; }
     set editable(val: boolean) {
@@ -61,9 +66,7 @@ export class DrawingDataService {
             nodes: this._blocks.reduce((t: Array<INode>, n: IBlockModel) => {
                 return [].concat.apply(t, [n.GetNodeObj()]);
             }, []),
-            links: this._blocks.reduce((t: Array<ILink>, n: IBlockModel) => {
-                return [].concat.apply(t, n.GetConnectionsObj());
-            }, [])
+            links: this._links
         } as IDrawing;
     }
 
@@ -84,7 +87,34 @@ export class DrawingDataService {
         return this._blocks.reduce((t,n) => { return (n.id == blockId) ? n : t });
     }
 
+    addConnection(srcBlockId: string, destBlockId: string, linkName: string): void {
+        const lnk = new Link();
+        lnk.source = srcBlockId;
+        lnk.target = destBlockId;
+        lnk.label = linkName;
+        this._links.push(lnk);
 
+        //this.getBlockById(srcBlockId).AddConnection(this.getBlockById(destBlockId));
+        this.emitUpdate();
+    }
+
+    removeConnection(linkId: string): void {
+        this._links = this._links.filter(f => f.id != linkId);
+        this.emitUpdate();
+    }
+
+    getLinkById(linkId: string): ILink {
+        return this._links.reduce((t: ILink, n: ILink) => {
+            return n.id == linkId ? n : t;
+        }, null)
+    }
+
+    getLinksForBlock(blockId: string): IBlockLinks {
+        return {
+            "in": this._links.filter(f => f.target == blockId),
+            "out": this._links.filter(f => f.source == blockId)
+        } as IBlockLinks
+    }
 
     //Used to add a copy of a galery block to the drawing
     addBlockToDrawing(serviceId: string, blockGuid: string, blockName: string) {

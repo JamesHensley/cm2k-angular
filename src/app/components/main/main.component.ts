@@ -62,20 +62,12 @@ export class Main implements OnInit, OnDestroy {
     //Called when a user clicks on a node on the drawing
     openBlockProps(elem: INode): void {
         const block = this.drawingService.getBlockById(elem.id);
-        //const dialogRef = this.dialogService.openNodeDialog(block);
         this.dialogService.openNodeDialog(block);
     }
 
     //Called when a user clicks on a node on the drawing
     openLinkProps(elem: ILink): void {
-        /*
-        const dialogRef = this.linkDialog.open(LinkPropsDialog, {
-            data: elem
-         });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
-        */
+        const link = this.drawingService.getLinkById(elem.id);
+        this.dialogService.openLinkDialog(link);
     }
 }

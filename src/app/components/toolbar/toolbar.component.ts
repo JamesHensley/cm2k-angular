@@ -63,15 +63,16 @@ export class Toolbar implements OnInit, OnDestroy {
                 break;
             case 'AddNode':
                 let btnGuid = data.btnData.srcElement.getAttribute('aria-guid');
+                const template = this.appConfigService.getBlockTemplateByGuid(btnGuid);
                 let tempData = {
-                    "serviceId": this.appConfigService.getBlockTemplateByGuid(btnGuid).blockServiceId,
+                    "serviceId": template.blockServiceId,
                     "guid": btnGuid
                 }
 
                 const dialogRef = this.dialogservice.openInputDialog({
                     dlgTitle: 'Adding New Block',
                     message: '',
-                    inputVal: 'New Block',
+                    inputVal: template.blockName,
                     inputLabel:'New Block Name',
                 } as InputData);
 

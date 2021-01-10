@@ -20,4 +20,8 @@ import { ILink } from "src/app/interfaces/ILink";
 
 export class LinkPropsDialog {
     constructor(@Inject(MAT_DIALOG_DATA) public data: ILink) { console.log('LinkPropsDialog: ', data); }
+
+    saveLink(ev): void {
+        console.log('LinkPropsDialog->saveLink');
+    }
 }

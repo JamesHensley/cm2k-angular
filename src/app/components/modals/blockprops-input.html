@@ -7,7 +7,7 @@
       <h3>{{blockData.id}}</h3>
     </mat-tab>
     <mat-tab label="Outputs">
-      <block-edge-mgr [connections]="outputConnections" side="out">
+      <block-edge-mgr [connections]="outputConnections" side="out" [blockData] = 'blockData'>
       </block-edge-mgr>
     </mat-tab>
     <mat-tab label="Advanced">

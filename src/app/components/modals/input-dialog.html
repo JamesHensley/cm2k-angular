@@ -2,7 +2,7 @@
   <h2 mat-dialog-title>{{data.dlgTitle}}</h2>
   <mat-dialog-content class="mat-typography">
       <h3> {{data.message}} </h3>
-      <div *ngIf='data.dropDownVal'>
+      <div *ngIf='data.dropDownChoices && data.dropDownChoices.length > 0'>
         <mat-form-field appearance="legacy">
             <mat-label *ngIf='data.dropDownLabel'>{{data.dropDownLabel}}</mat-label>
             <mat-select

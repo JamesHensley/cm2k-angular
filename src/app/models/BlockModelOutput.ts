@@ -43,12 +43,15 @@ export class BlockModelOutput implements IBlockModel {
         } as INode
     }
 
+    /*
     GetConnectionsObj(): ILink[] {
         return [];
     }
+    */
+    /*
     AddConnection(otherBlock: IBlockModel): void {
         throw new Error("Method not implemented.");
     }
-
+    */
     ToJSON(): string { return JSON.stringify(this); }
 }

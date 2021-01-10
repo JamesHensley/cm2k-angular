@@ -12,16 +12,20 @@ import { BlockModelInput } from '../models/BlockModelInput';
 import { BlockModelOutput } from '../models/BlockModelOutput';
 import { AppConfigService } from './appConfigService';
 import { BlockTypes } from '../enums';
+import { ILink } from '../interfaces/ILink';
+import { LinkPropsDialog } from '../components/modals/linkprops';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DialogService {
     constructor(
-        public nodeDialog: MatDialog,
-        public inputDialog: MatDialog,
+        private nodeDialog: MatDialog,
+        private linkDialog: MatDialog,
+        private inputDialog: MatDialog,
         private appConfigService: AppConfigService
     ) {}
+
 
     openNodeDialog(blockModel: IBlockModel): MatDialogRef<any> {
         switch(blockModel.blockServiceType) {
@@ -36,8 +40,8 @@ export class DialogService {
         }
     }
     
-    openLinkDialog(blockModel: IBlockModel): MatDialogRef<any> {
-        return null;
+    openLinkDialog(linkData: ILink): MatDialogRef<any> {
+        return this.linkDialog.open(LinkPropsDialog, { data: linkData })
     }
 
     openInputDialog(inputData: InputData) {

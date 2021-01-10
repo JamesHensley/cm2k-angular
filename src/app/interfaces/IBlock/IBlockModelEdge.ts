@@ -2,6 +2,7 @@
 
 import { IConnection } from '../IConnection';
 import { IConnector } from '../IConnector';
+
 export interface IBlockModelEdge {
     name: string;
     connections: Array<IConnection>;

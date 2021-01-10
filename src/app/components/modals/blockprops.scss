@@ -7,6 +7,11 @@
     font-size: x-small;
 }
 
-block-edge-mgr {
+block-edge-mgr > ::ng-deep div {
+    padding-top: 10px;
     min-height: 300px;
+}
+
+.linkRow {
+    cursor: pointer;
 }
