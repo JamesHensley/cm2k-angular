@@ -4,4 +4,7 @@ export interface IBlockModelField {
     type: string;
     path: Array<string>;
     children?: Array<IBlockModelField>;
+
+    GetFieldNode(path: Array<string>): IBlockModelField;
+    Flatten(): Array<IBlockModelField>;
 }

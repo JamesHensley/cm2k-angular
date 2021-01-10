@@ -9,18 +9,15 @@ import { BlockModelField } from 'src/app/models/BlockModelField';
 
 export interface IBlockModel {
     blockServiceId: string;
-    blockServiceType: BlockTypes;
     blockServiceSubType: string;
+    blockTemplateGuid: string;
 
     id: string;
-    guid: string;
     blockName: string;
+    blockType: BlockTypes;
     label: string;
     edgeInput?: IBlockModelEdge;
     edgeOutput?: IBlockModelEdge;
-    modelFields: BlockModelField;
-    GetNodeObj(): INode;
-    //GetConnectionsObj(): Array<ILink>;
-    //AddConnection(otherBlock: IBlockModel): void;
-    ToJSON(): string;
+    modelFields: IBlockModelField;
+    allModelFields: Array<IBlockModelField>;
 }

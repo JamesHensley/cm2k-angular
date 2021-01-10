@@ -56,8 +56,11 @@ export class AppConfigService {
             }, null);
     }
 
-    getBlockTemplateByGuid(guid: string): IBlockModel {
-        return this._blockDefs.reduce((t, n) => { return n.guid == guid ? n : t });
+    getBlockTemplateByGuid(templateGuid: string): IBlockModel {
+        return this._blockDefs
+            .reduce((t: IBlockModel, n: IBlockModel) => {
+                return n.blockTemplateGuid == templateGuid ? n : t
+            }, null);
     }
 
     get BlockServiceTypes(): Array<string> {

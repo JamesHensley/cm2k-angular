@@ -13,22 +13,25 @@ import { BlockModelEdge } from './BlockModelEdge';
 import { BlockModelField } from './BlockModelField';
 
 export class BlockModelEndpoint implements IBlockModel {
-    guid: string;
-    get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
+    id: string;
 
     blockServiceId: string;
-    get blockServiceType(): BlockTypes { return BlockTypes.PROCESSORBLOCK; }
     blockServiceSubType: string;
-    get blockTypeFriendlyName(): string { return 'BlockModelEndpoint'; };
+    blockTemplateGuid: string;
 
     label: string;
     blockName: string;
+    blockType = BlockTypes.PROCESSORBLOCK;
+
     edgeInput: IBlockModelEdge;
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
-    modelFields: BlockModelField;
+    modelFields: IBlockModelField;
+    allModelFields: Array<IBlockModelField>;
 
-    constructor(blockName: string, blockServiceId: string) {
+    constructor(blockName: string, blockServiceId: string, id?: string) {
+        this.id = 'N-' + ( id ? id : Guid.create().toString().replace(/\-/ig, ''));
+        
         this.blockServiceId = blockServiceId;
         this.blockName = blockName;
         this.label = blockName;
@@ -46,27 +49,4 @@ export class BlockModelEndpoint implements IBlockModel {
             edges: []
         } as INode
     }
-    
-    /*
-    GetConnectionsObj(): Array<ILink> {
-        return this.edgeOutput.connections.map(m => {
-            return {
-                id: 'L-' + Guid.create().toString().replace(/\-/ig, ''),
-                source: this.id,
-                target: m.connectedBlockId,
-                label: this.id.substring(0, 5)
-            } as ILink
-        });
-    }
-    */
-    /*
-    AddConnection(otherBlock: IBlockModel): void {
-        this.edgeOutput.connections.push({
-            connectedBlockId: otherBlock.id,
-            connectors: new Array<IConnector>()
-        } as IConnection)
-    }
-    */
-   
-    ToJSON(): string { return JSON.stringify(this); }
 }

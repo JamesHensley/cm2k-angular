@@ -14,6 +14,8 @@ import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { AppConfigService } from './appConfigService';
 import { Link } from '../models/Link';
 import { IBlockLinks } from '../interfaces/IBlock/IBlockLinks';
+import { IFieldMap } from '../interfaces/IFieldMap';
+import { BlockService } from './blockService';
 
 export interface DrawingUpdatedData {
     newDiagramData: IDrawing;
@@ -26,11 +28,12 @@ export interface DrawingUpdatedData {
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
     constructor(
-        private appConfigService: AppConfigService
+        private appConfigService: AppConfigService,
+        private blockService: BlockService
     ) {
         this.drawingLayout = 'dagre';
         this.editable = false;
-        this.appMode = 'View'
+        this.appMode = 'View';
     }
 
     drawingUpdated = new EventEmitter<DrawingUpdatedData>();
@@ -64,22 +67,10 @@ export class DrawingDataService {
     get drawingData(): IDrawing {
         return {
             nodes: this._blocks.reduce((t: Array<INode>, n: IBlockModel) => {
-                return [].concat.apply(t, [n.GetNodeObj()]);
+                return [].concat.apply(t, [this.blockService.GetNodeObj(n)]);
             }, []),
             links: this._links
         } as IDrawing;
-    }
-
-    xxxconstructor() {
-        /*
-        this._blocks[0].AddConnection(this._blocks[1]);
-        this._blocks[1].AddConnection(this._blocks[2]);
-        this._blocks[1].AddConnection(this._blocks[4]);
-        this._blocks[2].AddConnection(this._blocks[3]);
-        this._blocks[2].AddConnection(this._blocks[4]);
-        this._blocks[3].AddConnection(this._blocks[4]);
-        this._blocks[3].AddConnection(this._blocks[1]);
-        */
     }
 
     //Used to get a block from the drawing by it's id
@@ -92,9 +83,9 @@ export class DrawingDataService {
         lnk.source = srcBlockId;
         lnk.target = destBlockId;
         lnk.label = linkName;
-        this._links.push(lnk);
+        lnk.fieldMappings = new Array<IFieldMap>();
 
-        //this.getBlockById(srcBlockId).AddConnection(this.getBlockById(destBlockId));
+        this._links.push(lnk);
         this.emitUpdate();
     }
 
@@ -118,7 +109,8 @@ export class DrawingDataService {
 
     //Used to add a copy of a galery block to the drawing
     addBlockToDrawing(serviceId: string, blockGuid: string, blockName: string) {
-        let block: IBlockModel = this.cloneBlockByTemplate(serviceId, blockGuid, blockName);
+        let block: IBlockModel = this.blockService.CloneBlockByTemplate(serviceId, blockGuid, blockName);
+        console.log('addBlockToDrawing', block);
         this._blocks.push(block);
         this.emitUpdate(this.drawingData, this._blocks);
     }
@@ -133,7 +125,6 @@ export class DrawingDataService {
         if(blockType == BlockTypes.OUTPUTBLOCK) { block = new BlockModelOutput(blockName, blockServiceId); }
 
         if(block && blockServiceId) {
-            block.guid = Guid.create().toString();
             this._blocks.push(block);
     
             this.emitUpdate(this.drawingData, this._blocks);
@@ -184,8 +175,10 @@ export class DrawingDataService {
     }
 
     exportDrawing(): void {
+        const drawing = JSON.stringify({ 'blocks': this._blocks, 'links': this._links }, null, '  ');
+
         console.log("*  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *");
-        console.log(JSON.stringify(this._blocks, null, '    '));
+        console.log(drawing);
         console.log("*  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *  EXPORT  *");
     }
 
@@ -215,21 +208,26 @@ export class DrawingDataService {
         });
     }
 
-    //Used to create a clone of a gallery block
-    private cloneBlockByTemplate(serviceId: string, blockGuid: string, blockName: string): IBlockModel {
-        let newBlock: IBlockModel;
-        const block: IBlockModel = this.appConfigService.getBlockTemplateByGuid(blockGuid);
 
-        let blockServiceType = this.appConfigService.getBlockServiceTypeFromServiceId(serviceId);
-        if(blockServiceType == BlockTypes.INPUTBLOCK) { newBlock = new BlockModelInput(blockName, serviceId); }
-        if(blockServiceType == BlockTypes.PROCESSORBLOCK) { newBlock = new BlockModelEndpoint(blockName, serviceId); }
-        if(blockServiceType == BlockTypes.OUTPUTBLOCK) { newBlock = new BlockModelOutput(blockName, serviceId); }
 
-        if(newBlock) {
-            newBlock.guid = Guid.create().toString();
-            newBlock.modelFields.children = JSON.parse(JSON.stringify(block.modelFields.children));
-            return newBlock;
-        }
-        return null;
+    LoadTestData(): void {
+        //this.addBlockToDrawing('ff8c1eec-6735-c63a-14ce-6f4da2ccea42', '443965a6-3071-62e1-60b7-aa99b4747638', 'csvInput');
+        //this.addBlockToDrawing('696a219e-58a8-1585-dd24-53e90670cfc7', 'd14ab94e-0037-4c66-9980-4b785099c6b1', 'csvOutput');
+        //this.addBlockToDrawing('dc279a42-2b88-62eb-baa9-51f3d42885e3', '0ec538f6-e5c8-0d08-2264-025197be81fd', 'Qlix');
+        this.LoadDrawing('/resources/testdata.json');
+    }
+
+    LoadDrawing(url: string): void {
+        fetch(url)
+            .then(data => data.json())
+            .then(data => {
+                data.blocks.forEach((b: IBlockModel) => {
+                    const blk = this.blockService.GetBlockModel(b);
+                    this._blocks.push(blk)
+                });
+                data.links.forEach((l: ILink) => {
+                    this.addConnection(l.source, l.target, l.label);
+                });                
+            });
     }
 }

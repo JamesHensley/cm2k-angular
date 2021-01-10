@@ -11,21 +11,24 @@ import { BlockModelField } from './BlockModelField';
 import { BlockModelEdge } from './BlockModelEdge';
 
 export class BlockModelOutput implements IBlockModel {
-    guid: string;
-    get id(): string { return 'N-' + this.guid.replace(/\-/ig, ''); }
+    id: string;
 
     blockServiceId: string;
-    get blockServiceType(): BlockTypes { return BlockTypes.OUTPUTBLOCK; }
     blockServiceSubType: string;
-    get blockTypeFriendlyName(): string { return 'BlockModelOutput'; };
+    blockTemplateGuid: string;
 
     label: string;
     blockName: string;
+    blockType = BlockTypes.OUTPUTBLOCK;
+
     edgeInput: IBlockModelEdge;
     processor: IBlockProcessor;
-    modelFields: BlockModelField;
-    
-    constructor(blockName: string, blockServiceId: string) {
+    modelFields: IBlockModelField;
+    allModelFields: Array<IBlockModelField>;
+
+    constructor(blockName: string, blockServiceId: string, id?: string) {
+        this.id = 'N-' + ( id ? id : Guid.create().toString().replace(/\-/ig, ''));
+
         this.blockServiceId = blockServiceId;
         this.blockName = blockName;
         this.label = blockName;
@@ -34,24 +37,4 @@ export class BlockModelOutput implements IBlockModel {
 
         this.modelFields = new BlockModelField(blockName, 'object', [Guid.create().toString()], []);
     }
-
-    GetNodeObj(): INode {
-        return {
-            id: this.id,
-            label: this.label || '',
-            edges: []
-        } as INode
-    }
-
-    /*
-    GetConnectionsObj(): ILink[] {
-        return [];
-    }
-    */
-    /*
-    AddConnection(otherBlock: IBlockModel): void {
-        throw new Error("Method not implemented.");
-    }
-    */
-    ToJSON(): string { return JSON.stringify(this); }
 }

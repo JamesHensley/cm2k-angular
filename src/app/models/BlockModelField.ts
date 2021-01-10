@@ -8,20 +8,27 @@ export class BlockModelField implements IBlockModelField {
     path: string[];
     children?: IBlockModelField[];
 
-    constructor(name: string, type: string, path?: Array<string>, children?: Array<IBlockModelField>, id?: string) {
+    constructor(name: string, type: string, path?: Array<string>, children?: Array<BlockModelField>, id?: string) {
         this.id = id || Guid.create().toString();
         this.name = name;
         this.type = type;
         this.path = path || new Array<string>();
-        this.children = children || new Array<IBlockModelField>();
+        this.children = children || new Array<BlockModelField>();
     }
 
-    GetFieldNode(path: Array<string>): IBlockModelField {
-        let root: IBlockModelField = this;
+    Flatten(): Array<BlockModelField> {
+        console.log('Flatten');
+        let xx = [].concat.apply([this], this.children.map((d: BlockModelField) => d.Flatten()));
+        //return xx;
+        return [];
+    }
+
+    GetFieldNode(path: Array<string>): BlockModelField {
+        let root: BlockModelField = this;
 
         path.forEach((d, i) => {
             if(i==0) { return root; }
-            root = root.children.reduce((t,n) => { return n.id == d ? n : t; }, {} as IBlockModelField)
+            root = root.children.reduce((t,n) => { return n.id == d ? n : t; }, {} as BlockModelField)
         })
         return root;
     }

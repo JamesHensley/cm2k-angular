@@ -14,6 +14,7 @@ import { AppConfigService } from './appConfigService';
 import { BlockTypes } from '../enums';
 import { ILink } from '../interfaces/ILink';
 import { LinkPropsDialog } from '../components/modals/linkprops';
+import { BlockService } from './blockService';
 
 @Injectable({
     providedIn: 'root',
@@ -23,12 +24,13 @@ export class DialogService {
         private nodeDialog: MatDialog,
         private linkDialog: MatDialog,
         private inputDialog: MatDialog,
-        private appConfigService: AppConfigService
+        private appConfigService: AppConfigService,
+        private blockService: BlockService
     ) {}
 
 
     openNodeDialog(blockModel: IBlockModel): MatDialogRef<any> {
-        switch(blockModel.blockServiceType) {
+        switch(blockModel.blockType) {
             case BlockTypes.PROCESSORBLOCK:
                 return this.nodeDialog.open(BlockPropsEndpointDialog, {data: blockModel as BlockModelEndpoint });
             case BlockTypes.INPUTBLOCK:

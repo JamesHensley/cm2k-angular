@@ -48,7 +48,7 @@
                 }
             ]
         },
-        "guid": "443965a6-3071-62e1-60b7-aa99b4747638"
+        "blockTemplateGuid": "443965a6-3071-62e1-60b7-aa99b4747638"
     },
     {
         "blockName": "csvOutput",
@@ -99,7 +99,7 @@
                 }
             ]
         },
-        "guid": "d14ab94e-0037-4c66-9980-4b785099c6b1"
+        "blockTemplateGuid": "d14ab94e-0037-4c66-9980-4b785099c6b1"
     },
     {
         "blockName": "Q",
@@ -179,6 +179,6 @@
                 }
             ]
         },
-        "guid": "0ec538f6-e5c8-0d08-2264-025197be81fd"
+        "blockTemplateGuid": "0ec538f6-e5c8-0d08-2264-025197be81fd"
     }
 ]

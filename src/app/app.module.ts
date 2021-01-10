@@ -36,6 +36,7 @@ import { TreeComponent } from './components/shared/tree-component';
 import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldscomponent';
 import { MappingService } from './services/mappingService';
 import { BlockEdgeMgr } from './components/modals/block-edge-mgr';
+import { BlockService } from './services/blockService';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { BlockEdgeMgr } from './components/modals/block-edge-mgr';
   ],
   providers: [
     DialogService,
-    /*BlockDialogService,*/
+    BlockService,
     DrawingDataService,
     AppConfigService,
     MappingService
