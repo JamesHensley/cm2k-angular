@@ -3,11 +3,11 @@ import { Guid } from 'typescript-guid';
 import { IBlockModelEdge } from "../interfaces/IBlock/IBlockModelEdge";
 import { IBlockProcessor } from '../interfaces/IBlock/IBlockProcessor';
 import { IBlockModel } from "../interfaces/IBlock/IBlockModel";
+import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 
 import { BlockTypes } from '../enums';
 import { BlockModelField } from './BlockModelField';
 import { BlockModelEdge } from './BlockModelEdge';
-import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 
 export class BlockModelInput implements IBlockModel {
     id: string;
@@ -22,7 +22,6 @@ export class BlockModelInput implements IBlockModel {
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
     modelFields: IBlockModelField;
-    allModelFields: Array<IBlockModelField>;
     edgeInput?: IBlockModelEdge;
 
     constructor(blockName: string, blockServiceId: string, id?: string) {

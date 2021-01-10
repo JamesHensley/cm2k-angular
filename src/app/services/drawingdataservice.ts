@@ -110,7 +110,6 @@ export class DrawingDataService {
     //Used to add a copy of a galery block to the drawing
     addBlockToDrawing(serviceId: string, blockGuid: string, blockName: string) {
         let block: IBlockModel = this.blockService.CloneBlockByTemplate(serviceId, blockGuid, blockName);
-        console.log('addBlockToDrawing', block);
         this._blocks.push(block);
         this.emitUpdate(this.drawingData, this._blocks);
     }
@@ -141,6 +140,13 @@ export class DrawingDataService {
         thisBlock.label = newName;
         thisBlock.blockName = newName;
         thisBlock.modelFields.name = newName;
+
+        this.emitUpdate(this.drawingData, this._blocks);
+    }
+
+    renameLink(linkId: string, newName: string): void {
+        let thisLink = this._links.reduce((t,n) => { return (n.id == linkId) ? n : t;});
+        thisLink.label = newName;
 
         this.emitUpdate(this.drawingData, this._blocks);
     }

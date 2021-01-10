@@ -6,5 +6,4 @@ export interface IBlockModelField {
     children?: Array<IBlockModelField>;
 
     GetFieldNode(path: Array<string>): IBlockModelField;
-    Flatten(): Array<IBlockModelField>;
 }

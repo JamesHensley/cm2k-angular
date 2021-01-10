@@ -1,6 +1,8 @@
-<h2 mat-dialog-title>Link Props</h2>
+<h2 mat-dialog-title>{{ linkData.label }}
+<button (click)="renameLink()" aria-id="linkRenameBtn">rename</button>
+</h2>
+
 <mat-dialog-content class="mat-typography">
-  <h3>{{linkData.id}}</h3>
   <div *ngFor="let field of srcFields">
     {{ field }}
   </div>
@@ -8,7 +10,6 @@
   <div *ngFor="let field of dstFields">
     {{ field }}
   </div>
-
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>

@@ -19,5 +19,4 @@ export interface IBlockModel {
     edgeInput?: IBlockModelEdge;
     edgeOutput?: IBlockModelEdge;
     modelFields: IBlockModelField;
-    allModelFields: Array<IBlockModelField>;
 }

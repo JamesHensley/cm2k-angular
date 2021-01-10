@@ -14,6 +14,7 @@ import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
 import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
 import { IDrawing } from "src/app/interfaces/IDrawing";
+import { Guid } from "typescript-guid";
 
 @Component({
     selector: "diagram-component",
@@ -49,6 +50,7 @@ export class Diagram implements OnInit, OnDestroy {
             this.drawingEditable = newData.editable;
             this.drawingLayout = newData.drawingLayout;
         })
+        console.log(Guid.create().toString())
     }
 
     ngOnDestroy() { }

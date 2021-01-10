@@ -180,5 +180,75 @@
             ]
         },
         "blockTemplateGuid": "0ec538f6-e5c8-0d08-2264-025197be81fd"
+    },
+    {
+      "blockType": "processorBlock",
+      "blockServiceId": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
+      "blockName": "RS",
+      "label": "RS",
+      "edgeInput": {
+        "name": "InputEdge",
+        "direction": "in",
+        "connections": []
+      },
+      "edgeOutput": {
+        "name": "OutputEdge",
+        "direction": "out",
+        "connections": []
+      },
+      "modelFields": {
+        "id": "457bad8a-7bcd-17ca-cdb9-2abf06734233",
+        "name": "RS",
+        "type": "object",
+        "path": [
+          "b5e5bedc-e0e8-9842-30e6-d30c53b244de"
+        ],
+        "children": [
+          {
+            "id": "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+            "name": "web",
+            "type": "object",
+            "path": [
+              "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+              "35af8143-4f6a-ba96-2dc0-bf6c0eca50de"
+            ],
+            "children": [
+              {
+                "id": "ddaf8516-addb-02dc-a871-5e12ca961874",
+                "name": "url",
+                "type": "string",
+                "path": [
+                  "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+                  "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+                  "ddaf8516-addb-02dc-a871-5e12ca961874"
+                ],
+                "children": []
+              },
+              {
+                "id": "213eae50-b983-9c8d-25c8-f46ee28337db",
+                "name": "timeout",
+                "type": "number",
+                "path": [
+                  "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+                  "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+                  "213eae50-b983-9c8d-25c8-f46ee28337db"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "704cc28b-e73b-52f3-df0e-f46ed9d5d05f",
+            "name": "fields",
+            "type": "array",
+            "path": [
+              "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+              "704cc28b-e73b-52f3-df0e-f46ed9d5d05f"
+            ],
+            "children": []
+          }
+        ]
+      },
+      "blockTemplateGuid": "8964d486-7e46-58a5-bb4c-ab7ed655e4a3"
     }
 ]

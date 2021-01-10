@@ -20,11 +20,11 @@ export class BlockService {
 
         newBlock.id = inp.id;
         newBlock.label = inp.label;
-        newBlock.allModelFields = this.GetFields(newBlock.modelFields);
 
         return newBlock;
     }
 
+    //Returns an INode for displaying on the drawing
     GetNodeObj(block: IBlockModel): INode {
         return {
             id: block.id,
@@ -33,6 +33,7 @@ export class BlockService {
         } as INode
     }
 
+    //Flattens the field models into an array
     GetFields(blockModelField: IBlockModelField): Array<IBlockModelField> {
         const childMap = blockModelField.children.map(d => this.GetFields(d));
         return [].concat.apply([blockModelField], childMap);
@@ -40,8 +41,6 @@ export class BlockService {
 
     //Used to create a clone of a gallery block
     CloneBlockByTemplate(serviceId: string, blockTemplateGuid: string, blockName: string): IBlockModel {
-        console.log(serviceId, blockTemplateGuid, blockName);
-
         let newBlock: IBlockModel;
         const block: IBlockModel = this.appConfigService.getBlockTemplateByGuid(blockTemplateGuid);
 
@@ -52,6 +51,7 @@ export class BlockService {
 
         if(newBlock) {
             newBlock.blockTemplateGuid = blockTemplateGuid;
+            //JSON.stringify(block.modelFields.children).replace
             newBlock.modelFields.children = JSON.parse(JSON.stringify(block.modelFields.children));
             
             return newBlock;

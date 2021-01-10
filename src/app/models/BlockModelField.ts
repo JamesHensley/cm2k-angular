@@ -16,13 +16,6 @@ export class BlockModelField implements IBlockModelField {
         this.children = children || new Array<BlockModelField>();
     }
 
-    Flatten(): Array<BlockModelField> {
-        console.log('Flatten');
-        let xx = [].concat.apply([this], this.children.map((d: BlockModelField) => d.Flatten()));
-        //return xx;
-        return [];
-    }
-
     GetFieldNode(path: Array<string>): BlockModelField {
         let root: BlockModelField = this;
 
