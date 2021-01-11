@@ -55,7 +55,7 @@ export class BlockService {
             newBlock.modelFields.children = JSON.parse(JSON.stringify(block.modelFields.children));
             
             newBlock.blockSettings = this.appConfigService.getBlockSettingsByGuid(blockTemplateGuid);
-            
+console.log('BlockService.CloneBlockByTemplate ', newBlock)
             return newBlock;
         }
         return null;

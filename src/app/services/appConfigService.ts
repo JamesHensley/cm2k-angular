@@ -70,8 +70,9 @@ export class AppConfigService {
     }
 
     getBlockSettingsByGuid(templateGuid: string): IBlockSettings {
-        const settings: any = this._blockSettings.reduce((t, n) => n.blockTemplateGuid == templateGuid ? n : t);
-        return settings;
+        const data: any = this._blockSettings
+            .reduce((t, n) => n.blockTemplateGuid == templateGuid ? n : t);
+        return data ? data.settings : {};
     }
 
     get BlockServiceTypes(): Array<string> {
