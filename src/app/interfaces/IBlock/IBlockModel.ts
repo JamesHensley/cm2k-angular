@@ -6,6 +6,7 @@ import { ILink } from '../ILink';
 import { INode } from '../INode';
 import { BlockTypes } from '../../enums';
 import { BlockModelField } from 'src/app/models/BlockModelField';
+import { IBlockSettings } from 'src/app/services/appConfigService';
 
 export interface IBlockModel {
     blockServiceId: string;
@@ -19,4 +20,5 @@ export interface IBlockModel {
     edgeInput?: IBlockModelEdge;
     edgeOutput?: IBlockModelEdge;
     modelFields: IBlockModelField;
+    blockSettings: IBlockSettings;
 }

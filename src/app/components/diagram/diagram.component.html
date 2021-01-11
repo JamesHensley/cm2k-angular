@@ -33,10 +33,19 @@
         </ng-template>
 
         <ng-template #linkTemplate let-link>
-            <svg:g
-                class="edge"
-                (click)="diagramItemClicked('link', link.id)">
-                <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+            <svg:g class="edge">
+            <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+            <svg:text class="edge-label" text-anchor="middle">
+                <textPath
+                    class="text-path"
+                    [attr.href]="'#' + link.id"
+                    [style.dominant-baseline]="link.dominantBaseline"
+                    (click)="diagramItemClicked('link', link.id)"
+                    startOffset="50%"
+                >
+                {{link.label}}
+                </textPath>
+            </svg:text>
             </svg:g>
         </ng-template>
     </ngx-graph>

@@ -1,0 +1,13 @@
+[
+    {"blockTemplateGuid": "443965a6-3071-62e1-60b7-aa99b4747638", "settings": {}},
+    {"blockTemplateGuid": "d14ab94e-0037-4c66-9980-4b785099c6b1", "settings": {}},
+    {"blockTemplateGuid": "0ec538f6-e5c8-0d08-2264-025197be81fd", "settings": {
+        "timeout": 600
+    }},
+    {"blockTemplateGuid": "8964d486-7e46-58a5-bb4c-ab7ed655e4a3", "settings": {
+        "timeout": 400
+    }},
+    {"blockTemplateGuid": "b7293bc9-5aa3-34ba-a581-3bbd54c2c183", "settings": {
+        "timeout": 900
+    }}
+]

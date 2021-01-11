@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 
 import { DialogService } from './services/dialogservice';
 //import { BlockDialogService } from './services/blockdialogservice';
@@ -49,7 +50,7 @@ import { BlockService } from './services/blockService';
     BrowserModule, NgxGraphModule, BrowserAnimationsModule, OverlayModule,
     MatMenuModule, MatButtonModule, MatSelectModule, MatFormFieldModule,
     MatInputModule, MatDialogModule, MatTabsModule, MatListModule,
-    MatGridListModule, MatTreeModule, MatIconModule
+    MatGridListModule, MatTreeModule, MatIconModule, MatTableModule
   ],
   providers: [
     DialogService,

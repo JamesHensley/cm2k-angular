@@ -5,6 +5,7 @@
 
 [aria-id='blockRenameBtn'] {
     font-size: x-small;
+    cursor: pointer;
 }
 
 block-edge-mgr > ::ng-deep div {
@@ -14,4 +15,8 @@ block-edge-mgr > ::ng-deep div {
 
 .linkRow {
     cursor: pointer;
+}
+
+textarea {
+    margin-top: 15px;
 }

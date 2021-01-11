@@ -8,6 +8,7 @@ import { IBlockModelField } from '../interfaces/IBlock/IBlockModelField';
 import { BlockTypes } from '../enums';
 import { BlockModelEdge } from './BlockModelEdge';
 import { BlockModelField } from './BlockModelField';
+import { IBlockSettings } from '../services/appConfigService';
 
 export class BlockModelEndpoint implements IBlockModel {
     id: string;
@@ -24,6 +25,7 @@ export class BlockModelEndpoint implements IBlockModel {
     edgeOutput: IBlockModelEdge;
     processor: IBlockProcessor;
     modelFields: IBlockModelField;
+    blockSettings: IBlockSettings;
 
     constructor(blockName: string, blockServiceId: string, id?: string) {
         this.id = 'N-' + ( id ? id : Guid.create().toString().replace(/\-/ig, ''));

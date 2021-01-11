@@ -83,7 +83,7 @@ export class TreeComponent implements OnInit {
     this._activePath = JSON.parse((data.target as Element).getAttribute('aria-path'));
     this._activeNode = this.blockData.modelFields.GetFieldNode(this._activePath);
 
-    this.canAddChildren = this._activeNode.type === 'object';
+    this.canAddChildren = this._activeNode.type === 'object' || this._activeNode.type === 'array';
     this.canModify = this._activeNode !== this.blockData.modelFields;
   }
 

@@ -17,11 +17,11 @@
         "connections": []
       },
       "modelFields": {
-        "id": "aa9bf7db-95ff-519d-a384-af47ce431ced",
+        "id": "136e6d32-490e-5567-6569-e12debf97e81",
         "name": "Q",
         "type": "object",
         "path": [
-          "cca80b1f-dee7-01e3-1007-fd8539ed1f21"
+          "6ef0a18e-5ece-2adf-890e-fca2f843dc6f"
         ],
         "children": [
           {
@@ -99,11 +99,11 @@
         "connections": []
       },
       "modelFields": {
-        "id": "1ec28479-b2f5-515b-959d-e3b37b5cb49d",
+        "id": "566b52b3-4133-7000-9d39-cf2e92ce643b",
         "name": "RS",
         "type": "object",
         "path": [
-          "e6d0c672-b05c-1d78-43a5-d2f77a239588"
+          "bfa1cc65-9fbb-8352-06a5-7ee1d8cadf09"
         ],
         "children": [
           {
@@ -165,11 +165,11 @@
         "connections": []
       },
       "modelFields": {
-        "id": "44d83ba4-5f96-d36b-5a2d-4c6a9e7e91f2",
+        "id": "6f739bdd-0d77-7742-7757-cfa532af2733",
         "name": "csvInput",
         "type": "object",
         "path": [
-          "8e6a1c8b-e5eb-58f8-5097-1ddae4893f91"
+          "967ca099-7622-b8ef-64f7-7c8a28f21934"
         ],
         "children": [
           {
@@ -218,11 +218,11 @@
         "connections": []
       },
       "modelFields": {
-        "id": "3e21849d-2764-6866-ff04-346e01a18f33",
+        "id": "ef088649-b7ed-1957-d4df-d5da5ff9b4c3",
         "name": "csvOutput",
         "type": "object",
         "path": [
-          "0300d925-dbe3-8e20-6396-2609b39fce6e"
+          "df7ca228-0f4d-c1c0-2d79-6c1197c29ba4"
         ],
         "children": [
           {
@@ -258,35 +258,127 @@
         ]
       },
       "blockTemplateGuid": "d14ab94e-0037-4c66-9980-4b785099c6b1"
+    },
+    {
+      "blockType": "processorBlock",
+      "id": "N-40393836e1a1b075724f584b9baf032e",
+      "blockServiceId": "dc279a42-2b88-62eb-baa9-51f3d42885e3",
+      "blockName": "DX",
+      "label": "DX",
+      "edgeInput": {
+        "name": "InputEdge",
+        "direction": "in",
+        "connections": []
+      },
+      "edgeOutput": {
+        "name": "OutputEdge",
+        "direction": "out",
+        "connections": []
+      },
+      "modelFields": {
+        "id": "b8dac2bd-85e6-bd35-8869-7aab61b30ad8",
+        "name": "DX",
+        "type": "object",
+        "path": [
+          "8b3ffdfd-3bcf-cc26-b561-bff8e47de092"
+        ],
+        "children": [
+          {
+            "id": "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+            "name": "web",
+            "type": "object",
+            "path": [
+              "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+              "35af8143-4f6a-ba96-2dc0-bf6c0eca50de"
+            ],
+            "children": [
+              {
+                "id": "ddaf8516-addb-02dc-a871-5e12ca961874",
+                "name": "url",
+                "type": "string",
+                "path": [
+                  "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+                  "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+                  "ddaf8516-addb-02dc-a871-5e12ca961874"
+                ],
+                "children": []
+              },
+              {
+                "id": "213eae50-b983-9c8d-25c8-f46ee28337db",
+                "name": "timeout",
+                "type": "number",
+                "path": [
+                  "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+                  "35af8143-4f6a-ba96-2dc0-bf6c0eca50de",
+                  "213eae50-b983-9c8d-25c8-f46ee28337db"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "704cc28b-e73b-52f3-df0e-f46ed9d5d05f",
+            "name": "fields",
+            "type": "array",
+            "path": [
+              "b5e5bedc-e0e8-9842-30e6-d30c53b244de",
+              "704cc28b-e73b-52f3-df0e-f46ed9d5d05f"
+            ],
+            "children": []
+          }
+        ]
+      },
+      "blockTemplateGuid": "b7293bc9-5aa3-34ba-a581-3bbd54c2c183"
     }
   ],
   "links": [
     {
-      "id": "L-466b486f2033fd177830c6e0af4cae0d",
+      "id": "L-e2174a25691fa4714d5d760c71f2de24",
       "source": "N-eeade8a4d8f6191799e4834433bbb9bf",
       "target": "N-350e36614a02f3da0bc1810cae8199bd",
-      "label": "Qlix",
+      "label": "Qlix 01",
       "fieldMappings": []
     },
     {
-      "id": "L-3bf1e6b41b512e04cab89b8be423138f",
+      "id": "L-165a1925abafc61fe54c38fc5758993d",
       "source": "N-350e36614a02f3da0bc1810cae8199bd",
       "target": "N-b3d8862ea170b0415045fe68b2730398",
-      "label": "RS 1",
+      "label": "RS 01",
       "fieldMappings": []
     },
     {
-      "id": "L-637204cee1ca9625d964990d9ba8abaa",
+      "id": "L-9e58615c0b92258fff9ec41fe2a7e2fb",
       "source": "N-350e36614a02f3da0bc1810cae8199bd",
       "target": "N-51564340fbfea2336e1c7a3cb94c028b",
-      "label": "Q2",
+      "label": "Qlix 02",
       "fieldMappings": []
     },
     {
-      "id": "L-ff17cb47f85128fbf5a71967a7d5f5dc",
+      "id": "L-4080c7428083799dde794526857cb4e4",
       "source": "N-b3d8862ea170b0415045fe68b2730398",
       "target": "N-51564340fbfea2336e1c7a3cb94c028b",
-      "label": "RS2",
+      "label": "RS 02",
+      "fieldMappings": []
+    },
+    {
+      "id": "L-e6431cbd4b0e937ab26cc921770ebd7e",
+      "source": "N-b3d8862ea170b0415045fe68b2730398",
+      "target": "N-40393836e1a1b075724f584b9baf032e",
+      "label": "DX 01",
+      "fieldMappings": []
+    },
+    {
+      "id": "L-a31735e93cfcbddb12616a35115ad7d9",
+      "source": "N-40393836e1a1b075724f584b9baf032e",
+      "target": "N-51564340fbfea2336e1c7a3cb94c028b",
+      "label": "DX 02",
+      "fieldMappings": []
+    },
+    {
+      "id": "L-5070d4f9639421169feacb6def079fa0",
+      "source": "N-40393836e1a1b075724f584b9baf032e",
+      "target": "N-350e36614a02f3da0bc1810cae8199bd",
+      "label": "DX 03",
       "fieldMappings": []
     }
   ]

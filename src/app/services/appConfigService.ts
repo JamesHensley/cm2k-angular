@@ -1,13 +1,10 @@
-import { ArrayType } from '@angular/compiler';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Guid } from 'typescript-guid';
-import { BlockTypes } from '../enums';
 import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
-
 import { IBlockServiceModel } from '../models/configurationModels/blockServiceModel';
 
 export interface IAppConfig {
     blockDefs: Array<IBlockDefinitions>,
+    blockSettings: Array<IBlockSettings>,
     serviceTypes: Array<IBlockServiceModel>,
     fieldTypes: Array<any>
 }
@@ -19,12 +16,18 @@ export interface IBlockDefinitions {
     blocks: Array<any>;
 }
 
+export interface IBlockSettings {
+    blockTemplateGuid: string,
+    settings: { [id: string] : any; }
+}
+
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
     configUpdated = new EventEmitter<IAppConfig>();
 
     private _blockDefs: Array<any>;
     private _blockServiceTypes: Array<IBlockServiceModel>;
+    private _blockSettings: Array<IBlockSettings>;
 
     constructor() {
         Promise.all([
@@ -33,10 +36,13 @@ export class AppConfigService {
             fetch('/resources/BlockServiceTypes.json')
                 .then(data => data.json()),
             fetch('/resources/FieldDefs.json')
+                .then(data => data.json()),
+            fetch('/resources/BlockTemplateSettings.json')
                 .then(data => data.json())
         ]).then(data => {
             this._blockDefs = data[0];
             this._blockServiceTypes = data[1];
+            this._blockSettings = data[3];
 
             this.emitConfigUpdate();
         });
@@ -61,6 +67,11 @@ export class AppConfigService {
             .reduce((t: IBlockModel, n: IBlockModel) => {
                 return n.blockTemplateGuid == templateGuid ? n : t
             }, null);
+    }
+
+    getBlockSettingsByGuid(templateGuid: string): IBlockSettings {
+        const settings: any = this._blockSettings.reduce((t, n) => n.blockTemplateGuid == templateGuid ? n : t);
+        return settings;
     }
 
     get BlockServiceTypes(): Array<string> {
@@ -89,7 +100,8 @@ export class AppConfigService {
         this.configUpdated.emit({
             blockDefs: blockDefs,
             serviceTypes: this._blockServiceTypes,
-            fieldTypes: null
+            fieldTypes: null,
+            blockSettings: this._blockSettings
         });
     }
 }

@@ -36,15 +36,19 @@ export class LinkPropsDialog {
     public srcBlock: IBlockModel;
     public dstBlock: IBlockModel;
 
-    get srcFields(): Array<string> {
+    get srcFields(): Array<any> {
         return this.blockService.GetFields(this.srcBlock.modelFields)
-            .map(d => d.name + ' ' + d.type );
+            .map(d => { return { name: d.name, type: d.type, linked: null } });
     }
 
-    get dstFields(): Array<string> {
+    get dstFields(): Array<any> {
         return this.blockService.GetFields(this.dstBlock.modelFields)
-            .map(d => d.name + ' ' + d.type );
+            .map(d => { return { name: d.name, type: d.type, linked: null } });
     }
+    displayedColumns: string[] = [ 'name', 'type', 'linked' ];
+
+
+
 
     saveLink(ev): void {
         console.log('LinkPropsDialog->saveLink', this.linkData);
