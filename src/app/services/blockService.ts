@@ -51,11 +51,10 @@ export class BlockService {
 
         if(newBlock) {
             newBlock.blockTemplateGuid = blockTemplateGuid;
-            //JSON.stringify(block.modelFields.children).replace
             newBlock.modelFields.children = JSON.parse(JSON.stringify(block.modelFields.children));
             
             newBlock.blockSettings = this.appConfigService.getBlockSettingsByGuid(blockTemplateGuid);
-console.log('BlockService.CloneBlockByTemplate ', newBlock)
+console.log('BlockService.CloneBlockByTemplate...fix code to update PATH in modelFields here: ', newBlock)
             return newBlock;
         }
         return null;

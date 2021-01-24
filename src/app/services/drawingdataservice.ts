@@ -16,14 +16,7 @@ import { Link } from '../models/Link';
 import { IBlockLinks } from '../interfaces/IBlock/IBlockLinks';
 import { IFieldMap } from '../interfaces/IFieldMap';
 import { BlockService } from './blockService';
-
-export interface DrawingUpdatedData {
-    newDiagramData: IDrawing;
-    newBlockData: Array<IBlockModel>;
-    appMode: string;
-    editable: boolean;
-    drawingLayout: string;
-}
+import { IDrawingData } from '../interfaces/IDrawingData';
 
 @Injectable({ providedIn: 'root' })
 export class DrawingDataService {
@@ -36,7 +29,9 @@ export class DrawingDataService {
         this.appMode = 'View';
     }
 
-    drawingUpdated = new EventEmitter<DrawingUpdatedData>();
+    private windowEvent: CustomEvent;
+
+    drawingUpdated = new EventEmitter<IDrawingData>();
 
     private _links: Array<ILink> = [];
     get links(): Array<ILink> { return this._links; }
@@ -203,15 +198,21 @@ export class DrawingDataService {
         return root;
     }
 
-    //Used to notify any subscribers that an application config update occured
-    private emitUpdate(diagramData?: IDrawing, blockData?: Array<IBlockModel>): void {
-        this.drawingUpdated.emit({
+    public getDrawingData(diagramData?: IDrawing, blockData?: Array<IBlockModel>): IDrawingData {
+        return {
             newDiagramData: diagramData || this.drawingData,
             newBlockData: blockData || this._blocks,
             appMode: this.appMode,
             editable: this.editable,
             drawingLayout: this.drawingLayout
-        });
+        }
+    }
+
+    //Used to notify any subscribers that an application config update occured
+    private emitUpdate(diagramData?: IDrawing, blockData?: Array<IBlockModel>): void {
+        const emitData = this.getDrawingData(diagramData, blockData);
+
+        this.drawingUpdated.emit(emitData);
     }
 
 

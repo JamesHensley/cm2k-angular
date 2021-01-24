@@ -1,13 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { IAppConfig } from '../interfaces/IApplicationData';
 import { IBlockModel } from '../interfaces/IBlock/IBlockModel';
-import { IBlockServiceModel } from '../models/configurationModels/blockServiceModel';
-
-export interface IAppConfig {
-    blockDefs: Array<IBlockDefinitions>,
-    blockSettings: Array<IBlockSettings>,
-    serviceTypes: Array<IBlockServiceModel>,
-    fieldTypes: Array<any>
-}
+import { IBlockServiceModel } from '../models/configurationModels/IBlockServiceModel';
 
 export interface IBlockDefinitions {
     blockServiceId: string;
@@ -90,7 +84,7 @@ export class AppConfigService {
         ]
     }
 
-    private emitConfigUpdate(): void {
+    public getAppData(): IAppConfig {
         let blockDefs = (this._blockServiceTypes || []).map(d => { return {
             blockServiceId: d.serviceId,
             blockServiceType: d.serviceType,
@@ -98,11 +92,17 @@ export class AppConfigService {
             blocks: this._blockDefs.filter(f => f.blockServiceId == d.serviceId)
         }});
 
-        this.configUpdated.emit({
+        return {
             blockDefs: blockDefs,
             serviceTypes: this._blockServiceTypes,
             fieldTypes: null,
             blockSettings: this._blockSettings
-        });
+        };
+    }
+
+    private emitConfigUpdate(): void {
+        const emitData: IAppConfig = this.getAppData();
+
+        this.configUpdated.emit(emitData);
     }
 }

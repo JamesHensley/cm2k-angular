@@ -9,9 +9,12 @@ import {
     OnDestroy,
     Query
 } from "@angular/core";
-import { AppConfigService, IAppConfig, IBlockDefinitions } from "src/app/services/appConfigService";
+import { IAppConfig } from "src/app/interfaces/IApplicationData";
+import { IDrawingData } from "src/app/interfaces/IDrawingData";
+import { AppConfigService, IBlockDefinitions } from "src/app/services/appConfigService";
 import { DialogService } from "src/app/services/dialogservice";
-import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
+import { DrawingDataService } from "src/app/services/drawingdataservice";
+import { IdstFlowService } from "src/app/services/idstFlowService";
 import { InputData } from "../modals/input-dialog";
 
 export interface ToolBarBtnData {
@@ -31,8 +34,10 @@ export class Toolbar implements OnInit, OnDestroy {
     appBlockDefs: Array<IBlockDefinitions>;
 
     constructor(
-        public drawingService: DrawingDataService, public appConfigService: AppConfigService,
-        private dialogservice: DialogService
+        public drawingService: DrawingDataService,
+        public appConfigService: AppConfigService,
+        private dialogservice: DialogService,
+        private idstFlowService: IdstFlowService
     ) {
         this.appMode = this.drawingService.appMode;
         this.layouts = this.appConfigService.DiagramLayouts;
@@ -46,7 +51,7 @@ export class Toolbar implements OnInit, OnDestroy {
             this.appBlockDefs = newConfig.blockDefs;
         });
         
-        this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+        this.drawingService.drawingUpdated.subscribe((newData: IDrawingData) => {
             this.appMode = newData.appMode;
         });
     }
@@ -60,6 +65,7 @@ export class Toolbar implements OnInit, OnDestroy {
                 break;
             case 'Export':
                 this.drawingService.exportDrawing();
+                this.idstFlowService.notifyButtonClick('ExportDiagram');
                 break;
             case 'SetMode':
                 this.drawingService.editable = !this.drawingService.editable;

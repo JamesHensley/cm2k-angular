@@ -12,9 +12,10 @@ import {
 
 import { INode } from "src/app/interfaces/INode";
 import { ILink } from "src/app/interfaces/ILink";
-import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
+import { DrawingDataService } from "src/app/services/drawingdataservice";
 import { IDrawing } from "src/app/interfaces/IDrawing";
 import { Guid } from "typescript-guid";
+import { IDrawingData } from "src/app/interfaces/IDrawingData";
 
 @Component({
     selector: "diagram-component",
@@ -43,7 +44,7 @@ export class Diagram implements OnInit, OnDestroy {
     isOpen: boolean = false;
 
     ngOnInit() {
-        this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+        this.drawingService.drawingUpdated.subscribe((newData: IDrawingData) => {
             this.drawingNodes = newData.newDiagramData.nodes;
             this.drawingLinks = newData.newDiagramData.links;
             this.appMode = newData.appMode;

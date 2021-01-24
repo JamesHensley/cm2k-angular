@@ -12,10 +12,11 @@ import {
 } from "@angular/core";
 import { MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { IConnection } from "src/app/interfaces/IConnection";
+import { IDrawingData } from "src/app/interfaces/IDrawingData";
 import { ILink } from "src/app/interfaces/ILink";
 import { BlockModelEndpoint } from "src/app/models/BlockModelEndpoint";
 import { DialogService } from "src/app/services/dialogservice";
-import { DrawingDataService, DrawingUpdatedData } from "src/app/services/drawingdataservice";
+import { DrawingDataService } from "src/app/services/drawingdataservice";
 import { InputData } from "./input-dialog";
 
 @Component({
@@ -29,7 +30,7 @@ export class BlockPropsEndpointDialog implements OnInit {
         private drawingService: DrawingDataService) { }
 
     ngOnInit(): void {
-        this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+        this.drawingService.drawingUpdated.subscribe((newData: IDrawingData) => {
             this.blockData = (newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t))) as BlockModelEndpoint;
         });
     }

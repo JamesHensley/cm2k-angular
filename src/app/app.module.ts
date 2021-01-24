@@ -38,6 +38,7 @@ import { BlockPropsFieldsComponent } from './components/shared/blockpropsfieldsc
 import { MappingService } from './services/mappingService';
 import { BlockEdgeMgr } from './components/modals/block-edge-mgr';
 import { BlockService } from './services/blockService';
+import { IdstFlowService } from './services/idstFlowService';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { BlockService } from './services/blockService';
     BlockService,
     DrawingDataService,
     AppConfigService,
-    MappingService
+    MappingService,
+    IdstFlowService
   ],
   entryComponents: [
   ],

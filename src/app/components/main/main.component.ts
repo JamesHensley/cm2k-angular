@@ -21,6 +21,9 @@ import { Toolbar } from '../toolbar/toolbar.component';
 import { DialogService } from '../../services/dialogservice';
 import { DrawingDataService } from "src/app/services/drawingdataservice";
 import { AppConfigService } from "src/app/services/appConfigService";
+
+//declare var initIDSTListener: any;
+
 @Component({
     selector: "app-main",
     templateUrl: "./main.component.html",
@@ -35,7 +38,8 @@ export class Main implements OnInit, OnDestroy {
     constructor(
         public drawingService: DrawingDataService, public appConfigService: AppConfigService,
         public nodeDialog: MatDialog, public linkDialog: MatDialog, private dialogService: DialogService
-    ) {}
+    ) {
+    }
 
     appMode: string = 'Edit';
 

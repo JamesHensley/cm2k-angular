@@ -4,11 +4,12 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { IBlockModelField } from 'src/app/interfaces/IBlock/IBlockModelField';
 import { IBlockModel } from 'src/app/interfaces/IBlock/IBlockModel';
-import { DrawingDataService, DrawingUpdatedData } from 'src/app/services/drawingdataservice';
+import { DrawingDataService } from 'src/app/services/drawingdataservice';
 import { MappingService } from 'src/app/services/mappingService';
 import { BlockModelField } from 'src/app/models/BlockModelField';
 import { DialogService } from 'src/app/services/dialogservice';
 import { InputData } from '../modals/input-dialog';
+import { IDrawingData } from 'src/app/interfaces/IDrawingData';
 
 
 interface FlatNode {
@@ -64,7 +65,7 @@ export class TreeComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource.data = [this.blockData.modelFields];
 
-    this.drawingService.drawingUpdated.subscribe((newData: DrawingUpdatedData) => {
+    this.drawingService.drawingUpdated.subscribe((newData: IDrawingData) => {
       this.allowEdits = newData.editable;
       this.blockData = newData.newBlockData.reduce((t, n) => (n.id == this.blockData.id ? n : t));;
       this.dataSource.data = [this.blockData.modelFields];
